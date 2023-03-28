@@ -1,11 +1,10 @@
-// LoginRegisterForm.tsx
 import React, { useState } from "react";
 import { useAuthState, useSignIn, useRegister } from "./UserContext";
-
+import { Role } from "../types/user"
 const LoginRegisterForm: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState<"service_provider" | "user" | "">(null);
+    const [role, setRole] = useState<Role>(null);
     const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
     const [isLogin, setIsLogin] = useState(true);

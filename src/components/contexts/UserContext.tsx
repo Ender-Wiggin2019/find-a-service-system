@@ -1,11 +1,14 @@
 // UserContext.tsx
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import { User as FirebaseUser } from "firebase/auth";
-import { useAuth, useFirestore } from "~/lib/firebase";
+import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol} from "~/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { Role } from "../types/user"
+
 // import { collection } from "firebase/firestore";
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/firestore';
 type AuthActions =
     | { type: "SIGN_IN"; payload: { user: FirebaseUser } }
     | { type: "SIGN_OUT" };
@@ -98,17 +101,18 @@ const useRegister = () => {
     register: async (
         email: string,
         password: string,
-        role: "service_provider" | "user",
+        role: Role,
         address?: string,
         description?: string
     ) => {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       if (user) {
-        await firebase.firestore().collection("users").doc(user.uid).set({
+        const userRef = doc(serviceProviderCol, user.uid)
+        await setDoc(userRef, {
           role,
           address: address ?? "",
           description: description ?? "",
-        });
+        })
       }
     },
   };
