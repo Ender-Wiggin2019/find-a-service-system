@@ -27,3 +27,7 @@ yarn dev
 for now, I have created the register and login page with firebase auth.
 Note that the backend is changed to firebase since this one is recommended at lecture, and quite convenient based on this project's requirements.
 ![](images/CleanShot1.PNG)
+
+## Members
+
+- Jietao Chen
