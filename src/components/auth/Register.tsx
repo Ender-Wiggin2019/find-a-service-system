@@ -1,24 +1,36 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PasswordChecklist from "react-password-checklist"
 import { useAuthState, useRegister, useGoogleSignIn } from "./UserContext";
 import InputTextField from "./InputTextField";
-import { Role } from "../types/user"
+import { Role } from "../types/user";
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [passwordValid, setpasswordValid] = useState(false);
     const [role, setRole] = useState<Role>(null);
     const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
     const [selectedRole, setSelectedRole] = useState<Role>("user");
 
+    const navigate = useNavigate();
     const { register } = useRegister();
     const { signInWithGoogle } = useGoogleSignIn();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await register(email, password, role, address, description);
 
+        console.log(passwordValid)
+        if (passwordValid) {
+            console.log("Registering user with email: " + email + " and password: " + password);
+
+            const success = await register(email, password, role, address, description);
+            if (success) {
+                navigate("/login");
+            }
+        }
     };
 
     return (
@@ -88,6 +100,13 @@ const Register: React.FC = () => {
                                 type="password"
                                 placeholder="Password"
                                 onChange={(value) => setPasswordConfirm(value)}
+                            />
+                            <PasswordChecklist
+                                rules={["minLength","specialChar","number","capital","match"]}
+                                minLength={5}
+                                value={password}
+                                valueAgain={passwordConfirm}
+                                onChange={(isValid) => {setpasswordValid(isValid)}}
                             />
 
                             {selectedRole === "service_provider" && (
