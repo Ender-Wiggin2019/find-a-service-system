@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { getAuth, Auth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, Auth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { connectFirestoreEmulator, getFirestore, collection, DocumentData, CollectionReference } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 import { Role, User, ServiceProvider } from "~/components/types/user"
@@ -16,6 +16,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore();
+
+export const Providers = {
+    google: new GoogleAuthProvider(),
+    facebook: new FacebookAuthProvider(),
+};
 
 
 const createCollection = <T = DocumentData>(collectionName: string) => {

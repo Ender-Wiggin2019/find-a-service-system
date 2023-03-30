@@ -1,7 +1,7 @@
 // UserContext.tsx
 import { createContext, ReactNode, useContext, useReducer } from "react";
-import { User as FirebaseUser } from "firebase/auth";
-import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol} from "~/lib/firebase";
+import { User as FirebaseUser, signInWithPopup } from "firebase/auth";
+import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol, Providers} from "~/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { Role } from "../types/user"
@@ -83,6 +83,24 @@ const useSignIn = () => {
   };
 };
 
+const useGoogleSignIn = () => {
+  const auth = useAuth();
+  const { dispatch } = useContext(AuthContext);
+  return {
+    signInWithGoogle: async () => {
+      try {
+        const userCredential = await signInWithPopup(auth, Providers.google);
+        const { user } = userCredential;
+        if (user) {
+          dispatch({ type: "SIGN_IN", payload: { user } });
+        }
+      } catch (error) {
+        console.error("signInWithGoogle error:", error);
+      }
+    },
+  };
+};
+
 const useSignOut = () => {
   const auth = useAuth();
   const { dispatch } = useContext(AuthContext);
@@ -96,7 +114,7 @@ const useSignOut = () => {
 
 const useRegister = () => {
   const auth = useAuth();
-  const firestore = useFirestore();
+  // const firestore = useFirestore();
   return {
     register: async (
         email: string,
@@ -118,4 +136,4 @@ const useRegister = () => {
   };
 };
 
-export { useAuthState, useSignIn, useSignOut, useRegister, AuthProvider };
+export { useAuthState, useSignIn, useGoogleSignIn, useSignOut, useRegister, AuthProvider };

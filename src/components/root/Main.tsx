@@ -33,9 +33,9 @@ import { Router } from "~/components/router/Router";
 import { setupFirebase } from "~/lib/firebase";
 import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useSignIn, useSignOut } from "~/components/contexts/UserContext";
-import { useAuthState } from "~/components/contexts/UserContext";
-import LoginRegisterForm from "~/components/contexts/LoginRegisterForm";
+import { useSignIn, useSignOut } from "~/components/auth/UserContext";
+import { useAuthState } from "~/components/auth/UserContext";
+import Login from "~/components/auth/Login";
 
 const Main: React.FC = () => {
   const { state } = useAuthState();
@@ -48,7 +48,11 @@ const Main: React.FC = () => {
         </div>
     );
   } else {
-    return <LoginRegisterForm />;
+    return (
+        <main>
+            <Router />
+        </main>
+    );
   }
 };
 

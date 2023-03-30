@@ -5,6 +5,10 @@ import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom'
 const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p>;
 
 const IndexScreen = lazy(() => import('~/components/screens/Index'));
+
+const Login = lazy(() => import('~/components/auth/Login'));
+const Register = lazy(() => import('~/components/auth/Register'));
+
 const Page404Screen = lazy(() => import('~/components/screens/404'));
 
 function Layout() {
@@ -26,6 +30,7 @@ export const Router = () => {
   );
 };
 
+/* Note from Oushuo: When creating a new page, add route at here */
 const InnerRouter = () => {
   const routes: RouteObject[] = [
     {
@@ -35,6 +40,14 @@ const InnerRouter = () => {
         {
           index: true,
           element: <IndexScreen />,
+        },
+        {
+          path: '/login',
+          element: <Login />,
+        },
+        {
+          path: '/Register',
+          element: <Register />,
         },
         {
           path: '*',
