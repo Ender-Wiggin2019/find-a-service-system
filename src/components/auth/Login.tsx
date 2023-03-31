@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputTextField from "../shared/InputTextField";
 import { useSignIn, useGoogleSignIn } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -9,9 +10,13 @@ const Login: React.FC = () => {
     const { signIn } = useSignIn();
     const { signInWithGoogle } = useGoogleSignIn();
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         await signIn(email, password);
+        navigate("/service-creator"); // TODO: test only
+
     };
 
     return (
