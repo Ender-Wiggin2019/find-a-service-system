@@ -1,10 +1,10 @@
 // UserContext.tsx
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import { User as FirebaseUser, signInWithPopup } from "firebase/auth";
-import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol, Providers} from "~/lib/firebase";
+import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol, Providers, customerCol} from "~/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { Role } from "../types/user"
+import {Role, User, ServiceProvider, Customer} from "../types/user"
 
 // import { collection } from "firebase/firestore";
 // import firebase from 'firebase/compat/app';
@@ -77,6 +77,7 @@ const useSignIn = () => {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
 
       if (user) {
+        console.log('sign in')
         dispatch({ type: "SIGN_IN", payload: { user } });
       }
     },
@@ -118,22 +119,37 @@ const useRegister = () => {
   return {
     register: async (
         email: string,
+        name: string,
         password: string,
         role: Role,
         address?: string,
         description?: string
-    ) => {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      if (user) {
-        const userRef = doc(serviceProviderCol, user.uid)
-        await setDoc(userRef, {
-          role,
-          address: address ?? "",
-          description: description ?? "",
-        })
+    ): Promise<boolean> => {
+      try {
+        const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+        console.log(role);
+        if (user && role === "serviceProvider") { // case: service provider
+          console.log('check')
+          await setDoc(doc(serviceProviderCol, user.uid),
+              JSON.parse(JSON.stringify(new ServiceProvider(user.uid, name, email, address, description)))
+          );
+          return true;
+        } else if (user && role === "customer") { // case: customer
+            await setDoc(doc(customerCol, user.uid),
+                JSON.parse(JSON.stringify(new Customer(user.uid, name, email)))
+        );
+            return true;
+        }else {
+          return false;
+        }
+      } catch (error) {
+        console.error("Registration failed:", error);
+        return false;
       }
     },
   };
 };
+
 
 export { useAuthState, useSignIn, useGoogleSignIn, useSignOut, useRegister, AuthProvider };

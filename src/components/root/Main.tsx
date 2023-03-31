@@ -44,7 +44,6 @@ const Main: React.FC = () => {
     return (
         <div className="container mx-auto">
           <h1>Welcome, {state.currentUser.displayName}!</h1>
-          {/* Your application content goes here */}
         </div>
     );
   } else {

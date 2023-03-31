@@ -6,6 +6,10 @@ module.exports = {
     safeList: [],
     content: ['./index.html', './src/**/*.tsx', './src/**/*.ts'],
   },
+  content: [
+    './node_modules/flowbite/**/*.js',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     minWidth: {
       '40': '10rem',
@@ -63,6 +67,7 @@ module.exports = {
   variants: {},
   plugins: [
     require('daisyui'),
+    require('flowbite/plugin'),
   ],
   daisyui: {
     themes: [
