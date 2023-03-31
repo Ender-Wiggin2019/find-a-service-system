@@ -2,7 +2,7 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { getAuth, Auth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { connectFirestoreEmulator, getFirestore, collection, DocumentData, CollectionReference } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
-import { Role, User, ServiceProvider } from "~/components/types/user"
+import {Role, User, ServiceProvider, Customer} from "~/components/types/user"
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
       authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
@@ -15,7 +15,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore();
+const db = getFirestore(); // database
+const storage = getStorage(app);
 
 export const Providers = {
     google: new GoogleAuthProvider(),
@@ -27,14 +28,14 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
     return collection(db, collectionName) as CollectionReference<T>
 }
 
-export { auth, db };
+export { auth, db, storage };
 
 export const roleCol = createCollection<Role>('roles')
-export const userCol = createCollection<User>('users')
-export const serviceProviderCol = createCollection<ServiceProvider>('serviceProviders')
+export const customerCol = createCollection<Customer>('customer')
+export const serviceProviderCol = createCollection<ServiceProvider>('serviceProvider')
 
 
-
+// TODO(Ender): the following code is from original template, need to be refactored
 
 let firebaseApp: FirebaseApp;
 const useEmulator = () => import.meta.env.VITE_USE_FIREBASE_EMULATOR;
@@ -48,7 +49,7 @@ export const setupFirebase = () => {
 };
 
 let firestore: ReturnType<typeof getFirestore>;
-let storage: ReturnType<typeof getStorage>;
+// let storage: ReturnType<typeof getStorage>;
 
 export const useAuth = () => {
   if (useEmulator()) {
@@ -67,9 +68,9 @@ export const useFirestore = () => {
   return firestore;
 };
 
+// TODO: maybe delete it
 export const useStorage = () => {
   if (!storage) {
-    storage = getStorage();
     if (useEmulator()) {
       connectStorageEmulator(storage, 'localhost', 9199);
     }

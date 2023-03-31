@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import InputTextField from "./InputTextField";
+import InputTextField from "../shared/InputTextField";
 import { useSignIn, useGoogleSignIn } from "./UserContext";
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [remember, setRemember] = useState(""); // TODO - implement remember me
+    const [remember, setRemember] = useState(""); // TODO: implement remember me
 
     const { signIn } = useSignIn();
     const { signInWithGoogle } = useGoogleSignIn();

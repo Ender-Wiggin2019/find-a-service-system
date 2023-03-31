@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordChecklist from "react-password-checklist"
-import { useRegister, useGoogleSignIn } from "./UserContext";
-import InputTextField from "../shared/InputTextField";
+import { useAuthState, useRegister, useGoogleSignIn } from "./UserContext";
+import InputTextField from "./InputTextField";
 import { Role } from "../types/user";
 
 const Register: React.FC = () => {
@@ -117,12 +117,12 @@ const Register: React.FC = () => {
 
                             {selectedRole === "serviceProvider" && (
                                 <>
-                                <InputTextField
-                                    label="Your Address"
-                                    type="text"
-                                    placeholder="Address"
-                                    onChange={(value) => setAddress(value)}
-                                />
+                                    <InputTextField
+                                        label="Your Address"
+                                        type="text"
+                                        placeholder="Address"
+                                        onChange={(value) => setAddress(value)}
+                                    />
                                     <div className="mb-4">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
                                         <textarea
@@ -144,7 +144,7 @@ const Register: React.FC = () => {
 
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-2">
                                 Already has an account?  <a href="/login"
-                                                              className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
+                                                            className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
                             </p>
 
                             <div
