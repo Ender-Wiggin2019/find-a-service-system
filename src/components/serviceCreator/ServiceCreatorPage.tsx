@@ -10,7 +10,7 @@ import {storage} from "~/lib/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useServiceCreator } from "~/components/serviceCreator/UseServiceCreator";
 
-import {SERVICR_PROVIDER_IMAGE_PATH} from "~/lib/constants";
+import {SERVICE_PROVIDER_IMAGE_PATH} from "~/lib/constants";
 
 const ServiceCreatorPage: React.FC = () => {
     const { state } = useAuthState();
@@ -23,7 +23,7 @@ const ServiceCreatorPage: React.FC = () => {
 
     const [imageUpload, setImageUpload] = useState<File>(); // TODO: for now only assume one service has only one image
     const [imageUrl, setImageUrl] = useState<string>(); // url from firebase storage
-    const imagesListRef = ref(storage, SERVICR_PROVIDER_IMAGE_PATH);
+    const imagesListRef = ref(storage, SERVICE_PROVIDER_IMAGE_PATH);
 
     const { serviceCreator } = useServiceCreator();
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ const ServiceCreatorPage: React.FC = () => {
         if (state.state === "SIGNED_IN") {
             if (imageUpload === undefined) return;
             // upload image to firebase storage
-            const imageRef = ref(storage, `${SERVICR_PROVIDER_IMAGE_PATH+imageUpload.name + uuidv4()}`);
+            const imageRef = ref(storage, `${SERVICE_PROVIDER_IMAGE_PATH+imageUpload.name + uuidv4()}`);
             uploadBytes(imageRef, imageUpload).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     // setImageUrls((prev) => [...prev, url]);
@@ -50,9 +50,10 @@ const ServiceCreatorPage: React.FC = () => {
                 // write back to firestore
                 if (imageUrl === undefined) return;
                 serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description);
+                // TODO: if failed, delete image
             }).then(() => {
                 // TODO: should execute something and jump to another page
-                navigate("/");
+                // navigate("/");
             });
 
         }
@@ -94,7 +95,7 @@ const ServiceCreatorPage: React.FC = () => {
                                     placeholder="Please enter a number"
                                     prefix="£"
                                     suffix=" per hour"
-                                    defaultValue={1000}
+                                    // defaultValue={1000}
                                     decimalsLimit={2}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     onValueChange={(value) => value ? setPrice(value) : ""}
@@ -119,7 +120,7 @@ const ServiceCreatorPage: React.FC = () => {
                                 <textarea
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     rows={3}
                                 ></textarea>
                             </div>

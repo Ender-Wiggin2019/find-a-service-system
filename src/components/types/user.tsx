@@ -31,3 +31,5 @@ export class Customer extends User {
     }
 }
 
+// TODO: admin class
+

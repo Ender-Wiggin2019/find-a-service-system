@@ -16,8 +16,8 @@ export const useServiceCreator = () => {
             description: string, // TODO: need a link to provider
         ): Promise<boolean> => {
             try {
-                await setDoc(doc(serviceCreatorCol, uid),
-                    JSON.parse(JSON.stringify(new ServiceCreator(name, image, price, coverArea, time, description)))
+                await setDoc(doc(serviceCreatorCol), // will create a new document with a random ID
+                    JSON.parse(JSON.stringify(new ServiceCreator(uid, name, image, price, coverArea, time, description)))
                 );
                 return true;
             } catch (error) {

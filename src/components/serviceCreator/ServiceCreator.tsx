@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordChecklist from "react-password-checklist"
-import { useAuthState, useRegister, useGoogleSignIn } from "./UserContext";
-import InputTextField from "./InputTextField";
+import { useAuthState, useRegister, useGoogleSignIn } from "../auth/UserContext";
+import InputTextField from "../shared/InputTextField";
 import { Role } from "../types/user";
 
 const Register: React.FC = () => {
@@ -128,7 +128,7 @@ const Register: React.FC = () => {
                                         <textarea
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             rows={3}
                                         ></textarea>
                                     </div>
