@@ -28,6 +28,40 @@ for now, I have created the register and login page with firebase auth.
 Note that the backend is changed to firebase since this one is recommended at lecture, and quite convenient based on this project's requirements.
 ![](images/CleanShot1.PNG)
 
+## FireStore Structure
+
+```
+Firestore-root
+  |
+  --- serviceProvider (collection)
+  |    |
+  |    --- $uid (document)
+  |         |
+  |         --- //user fields.
+  |
+  --- customer (collection)
+  |    |
+  |    --- $uid (document)
+  |         |
+  |         --- //user fields.
+  |
+  --- service (collection)
+       |
+       --- $serviceId (document)
+            |
+            --- uid: "veryLongUid"
+            |
+            --- //service fields.
+            |
+            --- comments (sub-collection)
+                  |
+                  --- $commentId (document)
+                         |
+                         --- uid: "veryLongUid"
+                         |
+                         --- //comment fields.
+```
+
 ## Members
 
 - Jietao Chen

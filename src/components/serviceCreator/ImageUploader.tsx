@@ -1,40 +1,53 @@
 import React, { useRef, useState, useEffect } from "react";
-import { storage } from "~/lib/firebase";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
-import { SERVICR_PROVIDER_IMAGE_PATH } from "~/lib/constants";
+// import { storage } from "~/lib/firebase";
+// import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+// import { v4 as uuidv4 } from "uuid";
+// import { SERVICR_PROVIDER_IMAGE_PATH } from "~/lib/constants";
 
-const ImageUploader = () => {
+interface ImageUploaderProps {
+    onImageSelected: (file: File) => void;
+}
 
-    const [imageUpload, setImageUpload] = useState<File>(); // TODO: for now only assume one service has only one image
-    // const [imageUrls, setImageUrls] = useState<Array<string>>([]);
-    const [imageUrl, setImageUrl] = useState<string>();
+const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
 
-    const imagesListRef = ref(storage, SERVICR_PROVIDER_IMAGE_PATH);
-
-    const uploadFile = () => {
-        if (imageUpload === undefined) return;
-        const imageRef = ref(storage, `images/${imageUpload.name + uuidv4()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                // setImageUrls((prev) => [...prev, url]);
-                setImageUrl(url);
-            });
-            console.log(imageUrl);
-        });
+    const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files instanceof FileList) {
+            const file = event.target.files[0] as File;
+            onImageSelected(file);
+        } else {
+            console.log("TODO: handle error");
+        }
     };
 
-    useEffect(() => {
-        listAll(imagesListRef).then((response) => {
-            response.items.forEach((item) => {
-                getDownloadURL(item).then((url) => {
-                    // setImageUrls((prev) => [...prev, url]);
-                    setImageUrl(url);
+    // const [imageUpload, setImageUpload] = useState<File>(); // TODO: for now only assume one service has only one image
+    // // const [imageUrls, setImageUrls] = useState<Array<string>>([]);
+    // const [imageUrl, setImageUrl] = useState<string>();
+    //
+    // const imagesListRef = ref(storage, SERVICR_PROVIDER_IMAGE_PATH);
 
-                });
-            });
-        });
-    }, []);
+    // const uploadFile = () => {
+    //     if (imageUpload === undefined) return;
+    //     const imageRef = ref(storage, `images/${imageUpload.name + uuidv4()}`);
+    //     uploadBytes(imageRef, imageUpload).then((snapshot) => {
+    //         getDownloadURL(snapshot.ref).then((url) => {
+    //             // setImageUrls((prev) => [...prev, url]);
+    //             setImageUrl(url);
+    //         });
+    //         console.log(imageUrl);
+    //     });
+    // };
+
+    // useEffect(() => {
+    //     listAll(imagesListRef).then((response) => {
+    //         response.items.forEach((item) => {
+    //             getDownloadURL(item).then((url) => {
+    //                 // setImageUrls((prev) => [...prev, url]);
+    //                 setImageUrl(url);
+    //
+    //             });
+    //         });
+    //     });
+    // }, []);
 
     // FIXME(Ender): shouldn't upload to firebase in this step
     return (
@@ -55,20 +68,17 @@ const ImageUploader = () => {
                 aria-describedby="file_input_help"
                 id="file_input"
                 type="file"
-                onChange={(event) => {
-                    event.target.files instanceof FileList
-                        ? setImageUpload(event.target.files[0] as File) : 'TODO: handle error';
-                }}/>
+                onChange={handleFileInput}/>
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF
                     (MAX. 800x400px).</p>
 
-            <button
-                onClick={uploadFile}
-                className="mb-6 w-half text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                data-te-ripple-init
-                data-te-ripple-color="light">
-                Upload Image
-            </button>
+            {/*<button*/}
+            {/*    onClick={uploadFile}*/}
+            {/*    className="mb-6 w-half text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"*/}
+            {/*    data-te-ripple-init*/}
+            {/*    data-te-ripple-color="light">*/}
+            {/*    Upload Image*/}
+            {/*</button>*/}
             {/*<img alt='img' src={imageUrl} />*/}
             {/*{imageUrls.map((url) => {*/}
             {/*    return <img key={url} alt='img' src={url} />;*/}

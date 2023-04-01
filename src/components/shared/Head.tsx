@@ -1,7 +1,7 @@
 // import { Helmet } from 'react-helmet-async';
 // import { useAuthState } from '../auth/UserContext';
 
-import {useAuthState} from "~/components/auth/UserContext";
+import {useAuthState, useSignOut} from "~/components/auth/UserContext";
 
 type Props = {
   title: string;
@@ -12,6 +12,11 @@ const SERVICE_NAME = import.meta.env.VITE_SERVICE_NAME
 const PROJECT_LINK = import.meta.env.VITE_PROJECT_LINK
 export const Head = () => {
     const { state } = useAuthState();
+    const { signOut } = useSignOut();
+
+    const handleSignOut = () => {
+        signOut();
+    };
     console.log('user:',state.state)
     return (
         <nav
@@ -47,7 +52,7 @@ export const Head = () => {
                                 <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-3">
                                     <li><a>Information</a></li>
                                     <li><a>Setting</a></li>
-                                    <li><a className="text-gray-500">Sign Out</a></li>
+                                    <li><a className="text-gray-500" onClick={handleSignOut}>Sign Out</a></li>
 
                                 </ul>
                             </div>

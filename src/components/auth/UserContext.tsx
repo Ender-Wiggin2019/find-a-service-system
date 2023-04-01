@@ -1,7 +1,7 @@
 // UserContext.tsx
-import { createContext, ReactNode, useContext, useReducer } from "react";
-import { User as FirebaseUser, signInWithPopup } from "firebase/auth";
-import {useAuth, useFirestore, auth, db, roleCol, serviceProviderCol, Providers, customerCol} from "~/lib/firebase";
+import { createContext, ReactNode, useContext, useReducer, useEffect } from "react";
+import {User as FirebaseUser, signInWithPopup, onAuthStateChanged} from "firebase/auth";
+import { auth, useAuth, serviceProviderCol, Providers, customerCol} from "~/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import {Role, User, ServiceProvider, Customer} from "../types/user"
@@ -52,7 +52,23 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
+
   const [state, dispatch] = useReducer(AuthReducer, { state: "UNKNOWN" });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch({ type: "SIGN_IN", payload: { user } });
+      } else {
+        dispatch({ type: "SIGN_OUT" });
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
       <AuthContext.Provider value={{ state, dispatch }}>

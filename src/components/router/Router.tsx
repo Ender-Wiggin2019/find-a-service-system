@@ -11,6 +11,10 @@ const Register = lazy(() => import('~/components/auth/Register'));
 
 const ServiceCreatorPage = lazy(() => import('~/components/serviceCreator/ServiceCreatorPage'));
 
+const ServicePage = lazy(() => import('~/components/services/ServicePage'));
+
+const ServiceDetailPage = lazy(() => import('~/components/serviceDetail/ServiceDetailPage'));
+
 const Page404Screen = lazy(() => import('~/components/screens/404'));
 
 function Layout() {
@@ -54,6 +58,14 @@ const InnerRouter = () => {
         {
           path: '/service-creator',
           element: <ServiceCreatorPage />,
+        },
+        {
+          path: '/services',
+          element: <ServicePage />,
+        },
+        {
+          path: '/service/:serviceId',
+          element: <ServiceDetailPage />,
         },
         {
           path: '*',

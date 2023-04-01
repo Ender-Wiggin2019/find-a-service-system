@@ -3,6 +3,9 @@ import { getAuth, Auth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthPro
 import { connectFirestoreEmulator, getFirestore, collection, DocumentData, CollectionReference } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 import {Role, User, ServiceProvider, Customer} from "~/components/types/user"
+import { ServiceCreator } from "~/components/types/service"
+import { SERVICE_PROVIDER_FIRESTORE_PATH, CUSTOMER_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH } from '~/lib/constants';
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
       authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
@@ -31,8 +34,9 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 export { auth, db, storage };
 
 export const roleCol = createCollection<Role>('roles')
-export const customerCol = createCollection<Customer>('customer')
-export const serviceProviderCol = createCollection<ServiceProvider>('serviceProvider')
+export const customerCol = createCollection<Customer>(CUSTOMER_FIRESTORE_PATH)
+export const serviceProviderCol = createCollection<ServiceProvider>(SERVICE_PROVIDER_FIRESTORE_PATH)
+export const serviceCreatorCol = createCollection<ServiceCreator>(SERVICE_FIRESTORE_PATH)
 
 
 // TODO(Ender): the following code is from original template, need to be refactored
