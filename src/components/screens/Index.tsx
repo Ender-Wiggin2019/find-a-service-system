@@ -22,6 +22,7 @@ function Index() {
             <li><a href='/login'>login</a></li>
             <li><a href='/register'>register</a></li>
             <li><a href='/service-creator'>service-creator</a></li>
+            <li><a href='/services'>services</a></li>
           </ul>
         </div>
       </div>
