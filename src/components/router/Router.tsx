@@ -70,7 +70,7 @@ const InnerRouter = () => {
           element: <ServiceDetailPage />,
         },
         {
-          path: '/comment', //  test only
+          path: '/comment', //  debug only
           element: <CommentCard name="Annie" time="6 minutes ago" rating="2" comment="very good"/>,
         },
         {

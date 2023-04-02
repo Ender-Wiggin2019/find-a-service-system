@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import StarRatings from 'react-star-ratings';
-import { useParams } from 'react-router-dom';
-import {getDoc, doc, collection, getDocs} from 'firebase/firestore';
-import { db } from '~/lib/firebase';
-import { IService } from '~/types/service';
-import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
-import {ServiceProvider} from "~/components/types/user";
+
+// import { useParams } from 'react-router-dom';
+// import {getDoc, doc, collection, getDocs} from 'firebase/firestore';
+// import { db } from '~/lib/firebase';
+// import { IService } from '~/types/service';
+// import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
+// import {ServiceProvider} from "~/components/types/user";
+import { formatTime } from '~/components/utils/FormatTime'
 import {Service, Comment} from "~/components/types/service";
 
 /* Ender: Note that this should be a single component, which should in a father component such as CommentList */
 
-const CommentCard: React.FC = ({id, name, time, comment, rating}) => {
+
+
+
+const CommentCard: React.FC = ({uid, name, time, comment, rating}: Comment) => {
     // const { serviceId } = useParams<{ serviceId: string }>();
     // const [service, setService] = useState<Service | null>(null);
     //
@@ -35,15 +40,13 @@ const CommentCard: React.FC = ({id, name, time, comment, rating}) => {
     // }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="px-10 w-screen">
                 <div className="bg-white max-w-xl rounded-2xl px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500">
                     {/*<div className="w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-white">LOGO</div>*/}
                     <div className="mt-4 flex items-center space-x-4 py-2">
                         <div className="">
                             <img className="w-12 h-12 rounded-full" src="https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80" alt="" />
                         </div>
-                        <div className="text-sm font-semibold">{name} • <span className="font-normal"> {time}</span></div>
+                        <div className="text-sm font-semibold">{name} • <span className="font-normal"> {formatTime(time)}</span></div>
                     </div>
                     <div className="mt-1">
                         {/*<h1 className="text-lg text-gray-700 font-semibold cursor-pointer"> {title} </h1>*/}
@@ -69,8 +72,6 @@ const CommentCard: React.FC = ({id, name, time, comment, rating}) => {
                         {/*</div>*/}
                     </div>
                 </div>
-            </div>
-        </div>
     );
 };
 

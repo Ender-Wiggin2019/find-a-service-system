@@ -34,7 +34,6 @@ const CommentCreator: React.FC = ({serviceId}) => {
     };
 
     return (
-        <section className="h-screen">
             <div>
                 {/* The button to open modal */}
                 <label htmlFor="my-modal-6" className="p-6 bg-primary-600 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer">+</label>
@@ -76,7 +75,6 @@ const CommentCreator: React.FC = ({serviceId}) => {
                     </div>
                 </div>
             </div>
-        </section>
     )
 };
 
