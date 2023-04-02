@@ -2,9 +2,9 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { getAuth, Auth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { connectFirestoreEmulator, getFirestore, collection, DocumentData, CollectionReference } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
-import {Role, User, ServiceProvider, Customer} from "~/components/types/user"
-import { ServiceCreator } from "~/components/types/service"
-import { SERVICE_PROVIDER_FIRESTORE_PATH, CUSTOMER_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH } from '~/lib/constants';
+import {Role, ServiceProvider, Customer} from "~/components/types/user"
+import { ServiceCreator, Comment } from "~/components/types/service"
+import { SERVICE_PROVIDER_FIRESTORE_PATH, CUSTOMER_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH, COMMENT_FIRESTORE_PATH } from '~/lib/constants';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -31,12 +31,27 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
     return collection(db, collectionName) as CollectionReference<T>
 }
 
+// test subcollection situation
+// const createCollection = <T = DocumentData>(...collectionNames: string[]): CollectionReference<T> => {
+//     const fullPath = collectionNames.join("/");
+//     return collection(db, fullPath) as CollectionReference<T>;
+// };
+const createCollectionFactory = <T = DocumentData>(collectionPath: string) => {
+    return (serviceId: string): CollectionReference<T> => {
+        const fullPath = `${collectionPath}/${serviceId}/${COMMENT_FIRESTORE_PATH}`;
+        // return collection(db, fullPath) as CollectionReference<T>;
+        return collection(db, fullPath) as CollectionReference<T>;
+    };
+};
+
+
 export { auth, db, storage };
 
 export const roleCol = createCollection<Role>('roles')
 export const customerCol = createCollection<Customer>(CUSTOMER_FIRESTORE_PATH)
 export const serviceProviderCol = createCollection<ServiceProvider>(SERVICE_PROVIDER_FIRESTORE_PATH)
 export const serviceCreatorCol = createCollection<ServiceCreator>(SERVICE_FIRESTORE_PATH)
+export const commentColFactory = createCollectionFactory<Comment>(SERVICE_FIRESTORE_PATH);
 
 
 // TODO(Ender): the following code is from original template, need to be refactored

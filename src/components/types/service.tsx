@@ -38,7 +38,15 @@ export interface IService {
 }
 
 export interface Comment {
-    id: string;
+    uid: string; // connected to user.uid in firestore
+    name: string;
+    time: Date;
+    // title: string;
     comment: string;
     rating: number;
+}
+
+export interface IComment {
+    serviceId: string;
+    comment: Comment;
 }

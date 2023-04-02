@@ -15,6 +15,8 @@ const ServicePage = lazy(() => import('~/components/services/ServicePage'));
 
 const ServiceDetailPage = lazy(() => import('~/components/serviceDetail/ServiceDetailPage'));
 
+const CommentCard = lazy(() => import('~/components/comments/Comment'));
+
 const Page404Screen = lazy(() => import('~/components/screens/404'));
 
 function Layout() {
@@ -66,6 +68,10 @@ const InnerRouter = () => {
         {
           path: '/service/:serviceId',
           element: <ServiceDetailPage />,
+        },
+        {
+          path: '/comment', //  test only
+          element: <CommentCard name="Annie" time="6 minutes ago" rating="2" comment="very good"/>,
         },
         {
           path: '*',

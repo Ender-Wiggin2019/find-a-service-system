@@ -6,6 +6,7 @@ import { IService } from '~/types/service';
 import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
 import {ServiceProvider} from "~/components/types/user";
 import {Service} from "~/components/types/service";
+import CommentCreator from "../commentCreator/CommentCreator";
 
 const ServiceDetail: React.FC = () => {
     const { serviceId } = useParams<{ serviceId: string }>();
@@ -63,6 +64,9 @@ const ServiceDetail: React.FC = () => {
                 <div className="w-full lg:w-5/6 lg:max-w-lg md:w-1/2">
                     <img className="object-cover object-center rounded-lg" src={service.image} alt={service.name} />
                 </div>
+            </div>
+            <div className="container flex flex-col items-center px-5 py-2 mx-auto my-5 md:flex-row lg:px-28 shadow-xl bg-base-100">
+                <CommentCreator serviceId={serviceId} />
             </div>
 
 

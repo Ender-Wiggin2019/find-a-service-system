@@ -86,7 +86,7 @@ const ServicePage: React.FC = () => {
                     <option value="time">Time</option>
                 </select>
             </div>
-            <div className="service-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="service-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                 {services.map((service, index) => (
                     <Link key={index} to={`/service/${service.id}`}>
                         <ServiceCard service={service} />
