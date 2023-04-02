@@ -71,7 +71,7 @@ const InnerRouter = () => {
         },
         {
           path: '/comment', //  debug only
-          element: <CommentCard name="Annie" time="6 minutes ago" rating="2" comment="very good"/>,
+          element: <CommentCard uid = "111" name="Annie" time={new Date()} rating={2} comment="very good"/>,
         },
         {
           path: '*',

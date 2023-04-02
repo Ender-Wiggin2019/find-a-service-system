@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {getDoc, doc, collection, getDocs} from 'firebase/firestore';
 import { db } from '~/lib/firebase';
-import { IService } from '~/types/service';
+
 import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
-import {ServiceProvider} from "~/components/types/user";
-import {Service} from "~/components/types/service";
+// import {ServiceProvider} from "~/components/types/user";
+import { Service } from "~/components/types/service";
 import CommentCreator from "../commentCreator/CommentCreator";
 import CommentsList from "../comments/CommentsList";
 
@@ -21,7 +21,7 @@ const ServiceDetail: React.FC = () => {
             const serviceDoc = await getDoc(doc(db, SERVICE_FIRESTORE_PATH, serviceId));
             if (serviceDoc.exists()) {
                 const data = serviceDoc.data() as Service;
-                setService({ ...data, id: serviceDoc.id });
+                setService(data);
             }
         };
 
@@ -65,16 +65,18 @@ const ServiceDetail: React.FC = () => {
                     <img className="object-cover object-center rounded-lg" src={service.image} alt={service.name} />
                 </div>
             </div>
-            <div className="container grid grid-col-1 items-center px-5 py-2 mx-auto my-5 md:flex-row lg:px-28 shadow-xl bg-base-100">
-                <div>
-                    <CommentCreator serviceId={serviceId} />
-                </div>
-                <div className="w-full">
-                    <CommentsList serviceId={serviceId} />
-                </div>
-            </div>
-
-
+                {serviceId && (
+                    <>
+                        <div className="container grid grid-col-1 items-center px-5 py-2 mx-auto my-5 md:flex-row lg:px-28 shadow-xl bg-base-100">
+                            <div>
+                                <CommentCreator serviceId={serviceId} />
+                            </div>
+                            <div className="w-full">
+                                <CommentsList serviceId={serviceId} />
+                            </div>
+                        </div>
+                    </>
+                )}
         </div>
     );
 };

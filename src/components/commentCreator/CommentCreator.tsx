@@ -3,8 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState, } from "../auth/UserContext";
 import { useCommentCreator } from "./UseCommentCreator";
 import StarRatings from 'react-star-ratings';
+import {IService} from "~/components/types/service";
 
-const CommentCreator: React.FC = ({serviceId}) => {
+type CommentCreatorProps = {
+    serviceId: string;
+};
+
+const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
     const { state } = useAuthState();
     const [rating, setRating] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
@@ -18,7 +23,7 @@ const CommentCreator: React.FC = ({serviceId}) => {
         if (state.state === "SIGNED_IN") {
 
             const name = state.currentUser.displayName ? state.currentUser.displayName : "Anonymous";
-            const success = await commentCreator(serviceId, {
+            const success = await commentCreator(serviceId as string, {
                 uid: state.currentUser.uid,
                 name: name,
                 time: new Date(),
@@ -59,7 +64,7 @@ const CommentCreator: React.FC = ({serviceId}) => {
                             <div
                                 className="py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                                 <label htmlFor="comment" className="sr-only">Your comment</label>
-                                <textarea id="comment" rows="6"
+                                <textarea id="comment" rows={6}
                                           className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                                           onChange={(e) => setComment(e.target.value)}
                                           placeholder="Write a comment..." required></textarea>

@@ -6,7 +6,7 @@ export function formatTime(date: Date) {
     const now = new Date();
     const timeAgo = new TimeAgo('en-GB')
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-    const timeDifference = now - date;
+    const timeDifference = now.getTime() - date.getTime();
 
     if (timeDifference < oneDayInMilliseconds) {
         return timeAgo.format(date, 'twitter');

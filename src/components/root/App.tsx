@@ -7,7 +7,8 @@ export const App = () => {
     return (
         <HelmetProvider>
             <AuthProvider>
-                <Head title="Your App Title" />
+                {/*<Head title="Your App Title" />*/}
+                <Head />
                 <Main />
             </AuthProvider>
         </HelmetProvider>

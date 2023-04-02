@@ -12,10 +12,15 @@ import {Service, Comment} from "~/components/types/service";
 
 /* Ender: Note that this should be a single component, which should in a father component such as CommentList */
 
+type CommentCardProps = {
+    uid: string,
+    name: string,
+    time: Date,
+    comment: string,
+    rating: number,
+};
 
-
-
-const CommentCard: React.FC = ({uid, name, time, comment, rating}: Comment) => {
+const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rating }: Comment) => {
     // const { serviceId } = useParams<{ serviceId: string }>();
     // const [service, setService] = useState<Service | null>(null);
     //

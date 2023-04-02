@@ -3,11 +3,15 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
 import CommentCard from './Comment';
 import { Service, Comment } from '~/components/types/service';
-import { ServiceProvider } from '~/components/types/user';
+// import { ServiceProvider } from '~/components/types/user';
 import { db } from '~/lib/firebase';
 import { SERVICE_FIRESTORE_PATH, COMMENT_FIRESTORE_PATH } from '~/lib/constants';
 
-const CommentsList: React.FC = ({serviceId}) => {
+type ServiceCardProps = {
+    serviceId: string;
+};
+
+const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
     const [comments, setComments] = useState<Array<Comment>>([]);
 
     // console.log(comments);
