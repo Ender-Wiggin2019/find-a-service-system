@@ -62,6 +62,7 @@ const ServiceCreatorPage: React.FC = () => {
     return (
         <section className="h-screen">
             <div className="container h-full px-6 py-24">
+                <h2 className="text-2xl font-bold mb-4">Welcome {name}</h2>
                 <div
                     className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
                     <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">

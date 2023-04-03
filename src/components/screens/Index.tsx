@@ -23,6 +23,7 @@ function Index() {
             <li><a href='/register'>register</a></li>
             <li><a href='/service-creator'>service-creator</a></li>
             <li><a href='/services'>services</a></li>
+            <li><a href='/customer-home'>Customer Home</a></li>
           </ul>
         </div>
       </div>

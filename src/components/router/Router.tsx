@@ -1,6 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import { lazy, Suspense, useState } from 'react';
 import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
+import CustomerHomePage from "~/components/CustomerHome/CustomerHomePage";
 
 const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p>;
 
@@ -60,6 +61,10 @@ const InnerRouter = () => {
         {
           path: '/service-creator',
           element: <ServiceCreatorPage />,
+        },
+        {
+          path: '/customer-home',
+          element: <CustomerHomePage />,
         },
         {
           path: '/services',
