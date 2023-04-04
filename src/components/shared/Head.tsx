@@ -44,13 +44,13 @@ export const Head = () => {
                                     {/*</div>*/}
                                     <div className="avatar placeholder">
                                         <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                                            <span className="text-3xl">{ state.currentUser.uid.charAt(0)}</span>
+                                            <span className="text-3xl">{ (state.currentUser.displayName?.charAt(0))?.toUpperCase() }</span>
                                         </div>
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-3">
                                     <li><a>Information</a></li>
-                                    <li><a>Setting</a></li>
+                                    <li><a href="/setting">Setting</a></li>
                                     <li><a className="text-gray-500" onClick={handleSignOut}>Sign Out</a></li>
 
                                 </ul>

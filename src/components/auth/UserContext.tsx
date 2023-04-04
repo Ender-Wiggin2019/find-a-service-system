@@ -1,6 +1,6 @@
 // UserContext.tsx
 import { createContext, ReactNode, useContext, useReducer, useEffect } from "react";
-import {User as FirebaseUser, signInWithPopup, onAuthStateChanged} from "firebase/auth";
+import {User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile} from "firebase/auth";
 import { auth, useAuth, serviceProviderCol, Providers, customerCol} from "~/lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -143,6 +143,10 @@ const useRegister = () => {
     ): Promise<boolean> => {
       try {
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+        await updateProfile(user, {
+          displayName: name,
+        });
 
         console.log(role);
         if (user && role === "serviceProvider") { // case: service provider
