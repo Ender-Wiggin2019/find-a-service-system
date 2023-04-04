@@ -16,6 +16,8 @@ const ServicePage = lazy(() => import('~/components/services/ServicePage'));
 
 const ServiceDetailPage = lazy(() => import('~/components/serviceDetail/ServiceDetailPage'));
 
+const UserSettingPage = lazy(() => import('~/components/user/UserSettingPage'));
+
 const CommentCard = lazy(() => import('~/components/comments/Comment'));
 
 const Page404Screen = lazy(() => import('~/components/screens/404'));
@@ -73,6 +75,10 @@ const InnerRouter = () => {
         {
           path: '/service/:serviceId',
           element: <ServiceDetailPage />,
+        },
+        {
+          path: '/setting', //  debug only
+          element: <UserSettingPage/>,
         },
         {
           path: '/comment', //  debug only
