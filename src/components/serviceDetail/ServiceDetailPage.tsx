@@ -8,6 +8,7 @@ import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
 import { Service } from "~/components/types/service";
 import CommentCreator from "../commentCreator/CommentCreator";
 import CommentsList from "../comments/CommentsList";
+import RequestCreator from "../requestService/RequestService";
 
 const ServiceDetail: React.FC = () => {
     const { serviceId } = useParams<{ serviceId: string }>();
@@ -54,9 +55,13 @@ const ServiceDetail: React.FC = () => {
                         {/*<input*/}
                         {/*    className="flex-grow w-full px-4 py-3 mb-4 text-base text-black transition ease-in-out transform rounded-lg  duration-650 lg:w-auto bg-blueGray-200 focus:outline-none focus:border-purple-500 sm:mb-0 focus:bg-white focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2"*/}
                         {/*    placeholder="Your Email" type="email" />*/}
-                            <button
-                                className="flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Contact
-                            </button>
+                        {serviceId && (
+                            <>
+                                    <div>
+                                        <RequestCreator serviceId={serviceId} />
+                                    </div>
+                            </>
+                        )}
                     </div>
                     {/*<p className="w-full mt-2 mb-8 text-sm text-left text-blueGray-600"> I got 99 problems and blocks*/}
                     {/*    ain one. </p>*/}

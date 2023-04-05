@@ -16,7 +16,6 @@ const Login: React.FC = () => {
         e.preventDefault();
         await signIn(email, password);
         navigate("/service-creator"); // TODO: test only
-
     };
 
     return (

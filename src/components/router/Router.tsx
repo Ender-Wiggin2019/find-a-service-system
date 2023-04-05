@@ -20,6 +20,8 @@ const UserSettingPage = lazy(() => import('~/components/user/UserSettingPage'));
 
 const CommentCard = lazy(() => import('~/components/comments/Comment'));
 
+const RequestHistoryPage = lazy(() => import('~/components/requestService/RequestHistoryPage'));
+
 const Page404Screen = lazy(() => import('~/components/screens/404'));
 
 function Layout() {
@@ -87,6 +89,10 @@ const InnerRouter = () => {
         {
           path: '*',
           element: <Page404Screen />,
+        },
+        {
+          path: '/requestHistory',
+          element: <RequestHistoryPage />,
         },
       ],
     },

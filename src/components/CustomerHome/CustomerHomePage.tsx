@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import CurrencyInput from 'react-currency-input-field';
 
-import {useAuthState} from "~/components/auth/UserContext";
+import {useAuthState, useRegister} from "~/components/auth/UserContext";
 import InputTextField from "../shared/InputTextField";
 import {getDownloadURL, ref, uploadBytes, listAll} from "firebase/storage";
 import {storage} from "~/lib/firebase";
@@ -11,6 +11,9 @@ import { useServiceCreator } from "~/components/serviceCreator/UseServiceCreator
 
 import {SERVICE_PROVIDER_IMAGE_PATH} from "~/lib/constants";
 import ServiceCard from "~/components/services/Service";
+import CommentCreator from "~/components/commentCreator/CommentCreator";
+import CommentsList from "~/components/comments/CommentsList";
+import RequestHistoryPage from "~/components/requestService/RequestHistoryPage";
 
 const CustomerHomePage: React.FC = () => {
     const { state } = useAuthState();
@@ -61,19 +64,19 @@ const CustomerHomePage: React.FC = () => {
 
     return (
         <div className="container h-full px-6 py-12">
-            <h2 className="text-2xl font-bold mb-4">Welcome {name}</h2>
+            <h2 className="text-2xl font-bold mb-4">Welcome {state.state === 'SIGNED_IN' && (<>{state.currentUser.displayName}</>)} </h2>
             <div className="flex mb-4">
                 <button
                     className="flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
                     onClick={() => window.location.href = '/services'}>
-                    Search Services
+                    Search New Services
                 </button>
             </div>
             <div className="flex mb-4">
                 <button
                     className="flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
-                    >
-                    Service History
+                    onClick={() => window.location.href = '/requestHistory'}>
+                    View Service History
                 </button>
             </div>
         </div>

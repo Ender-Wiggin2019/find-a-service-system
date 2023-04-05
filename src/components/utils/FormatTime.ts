@@ -2,13 +2,12 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en"
 TimeAgo.addDefaultLocale(en)
 
-export function formatTime(date: Date) {
+export function formatTime(date: Date, threshold = 24 * 60 * 60 * 1000) {
     const now = new Date();
     const timeAgo = new TimeAgo('en-GB')
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
     const timeDifference = now.getTime() - date.getTime();
 
-    if (timeDifference < oneDayInMilliseconds) {
+    if (timeDifference < threshold) {
         return timeAgo.format(date, 'twitter');
     } else {
         const monthNames = [

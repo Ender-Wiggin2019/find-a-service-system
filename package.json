@@ -11,9 +11,15 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.13",
+    "@mui/base": "^5.0.0-alpha.124",
+    "@mui/material": "^5.11.16",
+    "@mui/x-date-pickers": "^6.0.4",
     "@types/react-star-ratings": "^2.3.0",
     "daisyui": "^2.51.5",
+    "dayjs": "^1.11.7",
     "firebase": "^9.18.0",
     "flowbite": "^1.6.4",
     "flowbite-react": "^0.4.2",

@@ -4,7 +4,14 @@ import { connectFirestoreEmulator, getFirestore, collection, DocumentData, Colle
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 import {Role, ServiceProvider, Customer} from "~/components/types/user"
 import { ServiceCreator, Comment } from "~/components/types/service"
-import { SERVICE_PROVIDER_FIRESTORE_PATH, CUSTOMER_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH, COMMENT_FIRESTORE_PATH } from '~/lib/constants';
+import { RequestCreator } from "~/components/types/request"
+import {
+    SERVICE_PROVIDER_FIRESTORE_PATH,
+    CUSTOMER_FIRESTORE_PATH,
+    SERVICE_FIRESTORE_PATH,
+    COMMENT_FIRESTORE_PATH,
+    REQUEST_FIRESTORE_PATH
+} from '~/lib/constants';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -52,6 +59,7 @@ export const customerCol = createCollection<Customer>(CUSTOMER_FIRESTORE_PATH)
 export const serviceProviderCol = createCollection<ServiceProvider>(SERVICE_PROVIDER_FIRESTORE_PATH)
 export const serviceCreatorCol = createCollection<ServiceCreator>(SERVICE_FIRESTORE_PATH)
 export const commentColFactory = createCollectionFactory<Comment>(SERVICE_FIRESTORE_PATH);
+export const requestCreatorCol = createCollection<RequestCreator>(REQUEST_FIRESTORE_PATH)
 
 
 // TODO(Ender): the following code is from original template, need to be refactored
