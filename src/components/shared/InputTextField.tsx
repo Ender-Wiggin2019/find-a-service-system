@@ -7,6 +7,7 @@ type InputTextFieldProps = {
     onChange: (value: string) => void;
     value?: string;
     disabled?: boolean;
+    isValid?: boolean;
 };
 
 const InputTextField: React.FC<InputTextFieldProps> = ({
@@ -16,6 +17,7 @@ const InputTextField: React.FC<InputTextFieldProps> = ({
                                                            onChange,
                                                            value,
                                                            disabled,
+                                                           isValid,
                                                        }) => {
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value);
@@ -31,7 +33,7 @@ const InputTextField: React.FC<InputTextFieldProps> = ({
             </label>
             <input
                 type={type}
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 disabled:text-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className={`bg-gray-50 border ${isValid === false ? 'border-red-500' : 'border-gray-300'} text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 disabled:text-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                 id={`FormControlInput${type}`}
                 placeholder={placeholder}
                 onChange={handleInputChange}

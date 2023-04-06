@@ -9,6 +9,9 @@ export const useRequestCreator = () => {
         requestCreator: async (
             sid: string, // user.uid
             uid: string,
+            requestCategory: string,
+            requiredHours: number,
+            address: string,
             requestDescription: string,
             requestedTime: Date,
             timestamp: Date,
@@ -16,7 +19,7 @@ export const useRequestCreator = () => {
         ): Promise<boolean> => {
             try {
                 await setDoc(doc(requestCreatorCol), // will create a new document with a random ID
-                    JSON.parse(JSON.stringify(new RequestCreator(sid, uid, requestDescription, requestedTime, timestamp, status)))
+                    JSON.parse(JSON.stringify(new RequestCreator(sid, uid, requestCategory, requiredHours, address, requestDescription, requestedTime, timestamp, status)))
                 );
                 return true;
             } catch (error) {

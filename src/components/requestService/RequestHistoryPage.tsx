@@ -49,6 +49,9 @@ const RequestHistoryPage: React.FC = () => {
                                 request: new RequestCreator(
                                     data.sid,
                                     data.uid,
+                                    data.requestCategory,
+                                    data.requiredHours,
+                                    data.address,
                                     data.requestDescription,
                                     data.requestedTime,
                                     data.timestamp,

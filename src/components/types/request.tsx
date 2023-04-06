@@ -9,6 +9,9 @@ export class RequestCreator {
     constructor(
         public sid: string, // service.id
         public uid: string, // user.id
+        public requestCategory: string,
+        public requiredHours: number,
+        public address: string,
         public requestDescription: string,
         public requestedTime: Date,
         public timestamp: Date,
