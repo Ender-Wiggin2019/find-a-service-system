@@ -91,9 +91,9 @@ const InnerRouter = () => {
                     element: <CommentCard uid='111' name='Annie' time={new Date()} rating={2} comment='very good' />,
                 },
                 {
-                  path: '/admin',
-                  element: <AdminPage />
-                }
+                    path: '/admin',
+                    element: <AdminPage />,
+                },
                 {
                     path: '*',
                     element: <Page404Screen />,
