@@ -33,6 +33,7 @@ const ServicePage: React.FC = () => {
                             serviceProviderData.email,
                             serviceProviderData.address,
                             serviceProviderData.description,
+                            serviceProviderData.isVerified,
                         )
 
                         servicesData.push({
