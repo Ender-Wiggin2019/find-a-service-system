@@ -14,6 +14,7 @@ import ServiceCard from "~/components/services/Service";
 import CommentCreator from "~/components/commentCreator/CommentCreator";
 import CommentsList from "~/components/comments/CommentsList";
 import RequestHistoryPage from "~/components/requestService/RequestHistoryPage";
+import {ServiceStatus} from "~/components/types/request";
 
 const CustomerHomePage: React.FC = () => {
     const { state } = useAuthState();
@@ -35,6 +36,17 @@ const CustomerHomePage: React.FC = () => {
         console.log("Image selected:", file);
         setImageUpload(file);
     }, []);
+
+    const toggleServiceHistory = () => {
+        const x = document.getElementById("requestHistory");
+        if(x) {
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -64,7 +76,7 @@ const CustomerHomePage: React.FC = () => {
 
     return (
         <div className="container h-full px-6 py-12">
-            <h2 className="text-2xl font-bold mb-4">Welcome {state.state === 'SIGNED_IN' && (<>{state.currentUser.displayName}</>)} </h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">Welcome {state.state === 'SIGNED_IN' && (<>{state.currentUser.displayName}</>)} </h2>
             <div className="flex mb-4">
                 <button
                     className="flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
@@ -72,13 +84,19 @@ const CustomerHomePage: React.FC = () => {
                     Search New Services
                 </button>
             </div>
+
             <div className="flex mb-4">
                 <button
                     className="flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
-                    onClick={() => window.location.href = '/requestHistory'}>
+                    onClick={() => toggleServiceHistory()}>
                     View Service History
                 </button>
             </div>
+
+            <div id="requestHistory" style={{ display: "none" }}>
+                <RequestHistoryPage />
+            </div>
+
         </div>
     )
 };
