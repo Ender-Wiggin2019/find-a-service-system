@@ -1,6 +1,6 @@
-import { requestCreatorCol, useAuth } from '~/lib/firebase';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { RequestCreator, ServiceStatus } from '~/components/types/request';
+import { requestCreatorCol, useAuth } from '~/lib/firebase'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
+import { RequestCreator, ServiceStatus } from '~/components/types/request'
 
 export const useRequestCreator = () => {
     // const auth = useAuth();
@@ -35,25 +35,22 @@ export const useRequestCreator = () => {
                             ),
                         ),
                     ),
-                );
-                return true;
+                )
+                return true
             } catch (error) {
-                console.error('Create failed:', error);
-                return false;
+                console.error('Create failed:', error)
+                return false
             }
         },
 
-        updateRequest: async (
-            requestId: string,
-            updates: Partial<RequestCreator>,
-        ): Promise<boolean> => {
+        updateRequest: async (requestId: string, updates: Partial<RequestCreator>): Promise<boolean> => {
             try {
-                await updateDoc(doc(requestCreatorCol, requestId), updates);
-                return true;
+                await updateDoc(doc(requestCreatorCol, requestId), updates)
+                return true
             } catch (error) {
-                console.error('Update failed:', error);
-                return false;
+                console.error('Update failed:', error)
+                return false
             }
         },
-    };
-};
+    }
+}

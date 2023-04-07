@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthState } from '../auth/UserContext'
 import { useRequestCreator } from '../requestService/UseRequestService'
-import {IRequest, ServiceStatus} from '~/components/types/request'
+import { IRequest, ServiceStatus } from '~/components/types/request'
 import InputTextField from '../shared/InputTextField'
 import dayjs from 'dayjs'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -30,7 +30,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
     const [address, setAddress] = React.useState<string>(request.address)
     const [requireHours, setRequireHours] = React.useState<number>(request.requiredHours || 0)
 
-    const canEdit = (state.state === 'SIGNED_IN' && state.currentUser.uid === request.uid); // user only
+    const canEdit = state.state === 'SIGNED_IN' && state.currentUser.uid === request.uid // user only
 
     const navigate = useNavigate()
     const { requestCreator } = useRequestCreator()
@@ -129,14 +129,15 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                                 required
                             ></textarea>
                         </div>
-                        {canEdit && (<button
-                            type='submit'
-                            disabled={!canEdit}
-                            className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
-                        >
-                            Update
-                        </button>)
-                        }
+                        {canEdit && (
+                            <button
+                                type='submit'
+                                disabled={!canEdit}
+                                className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
+                            >
+                                Update
+                            </button>
+                        )}
                     </form>
                     {/*<div className="modal-action">*/}
                     {/*    <label htmlFor="my-modal-6" className="btn">TODO</label>*/}

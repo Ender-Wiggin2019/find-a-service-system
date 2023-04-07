@@ -98,7 +98,7 @@ const InnerRouter = () => {
                 },
                 {
                     path: '/provider-home',
-                    element: <RequestListPage serviceId='5G7ltzuDxBVx47P8evXT'/>, // TODO: add a father page, and pass serviceId to RequestListPage
+                    element: <RequestListPage serviceId='5G7ltzuDxBVx47P8evXT' />, // TODO: add a father page, and pass serviceId to RequestListPage
                 },
             ],
         },

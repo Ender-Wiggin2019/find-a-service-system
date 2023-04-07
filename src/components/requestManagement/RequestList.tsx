@@ -8,43 +8,39 @@ import { db } from '~/lib/firebase'
 import { COMMENT_FIRESTORE_PATH, REQUEST_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH } from '~/lib/constants'
 import { IRequest, RequestCreator, ServiceStatus } from '~/components/types/request'
 import { useAuthState, useSignOut } from '~/components/auth/UserContext'
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import dayjs from "dayjs";
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import dayjs from 'dayjs'
 
 interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
+    children?: React.ReactNode
+    index: number
+    value: number
 }
 
 function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index, ...other } = props
 
     return (
         <div
-            role="tabpanel"
+            role='tabpanel'
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    {children}
-                </Box>
-            )}
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
         </div>
-    );
+    )
 }
 
 function a11yProps(index: number) {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
-    };
+    }
 }
 
 type RequestListProps = {
@@ -60,27 +56,26 @@ type RequestListProps = {
 // }
 
 interface IRequestLists {
-    "requested": Array<IRequest>;
-    "accepted": Array<IRequest>;
-    "needMoreInfo": Array<IRequest>;
-    "declined": Array<IRequest>;
-    "completed": Array<IRequest>;
+    requested: Array<IRequest>
+    accepted: Array<IRequest>
+    needMoreInfo: Array<IRequest>
+    declined: Array<IRequest>
+    completed: Array<IRequest>
 }
 
-const RequestList: React.FC<RequestListProps> = ({serviceId}) => {
+const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
     const { state } = useAuthState()
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(0)
     // const [requests, setRequests] = useState<IRequest[]>([])
     const [search, setSearch] = useState('')
     const [filter, setFilter] = useState('coverArea')
     const [requestLists, setRequestLists] = useState<IRequestLists>({
-        "requested": [],
-        "accepted": [],
-        "needMoreInfo": [],
-        "declined": [],
-        "completed": [],
-    });
-
+        requested: [],
+        accepted: [],
+        needMoreInfo: [],
+        declined: [],
+        completed: [],
+    })
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -89,13 +84,13 @@ const RequestList: React.FC<RequestListProps> = ({serviceId}) => {
                 const q = query(requestCollection, where('sid', '==', serviceId))
                 const requestSnapshot = await getDocs(q)
 
-                const tempRequestLists:IRequestLists = {
-                    "requested": [],
-                    "accepted": [],
-                    "needMoreInfo": [],
-                    "declined": [],
-                    "completed": [],
-                };
+                const tempRequestLists: IRequestLists = {
+                    requested: [],
+                    accepted: [],
+                    needMoreInfo: [],
+                    declined: [],
+                    completed: [],
+                }
 
                 await Promise.all(
                     requestSnapshot.docs.map(async (singleDoc) => {
@@ -120,51 +115,50 @@ const RequestList: React.FC<RequestListProps> = ({serviceId}) => {
                                 const requestData = {
                                     request: new RequestCreator(
                                         data.sid,
-                                    data.uid,
-                                    data.requestCategory,
-                                    data.requiredHours,
-                                    data.address,
-                                    data.requestDescription,
-                                    dayjs(data.requestedTime).toDate(),
-                                    dayjs(data.timestamp).toDate(),
-                                    data.status,
+                                        data.uid,
+                                        data.requestCategory,
+                                        data.requiredHours,
+                                        data.address,
+                                        data.requestDescription,
+                                        dayjs(data.requestedTime).toDate(),
+                                        dayjs(data.timestamp).toDate(),
+                                        data.status,
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,
                                 }
                                 switch (data.status) {
                                     case ServiceStatus.REQUESTED:
-                                        tempRequestLists.requested.push(requestData as IRequest);
-                                        break;
+                                        tempRequestLists.requested.push(requestData as IRequest)
+                                        break
                                     case ServiceStatus.ACCEPTED:
-                                        tempRequestLists.accepted.push(requestData);
-                                        break;
+                                        tempRequestLists.accepted.push(requestData)
+                                        break
                                     case ServiceStatus.DECLINED:
-                                        tempRequestLists.declined.push(requestData);
-                                        break;
+                                        tempRequestLists.declined.push(requestData)
+                                        break
                                     case ServiceStatus.NEED_MORE_INFO:
-                                        tempRequestLists.needMoreInfo.push(requestData);
-                                        break;
+                                        tempRequestLists.needMoreInfo.push(requestData)
+                                        break
                                     case ServiceStatus.COMPLETED:
-                                        tempRequestLists.completed.push(requestData);
-                                        break;
+                                        tempRequestLists.completed.push(requestData)
+                                        break
                                     default:
-                                        break;
-
+                                        break
                                 }
                             }
                         }
                     }),
                 )
-                setRequestLists(tempRequestLists);
+                setRequestLists(tempRequestLists)
             }
         }
         fetchRequests()
-    }, [state]);
+    }, [state])
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
+        setValue(newValue)
+    }
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
@@ -174,59 +168,58 @@ const RequestList: React.FC<RequestListProps> = ({serviceId}) => {
         setFilter(e.target.value)
     }
 
-    console.log(Object.keys(requestLists));
+    console.log(Object.keys(requestLists))
 
     return (
-        <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="tabs">
+        <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='tabs'>
                     <Tab
                         label={`Request ( ${requestLists.requested.length} )`}
-                        id="simple-tab-0"
-                        aria-controls="simple-tabpanel-0"
+                        id='simple-tab-0'
+                        aria-controls='simple-tabpanel-0'
                     />
                     <Tab
                         label={`Accepted ( ${requestLists.accepted.length} )`}
-                        id="simple-tab-1"
-                        aria-controls="simple-tabpanel-1"
+                        id='simple-tab-1'
+                        aria-controls='simple-tabpanel-1'
                     />
                     <Tab
                         label={`Waiting ( ${requestLists.needMoreInfo.length} )`}
-                        id="simple-tab-2"
-                        aria-controls="simple-tabpanel-2"
+                        id='simple-tab-2'
+                        aria-controls='simple-tabpanel-2'
                     />
                     <Tab
                         label={`Declined ( ${requestLists.declined.length} )`}
-                        id="simple-tab-3"
-                        aria-controls="simple-tabpanel-3"
+                        id='simple-tab-3'
+                        aria-controls='simple-tabpanel-3'
                     />
                     <Tab
                         label={`Completed ( ${requestLists.completed.length} )`}
-                        id="simple-tab-4"
-                        aria-controls="simple-tabpanel-4"
+                        id='simple-tab-4'
+                        aria-controls='simple-tabpanel-4'
                     />
                 </Tabs>
             </Box>
             {Object.keys(requestLists).map((status, index) => {
-                console.log('1', status, requestLists[status as keyof IRequestLists].length);
-                return(
+                console.log('1', status, requestLists[status as keyof IRequestLists].length)
+                return (
                     <TabPanel value={value} index={index} key={status}>
-                        <div className="service-cards grid grid-cols-1 gap-2">
+                        <div className='service-cards grid grid-cols-1 gap-2'>
                             {requestLists[status as keyof IRequestLists].map((request, index) => {
-                                console.log('2', status, index, request.request.status);
+                                console.log('2', status, index, request.request.status)
                                 return (
                                     // <Link key={index} to={`/service/${request.id}`}>
-                                    <RequestCard key={index} request={request}/>
+                                    <RequestCard key={index} request={request} />
                                     // </Link>
                                 )
-                            }
-                            )}
+                            })}
                         </div>
                     </TabPanel>
-                )}
-            )}
+                )
+            })}
         </Box>
-    );
+    )
 }
 
-export default RequestList;
+export default RequestList
