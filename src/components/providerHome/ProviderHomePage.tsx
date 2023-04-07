@@ -9,12 +9,9 @@ import {db, storage} from '~/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { useServiceCreator } from '~/components/serviceCreator/UseServiceCreator'
 
-import {SERVICE_FIRESTORE_PATH, SERVICE_PROVIDER_IMAGE_PATH} from '~/lib/constants'
+import {SERVICE_FIRESTORE_PATH} from '~/lib/constants'
 import ServiceCard from './ServiceCard'
-import CommentCreator from '~/components/commentCreator/CommentCreator'
-import CommentsList from '~/components/comments/CommentsList'
-import ServiceHistoryPage from '~/components/ServiceService/ServiceHistoryPage'
-import {IService, ServiceCreator} from '~/components/types/Service'
+import {IService, ServiceCreator} from '~/components/types/service'
 import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
 import {Service} from "~/components/types/service";
 import {ServiceProvider} from "~/components/types/user";
@@ -53,6 +50,7 @@ const ProviderHomePage: React.FC = () => {
                                 serviceProviderData.email,
                                 serviceProviderData.address,
                                 serviceProviderData.description,
+                                serviceProviderData.isVerified || false,
                             )
 
                             servicesData.push({
