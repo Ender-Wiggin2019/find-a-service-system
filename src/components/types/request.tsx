@@ -1,9 +1,10 @@
-import { Service } from "./service";
+import { Service } from './service'
 export enum ServiceStatus {
-    REQUESTED = "requested",
-    ACCEPTED = "accepted",
-    DECLINED = "declined",
-    COMPLETED = "completed",
+    REQUESTED = 'requested',
+    ACCEPTED = 'accepted',
+    DECLINED = 'declined',
+    NEED_MORE_INFO = 'need more info',
+    COMPLETED = 'completed',
 }
 export class RequestCreator {
     constructor(
@@ -19,10 +20,8 @@ export class RequestCreator {
     ) {}
 }
 
-
 export interface IRequest {
-    id: string; // pk
-    request: RequestCreator;
-    service: Service;
+    id: string // pk
+    request: RequestCreator
+    service: Service
 }
-

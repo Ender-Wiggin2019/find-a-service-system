@@ -1,4 +1,4 @@
-import { ServiceProvider } from "./user";
+import { ServiceProvider } from './user'
 
 // ServiceCreator is the initial data of service
 export class ServiceCreator {
@@ -15,7 +15,7 @@ export class ServiceCreator {
 }
 
 // service contains all data in service collection from firestore
-export class Service extends ServiceCreator{
+export class Service extends ServiceCreator {
     constructor(
         public uid: string,
         public name: string,
@@ -27,26 +27,26 @@ export class Service extends ServiceCreator{
         public isVerified: boolean = false,
         public comments?: Array<Comment>,
     ) {
-        super(uid, name, image, price, coverArea, time, description, isVerified);
+        super(uid, name, image, price, coverArea, time, description, isVerified)
     }
 }
 
 export interface IService {
-    id: string; // pk
-    service: Service;
-    serviceProvider: ServiceProvider;
+    id: string // pk
+    service: Service
+    serviceProvider: ServiceProvider
 }
 
 export interface Comment {
-    uid: string; // connected to user.uid in firestore
-    name: string;
-    time: Date;
+    uid: string // connected to user.uid in firestore
+    name: string
+    time: Date
     // title: string;
-    comment: string;
-    rating: number;
+    comment: string
+    rating: number
 }
 
 export interface IComment {
-    serviceId: string;
-    comment: Comment;
+    serviceId: string
+    comment: Comment
 }

@@ -1,23 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from 'react'
 // import { storage } from "~/lib/firebase";
 // import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 // import { v4 as uuidv4 } from "uuid";
 // import { SERVICR_PROVIDER_IMAGE_PATH } from "~/lib/constants";
 
 interface ImageUploaderProps {
-    onImageSelected: (file: File) => void;
+    onImageSelected: (file: File) => void
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
-
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files instanceof FileList) {
-            const file = event.target.files[0] as File;
-            onImageSelected(file);
+            const file = event.target.files[0] as File
+            onImageSelected(file)
         } else {
-            console.log("TODO: handle error");
+            console.log('TODO: handle error')
         }
-    };
+    }
 
     // const [imageUpload, setImageUpload] = useState<File>(); // TODO: for now only assume one service has only one image
     // // const [imageUrls, setImageUrls] = useState<Array<string>>([]);
@@ -60,17 +59,19 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
             {/*    Sign up*/}
             {/*</button>*/}
 
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
+            <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor='file_input'>
                 Upload Service Image
             </label>
             <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                aria-describedby="file_input_help"
-                id="file_input"
-                type="file"
-                onChange={handleFileInput}/>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF
-                    (MAX. 800x400px).</p>
+                className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                aria-describedby='file_input_help'
+                id='file_input'
+                type='file'
+                onChange={handleFileInput}
+            />
+            <p className='mt-1 text-sm text-gray-500 dark:text-gray-300' id='file_input_help'>
+                SVG, PNG, JPG or GIF (MAX. 800x400px).
+            </p>
 
             {/*<button*/}
             {/*    onClick={uploadFile}*/}
@@ -84,7 +85,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
             {/*    return <img key={url} alt='img' src={url} />;*/}
             {/*})}*/}
         </div>
-    );
-};
+    )
+}
 
-export default ImageUploader;
+export default ImageUploader
