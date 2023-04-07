@@ -11,6 +11,7 @@ export class ServiceProvider extends User {
         email: string,
         public address: string | undefined,
         public description: string | undefined,
+        public isVerified: boolean,
     ) {
         super(uid, displayName, email, 'serviceProvider')
     }
@@ -22,4 +23,8 @@ export class Customer extends User {
     }
 }
 
-// TODO: admin class
+export class Admin extends User {
+    constructor(uid: string, public displayName: string, email: string) {
+        super(uid, displayName, email, 'admin')
+    }
+}

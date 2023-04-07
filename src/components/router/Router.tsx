@@ -22,6 +22,8 @@ const CommentCard = lazy(() => import('~/components/comments/Comment'))
 
 const RequestHistoryPage = lazy(() => import('~/components/requestService/RequestHistoryPage'))
 
+const AdminPage = lazy(() => import('~/components/admin/VerifyPage'))
+
 const RequestListPage = lazy(() => import('~/components/requestManagement/RequestList'))
 
 const ProviderHomePage = lazy(() => import('~/components/providerHome/ProviderHomePage'))
@@ -89,6 +91,10 @@ const InnerRouter = () => {
                 {
                     path: '/comment', //  debug only
                     element: <CommentCard uid='111' name='Annie' time={new Date()} rating={2} comment='very good' />,
+                },
+                {
+                    path: '/admin',
+                    element: <AdminPage />,
                 },
                 {
                     path: '*',
