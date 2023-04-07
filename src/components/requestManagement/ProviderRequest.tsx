@@ -55,6 +55,12 @@ const RequestCard: React.FC<RequestCardProps> = ({ request }) => {
                                 onClick={() => handleClick(ServiceStatus.NEED_MORE_INFO)}
                             />
                         )}
+                        {requestInformation.status === ServiceStatus.REQUESTED && (
+                            <StatusButton
+                                status={ServiceStatus.DECLINED}
+                                onClick={() => handleClick(ServiceStatus.DECLINED)}
+                            />
+                        )}
                         <RequestViewer Irequest={request} />
                     </div>
                 </div>

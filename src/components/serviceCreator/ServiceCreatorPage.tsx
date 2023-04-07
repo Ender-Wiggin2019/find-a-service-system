@@ -52,6 +52,7 @@ const ServiceCreatorPage: React.FC = () => {
                     // write back to firestore
                     if (imageUrl === undefined) return
                     serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description)
+                    console.log('success')
                     // TODO: if failed, delete image
                 })
                 .then(() => {

@@ -24,6 +24,8 @@ const RequestHistoryPage = lazy(() => import('~/components/requestService/Reques
 
 const RequestListPage = lazy(() => import('~/components/requestManagement/RequestList'))
 
+const ProviderHomePage = lazy(() => import('~/components/providerHome/ProviderHomePage'))
+
 const Page404Screen = lazy(() => import('~/components/screens/404'))
 
 function Layout() {
@@ -97,8 +99,12 @@ const InnerRouter = () => {
                     element: <RequestHistoryPage />,
                 },
                 {
-                    path: '/provider-home',
+                    path: '/request-list',
                     element: <RequestListPage serviceId='5G7ltzuDxBVx47P8evXT' />, // TODO: add a father page, and pass serviceId to RequestListPage
+                },
+                {
+                    path: '/provider-home',
+                    element: <ProviderHomePage />,
                 },
             ],
         },

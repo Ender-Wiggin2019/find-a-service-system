@@ -24,6 +24,12 @@ const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick }) => {
                 Need More Info
             </Button>
         )
+    } else if (statusText === ServiceStatus.DECLINED.toLowerCase()) {
+        return (
+            <Button variant='contained' color='error' endIcon={<InfoIcon />} onClick={onClick}>
+                Decline
+            </Button>
+        )
     }
 
     return null
