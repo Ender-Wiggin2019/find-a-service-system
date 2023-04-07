@@ -76,7 +76,7 @@ const RequestHistoryPage: React.FC = () => {
     };
 
     return (
-        <div className="container h-full px-6 py-12">
+        <div>
             <h2 className="text-2xl font-bold mb-4">Service Request History</h2>
             <div className="service-cards grid grid-cols-1 gap-2">
                 {requests.map((request, index) => (
