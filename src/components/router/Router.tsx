@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import { lazy, Suspense, useState } from 'react';
 import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
-import CustomerHomePage from "~/components/CustomerHome/CustomerHomePage";
+import CustomerHomePage from '~/components/CustomerHome/CustomerHomePage';
 
 const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p>;
 
@@ -19,6 +19,8 @@ const ServiceDetailPage = lazy(() => import('~/components/serviceDetail/ServiceD
 const UserSettingPage = lazy(() => import('~/components/user/UserSettingPage'));
 
 const CommentCard = lazy(() => import('~/components/comments/Comment'));
+
+const AdminPage = lazy(() => import('~/components/admin/VerifyPage'));
 
 const RequestHistoryPage = lazy(() => import('~/components/requestService/RequestHistoryPage'));
 
@@ -80,11 +82,15 @@ const InnerRouter = () => {
         },
         {
           path: '/setting', //  debug only
-          element: <UserSettingPage/>,
+          element: <UserSettingPage />,
         },
         {
           path: '/comment', //  debug only
-          element: <CommentCard uid = "111" name="Annie" time={new Date()} rating={2} comment="very good"/>,
+          element: <CommentCard uid="111" name="Annie" time={new Date()} rating={2} comment="very good" />,
+        },
+        {
+          path: '/admin', // debug only
+          element: <AdminPage />,
         },
         {
           path: '*',

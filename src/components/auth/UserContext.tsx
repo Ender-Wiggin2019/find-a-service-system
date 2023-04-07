@@ -1,40 +1,38 @@
 // UserContext.tsx
-import { createContext, ReactNode, useContext, useReducer, useEffect } from "react";
-import {User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile} from "firebase/auth";
-import { auth, useAuth, serviceProviderCol, Providers, customerCol} from "~/lib/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
-import {Role, User, ServiceProvider, Customer} from "../types/user"
+import { createContext, ReactNode, useContext, useReducer, useEffect } from 'react';
+import { User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/lib/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { Role, User, ServiceProvider, Customer } from '../types/user';
 
 // import { collection } from "firebase/firestore";
 // import firebase from 'firebase/compat/app';
 // import 'firebase/compat/firestore';
-type AuthActions =
-    | { type: "SIGN_IN"; payload: { user: FirebaseUser } }
-    | { type: "SIGN_OUT" };
+type AuthActions = { type: 'SIGN_IN'; payload: { user: FirebaseUser } } | { type: 'SIGN_OUT' };
 
 type AuthState =
-    | {
-  state: "SIGNED_IN";
-  currentUser: FirebaseUser;
-}
-    | {
-  state: "SIGNED_OUT";
-}
-    | {
-  state: "UNKNOWN";
-};
+  | {
+      state: 'SIGNED_IN';
+      currentUser: FirebaseUser;
+    }
+  | {
+      state: 'SIGNED_OUT';
+    }
+  | {
+      state: 'UNKNOWN';
+    };
 
 const AuthReducer = (state: AuthState, action: AuthActions): AuthState => {
   switch (action.type) {
-    case "SIGN_IN":
+    case 'SIGN_IN':
       return {
-        state: "SIGNED_IN",
+        state: 'SIGNED_IN',
         currentUser: action.payload.user,
       };
-    case "SIGN_OUT":
+    case 'SIGN_OUT':
       return {
-        state: "SIGNED_OUT",
+        state: 'SIGNED_OUT',
       };
     default:
       return state;
@@ -47,20 +45,19 @@ type AuthContextProps = {
 };
 
 export const AuthContext = createContext<AuthContextProps>({
-  state: { state: "UNKNOWN" },
+  state: { state: 'UNKNOWN' },
   dispatch: (val) => {},
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-
-  const [state, dispatch] = useReducer(AuthReducer, { state: "UNKNOWN" });
+  const [state, dispatch] = useReducer(AuthReducer, { state: 'UNKNOWN' });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch({ type: "SIGN_IN", payload: { user } });
+        dispatch({ type: 'SIGN_IN', payload: { user } });
       } else {
-        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: 'SIGN_OUT' });
       }
     });
 
@@ -70,11 +67,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  return (
-      <AuthContext.Provider value={{ state, dispatch }}>
-        {children}
-      </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ state, dispatch }}>{children}</AuthContext.Provider>;
 };
 
 const useAuthState = () => {
@@ -93,8 +86,8 @@ const useSignIn = () => {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
 
       if (user) {
-        console.log('sign in')
-        dispatch({ type: "SIGN_IN", payload: { user } });
+        console.log('sign in');
+        dispatch({ type: 'SIGN_IN', payload: { user } });
       }
     },
   };
@@ -109,10 +102,10 @@ const useGoogleSignIn = () => {
         const userCredential = await signInWithPopup(auth, Providers.google);
         const { user } = userCredential;
         if (user) {
-          dispatch({ type: "SIGN_IN", payload: { user } });
+          dispatch({ type: 'SIGN_IN', payload: { user } });
         }
       } catch (error) {
-        console.error("signInWithGoogle error:", error);
+        console.error('signInWithGoogle error:', error);
       }
     },
   };
@@ -124,7 +117,7 @@ const useSignOut = () => {
   return {
     signOut: async () => {
       await auth.signOut();
-      dispatch({ type: "SIGN_OUT" });
+      dispatch({ type: 'SIGN_OUT' });
     },
   };
 };
@@ -134,12 +127,12 @@ const useRegister = () => {
   // const firestore = useFirestore();
   return {
     register: async (
-        email: string,
-        name: string,
-        password: string,
-        role: Role,
-        address?: string,
-        description?: string
+      email: string,
+      name: string,
+      password: string,
+      role: Role,
+      address?: string,
+      description?: string
     ): Promise<boolean> => {
       try {
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -149,27 +142,27 @@ const useRegister = () => {
         });
 
         console.log(role);
-        if (user && role === "serviceProvider") { // case: service provider
-          console.log('check')
-          await setDoc(doc(serviceProviderCol, user.uid),
-              JSON.parse(JSON.stringify(new ServiceProvider(user.uid, name, email, address, description)))
+        if (user && role === 'serviceProvider') {
+          // case: service provider
+          console.log('check');
+          await setDoc(
+            doc(serviceProviderCol, user.uid),
+            JSON.parse(JSON.stringify(new ServiceProvider(user.uid, name, email, address, description)))
           );
           return true;
-        } else if (user && role === "customer") { // case: customer
-            await setDoc(doc(customerCol, user.uid),
-                JSON.parse(JSON.stringify(new Customer(user.uid, name, email)))
-        );
-            return true;
-        }else {
+        } else if (user && role === 'customer') {
+          // case: customer
+          await setDoc(doc(customerCol, user.uid), JSON.parse(JSON.stringify(new Customer(user.uid, name, email))));
+          return true;
+        } else {
           return false;
         }
       } catch (error) {
-        console.error("Registration failed:", error);
+        console.error('Registration failed:', error);
         return false;
       }
     },
   };
 };
-
 
 export { useAuthState, useSignIn, useGoogleSignIn, useSignOut, useRegister, AuthProvider };
