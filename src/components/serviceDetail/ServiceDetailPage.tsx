@@ -9,6 +9,7 @@ import { Service } from '~/components/types/service'
 import CommentCreator from '../commentCreator/CommentCreator'
 import CommentsList from '../comments/CommentsList'
 import RequestCreator from '../requestService/RequestService'
+import Page from '~/components/shared/Page'
 
 const ServiceDetail: React.FC = () => {
     const { serviceId } = useParams<{ serviceId: string }>()
@@ -32,7 +33,7 @@ const ServiceDetail: React.FC = () => {
     }
 
     return (
-        <div className='container h-full px-6 py-12'>
+        <Page>
             <div className='container flex flex-col items-center px-5 py-16 mx-auto  md:flex-row lg:px-28 shadow-xl bg-base-100'>
                 <div className='flex flex-col items-start w-full pt-0 mb-16 text-left  lg:flex-grow md:w-1/2 xl:mr-20 md:pr-24 md:mb-0'>
                     <h1 className='mb-8 text-2xl font-black tracking-tighter text-black  md:text-5xl title-font'>
@@ -88,7 +89,7 @@ const ServiceDetail: React.FC = () => {
                     </div>
                 </>
             )}
-        </div>
+        </Page>
     )
 }
 

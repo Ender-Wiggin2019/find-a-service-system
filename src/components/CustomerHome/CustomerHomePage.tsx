@@ -15,6 +15,7 @@ import CommentCreator from '~/components/commentCreator/CommentCreator'
 import CommentsList from '~/components/comments/CommentsList'
 import RequestHistoryPage from '~/components/requestService/RequestHistoryPage'
 import { ServiceStatus } from '~/components/types/request'
+import Page from '~/components/shared/Page'
 
 const CustomerHomePage: React.FC = () => {
     const { state } = useAuthState()
@@ -77,7 +78,7 @@ const CustomerHomePage: React.FC = () => {
     }
 
     return (
-        <div className='container h-full px-6 py-12'>
+        <Page>
             <h2 className='text-2xl font-bold mb-4 text-center'>
                 Welcome {state.state === 'SIGNED_IN' && <>{state.currentUser.displayName}</>}{' '}
             </h2>
@@ -102,7 +103,7 @@ const CustomerHomePage: React.FC = () => {
             <div id='requestHistory' style={{ display: 'none' }}>
                 <RequestHistoryPage />
             </div>
-        </div>
+        </Page>
     )
 }
 
