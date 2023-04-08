@@ -30,8 +30,8 @@ const InputTextField: React.FC<InputTextFieldProps> = ({
             </label>
             <input
                 type={type}
-                className={`${
-                    isValid === false ? 'border border-red-500' : ''
+                className={`border ${
+                    isValid === false ? 'border-red-500' : 'border-subhead'
                 } text-head sm:text-sm rounded-sm focus:ring-primary-600 focus:border-head block w-full p-2.5 py-3 dark:bg-subhead disabled:text-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                 id={`FormControlInput${type}`}
                 placeholder={placeholder}

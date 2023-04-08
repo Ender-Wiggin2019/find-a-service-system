@@ -78,7 +78,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
 
                     <form onSubmit={handleSubmit} className='mb-6'>
                         <div className='mb-4'>
-                            <label className='block text-subhead text-sm font-bold mb-2'>Date and Time</label>
+                            <label className='block text-head text-sm font-bold mb-2'>Date and Time</label>
                             <DateTimePicker
                                 className='w-3/4'
                                 label='Pick your time'
@@ -117,7 +117,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                             onChange={(value) => setAddress(value)}
                         />
                         <label className='block text-subhead text-sm font-bold mb-2'>Request Description</label>
-                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-subhead dark:border-subhead'>
+                        <div className='p-2.5 py-2 mb-4 mt-2 bg-white rounded-sm border border-subhead dark:bg-subhead dark:border-subhead'>
                             <textarea
                                 id='comment'
                                 rows={6}
@@ -133,7 +133,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                             <button
                                 type='submit'
                                 disabled={!canEdit}
-                                className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
+                                className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-button rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
                             >
                                 Update
                             </button>

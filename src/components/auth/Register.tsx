@@ -120,15 +120,18 @@ const Register: React.FC = () => {
                                         placeholder='Address'
                                         onChange={(value) => setAddress(value)}
                                     />
-                                    <div className='mb-4'>
-                                        <label className='block text-subhead text-sm font-bold mb-2'>
-                                            Description
-                                        </label>
+                                    <label className='block text-subhead text-sm font-bold mb-2'>
+                                        Your Description
+                                    </label>
+                                    <div className='p-2.5 py-2 mb-4 mt-2 bg-white rounded-sm border border-subhead dark:bg-subhead dark:border-subhead'>
                                         <textarea
+                                            id='comment'
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            className='shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-subhead leading-tight focus:outline-none focus:shadow-outline'
                                             rows={3}
+                                            className='px-0 w-full text-sm text-head border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-subhead'
+                                            placeholder='Write Description...'
+                                            required
                                         ></textarea>
                                     </div>
                                 </>

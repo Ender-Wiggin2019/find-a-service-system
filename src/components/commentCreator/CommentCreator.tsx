@@ -67,7 +67,7 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
                             name='rating'
                             changeRating={setRating}
                         />
-                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-subhead dark:border-subhead'>
+                        <div className='p-2.5 py-2 mb-4 mt-2 bg-white rounded-sm border border-subhead dark:bg-subhead dark:border-subhead'>
                             <label htmlFor='comment' className='sr-only'>
                                 Your comment
                             </label>
@@ -82,7 +82,7 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
                         </div>
                         <button
                             type='submit'
-                            className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
+                            className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-button rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800'
                         >
                             Post comment
                         </button>

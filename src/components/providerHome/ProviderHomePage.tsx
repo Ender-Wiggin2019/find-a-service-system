@@ -1,20 +1,20 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CurrencyInput from 'react-currency-input-field'
 
 import { useAuthState, useRegister } from '~/components/auth/UserContext'
 import InputTextField from '../shared/InputTextField'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
-import {db, storage} from '~/lib/firebase'
+import { db, storage } from '~/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { useServiceCreator } from '~/components/serviceCreator/UseServiceCreator'
 
-import {SERVICE_FIRESTORE_PATH} from '~/lib/constants'
+import { SERVICE_FIRESTORE_PATH } from '~/lib/constants'
 import ServiceCard from './ServiceCard'
-import {IService, ServiceCreator} from '~/components/types/service'
-import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
-import {Service} from "~/components/types/service";
-import {ServiceProvider} from "~/components/types/user";
+import { IService, ServiceCreator } from '~/components/types/service'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { Service } from '~/components/types/service'
+import { ServiceProvider } from '~/components/types/user'
 import Page from '~/components/shared/Page'
 
 const ProviderHomePage: React.FC = () => {
@@ -73,10 +73,9 @@ const ProviderHomePage: React.FC = () => {
                 )
                 setServices(servicesData)
             }
+        }
 
-            }
-
-            fetchServices()
+        fetchServices()
     }, [state])
 
     return (
@@ -84,7 +83,7 @@ const ProviderHomePage: React.FC = () => {
             <h2 className='text-2xl font-bold mb-4'>Services</h2>
             <div className='service-cards grid grid-cols-1 gap-4'>
                 {services.map((service, index) => (
-                        <ServiceCard key={index} service={service} />
+                    <ServiceCard key={index} service={service} />
                 ))}
             </div>
         </Page>

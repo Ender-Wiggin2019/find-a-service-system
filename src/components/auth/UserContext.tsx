@@ -147,7 +147,9 @@ const useRegister = () => {
                     console.log('check')
                     await setDoc(
                         doc(serviceProviderCol, user.uid),
-                        JSON.parse(JSON.stringify(new ServiceProvider(user.uid, name, email, address, description, false))),
+                        JSON.parse(
+                            JSON.stringify(new ServiceProvider(user.uid, name, email, address, description, false)),
+                        ),
                     )
                     return true
                 } else if (user && role === 'customer') {
