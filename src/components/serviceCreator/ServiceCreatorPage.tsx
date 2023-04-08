@@ -93,7 +93,7 @@ const ServiceCreatorPage: React.FC = () => {
                             <div className='relative mb-6' data-te-input-wrapper-init>
                                 <label
                                     htmlFor='text'
-                                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                                    className='block mb-2 text-sm font-medium text-head dark:text-white'
                                 >
                                     Your service price
                                 </label>
@@ -105,7 +105,7 @@ const ServiceCreatorPage: React.FC = () => {
                                     suffix=' per hour'
                                     // defaultValue={1000}
                                     decimalsLimit={2}
-                                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                                    className='bg-gray-50 border border-gray-300 text-head sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-subhead dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                                     onValueChange={(value) => (value ? setPrice(value) : '')}
                                 />
                             </div>
@@ -124,18 +124,18 @@ const ServiceCreatorPage: React.FC = () => {
                             />
 
                             <div className='mb-4'>
-                                <label className='block text-gray-700 text-sm font-bold mb-2'>Description</label>
+                                <label className='block text-subhead text-sm font-bold mb-2'>Description</label>
                                 <textarea
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    className='shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                    className='shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-subhead leading-tight focus:outline-none focus:shadow-outline'
                                     rows={3}
                                 ></textarea>
                             </div>
 
                             <button
                                 type='submit'
-                                className='w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                                className='w-full text-white bg-button hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-button dark:hover:bg-primary-700 dark:focus:ring-primary-800'
                                 data-te-ripple-init
                                 data-te-ripple-color='light'
                             >

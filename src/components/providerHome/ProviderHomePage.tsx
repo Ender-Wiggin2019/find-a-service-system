@@ -15,6 +15,7 @@ import {IService, ServiceCreator} from '~/components/types/service'
 import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
 import {Service} from "~/components/types/service";
 import {ServiceProvider} from "~/components/types/user";
+import Page from '~/components/shared/Page'
 
 const ProviderHomePage: React.FC = () => {
     const { state } = useAuthState()
@@ -79,14 +80,14 @@ const ProviderHomePage: React.FC = () => {
     }, [state])
 
     return (
-        <div className='container h-full px-6 py-12'>
+        <Page>
             <h2 className='text-2xl font-bold mb-4'>Services</h2>
             <div className='service-cards grid grid-cols-1 gap-4'>
                 {services.map((service, index) => (
                         <ServiceCard key={index} service={service} />
                 ))}
             </div>
-        </div>
+        </Page>
     )
 }
 

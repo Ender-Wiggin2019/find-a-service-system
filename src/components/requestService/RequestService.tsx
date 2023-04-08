@@ -52,7 +52,7 @@ const RequestCreator: React.FC<RequestCreatorProps> = ({ serviceId }) => {
             {/* The button to open modal */}
             <label
                 htmlFor='my-modal-7'
-                className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
+                className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
                 Request
             </label>
@@ -67,7 +67,7 @@ const RequestCreator: React.FC<RequestCreatorProps> = ({ serviceId }) => {
 
                     <form onSubmit={handleSubmit} className='mb-6'>
                         <div className='mb-4'>
-                            <label className='block text-gray-700 text-sm font-bold mb-2'>Date and Time</label>
+                            <label className='block text-subhead text-sm font-bold mb-2'>Date and Time</label>
                             <DateTimePicker
                                 className='w-3/4'
                                 label='Pick your time'
@@ -98,12 +98,12 @@ const RequestCreator: React.FC<RequestCreatorProps> = ({ serviceId }) => {
                             isValid={true}
                             onChange={(value) => setAddress(value)}
                         />
-                        <label className='block text-gray-700 text-sm font-bold mb-2'>Request Description</label>
-                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+                        <label className='block text-subhead text-sm font-bold mb-2'>Request Description</label>
+                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-subhead dark:border-subhead'>
                             <textarea
                                 id='comment'
                                 rows={6}
-                                className='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800'
+                                className='px-0 w-full text-sm text-head border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-subhead'
                                 onChange={(e) => setRequestDesc(e.target.value)}
                                 placeholder='Write Request Description...'
                                 required

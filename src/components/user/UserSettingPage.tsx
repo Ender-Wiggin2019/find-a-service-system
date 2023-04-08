@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getAuth, updateProfile, sendEmailVerification } from 'firebase/auth'
+import Page from '~/components/shared/Page'
 
 import { useAuthState } from '~/components/auth/UserContext'
 import InputTextField from '../shared/InputTextField'
@@ -49,7 +50,7 @@ const UserSettingPage: React.FC = () => {
     }
 
     return (
-        <div className='container h-full px-6 py-12'>
+        <Page>
             {state.state === 'SIGNED_IN' &&
                 state.currentUser &&
                 !state.currentUser.emailVerified &&
@@ -128,7 +129,7 @@ const UserSettingPage: React.FC = () => {
                 {state.state === 'SIGNED_IN' && state.currentUser && !state.currentUser.emailVerified && (
                     <button
                         onClick={(e) => handleVerify(e)}
-                        className='w-20 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mb-4 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                        className='w-20 text-white bg-button hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mb-4 px-5 py-2.5 text-center dark:bg-button dark:hover:bg-primary-700 dark:focus:ring-primary-800'
                         data-te-ripple-color='light'
                     >
                         Verify
@@ -150,24 +151,24 @@ const UserSettingPage: React.FC = () => {
                 {/*    onChange={(value) => setAddress(value)}*/}
                 {/*/>*/}
                 {/*<div className="mb-4">*/}
-                {/*    <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>*/}
+                {/*    <label className="block text-subhead text-sm font-bold mb-2">Description</label>*/}
                 {/*    <textarea*/}
                 {/*        value={description}*/}
                 {/*        onChange={(e) => setDescription(e.target.value)}*/}
-                {/*        className="shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"*/}
+                {/*        className="shadow appearance-none border rounded w-full py-2 px-3 border-gray-300 text-subhead leading-tight focus:outline-none focus:shadow-outline"*/}
                 {/*        rows={3}*/}
                 {/*    ></textarea>*/}
                 {/*</div>*/}
 
                 <button
                     type='submit'
-                    className='w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                    className='w-full text-white bg-button hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-button dark:hover:bg-primary-700 dark:focus:ring-primary-800'
                     data-te-ripple-color='light'
                 >
                     Update
                 </button>
             </form>
-        </div>
+        </Page>
     )
 }
 

@@ -32,16 +32,30 @@ const RequestCard: React.FC<RequestCardProps> = ({ request }) => {
     const serviceInformation = request.service
 
     return (
-        <div className='card card-compact w-full bg-base-100 shadow-xl'>
-            <div className='card-body hover:bg-gray-100 cursor-pointer'>
-                <h2>ID: {request.id}</h2>
-                <h2 className='card-title'>{serviceInformation.name}</h2>
-                <h2>SERVICE TIME: {dayjs(requestInformation.requestedTime).format('LLL')}</h2>
-                <h2>LAST UPDATED: {dayjs(requestInformation.timestamp).format('LLL')}</h2>
-                <h2>PRICE: {'£' + serviceInformation.price}</h2>
-                <p>DESCRIPTION: {requestInformation.requestDescription}</p>
+        <div className='w-full bg-card shadow-xl rounded-md p-2'>
+            <div className="grid grid-cols-1 divide-y">
+                <div className="flex w-full justify-between">
+                    <div className="flex flex-col mr-4">
+                        <p className="font-bold text-head">Order ID</p>
+                        <p className="text-subhead">{request.id}</p>
+                    </div>
+                    <div className="flex flex-col mr-4">
+                        <p className="font-bold text-head">Order Time</p>
+                        <p className="text-subhead">{dayjs(requestInformation.timestamp).format('LLL')}</p>
+                    </div>
+                    <div className="flex flex-col mr-4">
+                        <p className="font-bold text-head">Service Category</p>
+                        <p className="text-subhead">{requestInformation.requestCategory}</p>
+                    </div>
+                </div>
+                <div className="mt-2">
+                {/*<h2 className='card-title'>{serviceInformation.name}</h2>*/}
+                {/*<h2>SERVICE TIME: {dayjs(requestInformation.requestedTime).format('LLL')}</h2>*/}
+                {/*<h2>LAST UPDATED: {dayjs(requestInformation.timestamp).format('LLL')}</h2>*/}
+                {/*<h2>PRICE: {'£' + serviceInformation.price}</h2>*/}
+                {/*<p>DESCRIPTION: {requestInformation.requestDescription}</p>*/}
                 <div className='card-actions justify-end'>
-                    <div className='flex justify-center items-baseline my-2'>
+                    <div className='flex justify-center items-baseline my-2 gap-4'>
                         {(requestInformation.status === ServiceStatus.REQUESTED ||
                             requestInformation.status === ServiceStatus.NEED_MORE_INFO) && (
                             <StatusButton
@@ -63,6 +77,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ request }) => {
                         )}
                         <RequestViewer Irequest={request} />
                     </div>
+                </div>
                 </div>
             </div>
         </div>

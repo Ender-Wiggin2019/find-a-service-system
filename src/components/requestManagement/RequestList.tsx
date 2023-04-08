@@ -175,27 +175,27 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label='tabs'>
                     <Tab
-                        label={`Request ( ${requestLists.requested.length} )`}
+                        label={`Request (${requestLists.requested.length})`}
                         id='simple-tab-0'
                         aria-controls='simple-tabpanel-0'
                     />
                     <Tab
-                        label={`Accepted ( ${requestLists.accepted.length} )`}
+                        label={`Accepted (${requestLists.accepted.length})`}
                         id='simple-tab-1'
                         aria-controls='simple-tabpanel-1'
                     />
                     <Tab
-                        label={`Waiting ( ${requestLists.needMoreInfo.length} )`}
+                        label={`Waiting (${requestLists.needMoreInfo.length})`}
                         id='simple-tab-2'
                         aria-controls='simple-tabpanel-2'
                     />
                     <Tab
-                        label={`Declined ( ${requestLists.declined.length} )`}
+                        label={`Declined (${requestLists.declined.length})`}
                         id='simple-tab-3'
                         aria-controls='simple-tabpanel-3'
                     />
                     <Tab
-                        label={`Completed ( ${requestLists.completed.length} )`}
+                        label={`Completed (${requestLists.completed.length})`}
                         id='simple-tab-4'
                         aria-controls='simple-tabpanel-4'
                     />

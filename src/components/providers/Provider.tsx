@@ -19,7 +19,7 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ provider }) => {
           />
         </div>
         <div className="ml-3">
-          <div className="text-sm font-medium text-gray-900">{provider.displayName}</div>
+          <div className="text-sm font-medium text-head">{provider.displayName}</div>
           <div className="text-sm text-gray-500">{provider.email}</div>
           <span className="inline-flex text-sm text-gray-500">{provider.address}</span>
         </div>

@@ -60,7 +60,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rat
                 </div>
             </div>
             <div className='mt-1'>
-                {/*<h1 className="text-lg text-gray-700 font-semibold cursor-pointer"> {title} </h1>*/}
+                {/*<h1 className="text-lg text-subhead font-semibold cursor-pointer"> {title} </h1>*/}
                 <div className='flex mt-2'>
                     <StarRatings
                         starRatedColor='#ffde18'

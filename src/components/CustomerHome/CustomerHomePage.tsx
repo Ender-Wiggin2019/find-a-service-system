@@ -83,7 +83,7 @@ const CustomerHomePage: React.FC = () => {
             </h2>
             <div className='flex mb-4'>
                 <button
-                    className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
+                    className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
                     onClick={() => (window.location.href = '/services')}
                 >
                     Search New Services
@@ -92,7 +92,7 @@ const CustomerHomePage: React.FC = () => {
 
             <div className='flex mb-4'>
                 <button
-                    className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg  hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
+                    className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
                     onClick={() => toggleServiceHistory()}
                 >
                     View Service History

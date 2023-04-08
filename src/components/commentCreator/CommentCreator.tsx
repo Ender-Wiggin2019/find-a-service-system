@@ -42,7 +42,7 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
             {/* The button to open modal */}
             <label
                 htmlFor='my-modal-6'
-                className='p-6 bg-primary-600 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer'
+                className='p-6 bg-button rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer'
             >
                 +
             </label>
@@ -67,14 +67,14 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
                             name='rating'
                             changeRating={setRating}
                         />
-                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+                        <div className='py-2 px-4 mb-4 mt-2 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-subhead dark:border-subhead'>
                             <label htmlFor='comment' className='sr-only'>
                                 Your comment
                             </label>
                             <textarea
                                 id='comment'
                                 rows={6}
-                                className='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800'
+                                className='px-0 w-full text-sm text-head border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-subhead'
                                 onChange={(e) => setComment(e.target.value)}
                                 placeholder='Write a comment...'
                                 required

@@ -13,17 +13,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                 <img
                     src={serviceInformation.image}
                     alt={serviceInformation.name}
-                    className='w-full h-40 object-cover rounded'
+                    className='w-full h-40 object-cover rounded-t'
                 />
             </figure>
-            <div className='card-body hover:bg-gray-100 cursor-pointer'>
-                <h2 className='card-title'>{serviceInformation.name}</h2>
-                <p className='line-clamp-3'>{serviceInformation.description}</p>{' '}
+            <div className='card-body hover:bg-gray-100 hover:rounded-b-md cursor-pointer h-52'>
+                <h1 className='card-title text-head'>{serviceInformation.name}</h1>
+                <p className='line-clamp-3 text-subhead'>{serviceInformation.description}</p>{' '}
                 {/* use line-clamp to limit the number of lines of text to 3 */}
                 <div className='card-actions justify-end'>
                     <div className='flex justify-center items-baseline my-2'>
-                        <span className='mr-2 text-5xl font-extrabold'>{'£' + serviceInformation.price}</span>
-                        <span className='text-gray-500 dark:text-gray-400'>/hour</span>
+                        <span className='mr-2 text-5xl text-head font-extrabold'>{'£' + serviceInformation.price}</span>
+                        <span className='text-subhead'>/hour</span>
                     </div>
                     {/*<button className="btn btn-primary">See More</button>*/}
                 </div>

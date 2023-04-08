@@ -32,6 +32,13 @@ module.exports = {
                     800: '#1e40af',
                     900: '#1e3a8a',
                 },
+                background: '#d8eefe',
+                head: '#094067',
+                subhead: '#5f6c7b',
+                card: '#fffffe',
+                button: '#3da9fc',
+                secondary: '#90b4ce',
+                tertiary: '#ef4565',
             },
         },
         fontFamily: {

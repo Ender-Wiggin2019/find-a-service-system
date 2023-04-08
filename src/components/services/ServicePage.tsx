@@ -6,7 +6,7 @@ import { Service, IService } from '~/components/types/service'
 import { ServiceProvider } from '~/components/types/user'
 import { db } from '~/lib/firebase'
 import { SERVICE_FIRESTORE_PATH } from '~/lib/constants'
-
+import Page from '~/components/shared/Page'
 const ServicePage: React.FC = () => {
     const [services, setServices] = useState<IService[]>([])
     const [search, setSearch] = useState('')
@@ -69,7 +69,7 @@ const ServicePage: React.FC = () => {
     }
 
     return (
-        <div className='container h-full px-6 py-12'>
+        <Page>
             <h2 className='text-2xl font-bold mb-4'>Services</h2>
             <div className='flex mb-4'>
                 <input
@@ -84,14 +84,14 @@ const ServicePage: React.FC = () => {
                     <option value='time'>Time</option>
                 </select>
             </div>
-            <div className='service-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 justify-items-stretch'>
                 {services.map((service, index) => (
                     <Link key={index} to={`/service/${service.id}`}>
                         <ServiceCard service={service} />
                     </Link>
                 ))}
             </div>
-        </div>
+        </Page>
     )
 }
 

@@ -53,17 +53,17 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
         <div>
             {/*<button*/}
             {/*    type="submit"*/}
-            {/*    className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"*/}
+            {/*    className="w-full text-white bg-button hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-button dark:hover:bg-primary-700 dark:focus:ring-primary-800"*/}
             {/*    data-te-ripple-init*/}
             {/*    data-te-ripple-color="light">*/}
             {/*    Sign up*/}
             {/*</button>*/}
 
-            <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor='file_input'>
+            <label className='block mb-2 text-sm font-medium text-head dark:text-white' htmlFor='file_input'>
                 Upload Service Image
             </label>
             <input
-                className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                className='block w-full text-sm text-head border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-subhead dark:border-gray-600 dark:placeholder-gray-400'
                 aria-describedby='file_input_help'
                 id='file_input'
                 type='file'
@@ -75,7 +75,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelected }) => {
 
             {/*<button*/}
             {/*    onClick={uploadFile}*/}
-            {/*    className="mb-6 w-half text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"*/}
+            {/*    className="mb-6 w-half text-white bg-button hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm mt-2 px-5 py-2.5 text-center dark:bg-button dark:hover:bg-primary-700 dark:focus:ring-primary-800"*/}
             {/*    data-te-ripple-init*/}
             {/*    data-te-ripple-color="light">*/}
             {/*    Upload Image*/}
