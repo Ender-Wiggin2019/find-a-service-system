@@ -33,6 +33,12 @@ Note that the backend is changed to firebase since this one is recommended at le
 ```
 Firestore-root
   |
+  --- admin (collection)
+  |    |
+  |    --- $uid (document)
+  |         |
+  |         --- //user fields.
+  |
   --- serviceProvider (collection)
   |    |
   |    --- $uid (document)
@@ -62,6 +68,114 @@ Firestore-root
                          --- //comment fields.
 ```
 
-## Members
+## Project File Structure
 
--   Jietao Chen
+```
+D:.
+│   App.tsx
+│   favicon.svg
+│   index.css
+│   logo.svg
+│   main.tsx
+│   vite-env.d.ts
+│
+├───components
+│   ├───Button
+│   │       SignInButton.tsx
+│   │       SignOutButton.tsx
+│   │       StatusButton.tsx
+│   │
+│   ├───Card
+│   │       CommentCard.tsx
+│   │       CustomerServiceCard.tsx
+│   │       ProviderCard.tsx
+│   │       ProviderServiceCard.tsx
+│   │       RequestManagementCard.tsx
+│   │       RequestServiceCard.tsx
+│   │
+│   ├───Creator
+│   │       CommentCreator.tsx
+│   │       RequestCreator.tsx
+│   │
+│   ├───Head
+│   │       Head.tsx
+│   │
+│   ├───InputText
+│   │       InputTextField.tsx
+│   │
+│   └───Page
+│           Page.tsx
+│
+├───pages
+│   ├───AdminPage
+│   │   ├───RemoveProviderPage
+│   │   └───VerifyProviderPage
+│   │           VerifyProviderPage.tsx
+│   │
+│   ├───AuthPage
+│   │   ├───LoginPage
+│   │   │       LoginPage.tsx
+│   │   │
+│   │   └───RegisterPage
+│   │           RegisterPage.tsx
+│   │
+│   ├───ErrorPage
+│   │       404.tsx
+│   │
+│   ├───HomePage
+│   │   ├───CustomerHomePage
+│   │   │       CustomerHomePage.tsx
+│   │   │
+│   │   ├───IndexPage
+│   │   │       Index.tsx
+│   │   │
+│   │   └───ProviderHomePage
+│   │           ProviderHomePage.tsx
+│   │
+│   ├───RequestPage
+│   │   ├───RequestManagementPage
+│   │   │       RequestListPage.tsx
+│   │   │       RequestViewer.tsx
+│   │   │
+│   │   └───RequestServicePage
+│   │           RequestHistoryPage.tsx
+│   │
+│   ├───ServicePage
+│   │   ├───ServiceCreatorPage
+│   │   │       ServiceCreatorPage.tsx
+│   │   │
+│   │   ├───ServiceDetailPage
+│   │   │   │   ServiceDetailPage.tsx
+│   │   │   │
+│   │   │   └───Comments
+│   │   │           CommentsListPage.tsx
+│   │   │
+│   │   └───ServiceListPage
+│   │           ServicePage.tsx
+│   │
+│   └───SettingPage
+│           UserSettingPage.tsx
+│
+├───routers
+│       Router.tsx
+│
+├───services
+│   ├───lib
+│   │       constants.ts
+│   │       firebase.ts
+│   │
+│   └───types
+│           request.tsx
+│           service.tsx
+│           user.tsx
+│
+└───utils
+    │   FormatTime.ts
+    │   ImageUploader.tsx
+    │
+    └───hooks
+            UseCommentCreator.tsx
+            UserContext.tsx
+            UseRequestService.tsx
+            UseServiceCreator.tsx
+```
