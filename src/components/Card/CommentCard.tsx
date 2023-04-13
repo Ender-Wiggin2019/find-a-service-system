@@ -5,7 +5,7 @@ import StarRatings from 'react-star-ratings'
 // import {getDoc, doc, collection, getDocs} from 'firebase/firestore';
 // import { db } from '~/lib/firebase';
 // import { IService } from '~/types/service';
-// import { SERVICE_FIRESTORE_PATH } from '~/lib/constants';
+// import { FirebasePath } from '~/lib/constants';
 // import {ServiceProvider} from "~/components/types/user";
 import { formatTime } from '~/utils/FormatTime'
 import { Service, Comment } from '~/services/types/service'
@@ -29,7 +29,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rat
     // useEffect(() => {
     //     const fetchService = async () => {
     //         if (!serviceId) return;
-    //         const serviceDoc = await getDoc(doc(db, SERVICE_FIRESTORE_PATH, serviceId));
+    //         const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, serviceId));
     //         console.log(serviceDoc)
     //         if (serviceDoc.exists()) {
     //             const data = serviceDoc.data() as Service;

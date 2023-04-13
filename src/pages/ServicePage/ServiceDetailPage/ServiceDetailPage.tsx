@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getDoc, doc, collection, getDocs } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
 
-import { SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 // import {ServiceProvider} from "~/components/types/user";
 import { Service } from '~/services/types/service'
 import CommentCreator from '~/components/Creator/CommentCreator'
@@ -18,7 +18,7 @@ const ServiceDetail: React.FC = () => {
     useEffect(() => {
         const fetchService = async () => {
             if (!serviceId) return
-            const serviceDoc = await getDoc(doc(db, SERVICE_FIRESTORE_PATH, serviceId))
+            const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, serviceId))
             if (serviceDoc.exists()) {
                 const data = serviceDoc.data() as Service
                 setService(data)

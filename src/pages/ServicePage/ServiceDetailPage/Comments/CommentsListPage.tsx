@@ -5,7 +5,7 @@ import CommentCard from '~/components/Card/CommentCard'
 import { Service, Comment } from '~/services/types/service'
 // import { ServiceProvider } from '~/components/types/user';
 import { db } from '~/services/lib/firebase'
-import { SERVICE_FIRESTORE_PATH, COMMENT_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 
 type ServiceCardProps = {
     serviceId: string
@@ -18,7 +18,7 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
 
     useEffect(() => {
         const fetchComments = async () => {
-            const serviceCollection = collection(db, SERVICE_FIRESTORE_PATH, serviceId, COMMENT_FIRESTORE_PATH)
+            const serviceCollection = collection(db, FirebasePath.SERVICE, serviceId, FirebasePath.COMMENT)
             const commentSnapshot = await getDocs(serviceCollection)
             const commentsData: Comment[] = []
 
