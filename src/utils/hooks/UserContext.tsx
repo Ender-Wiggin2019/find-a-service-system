@@ -1,20 +1,23 @@
 // UserContext.tsx
 import { createContext, ReactNode, useContext, useReducer, useEffect } from 'react'
 import { User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile } from 'firebase/auth'
-import { auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/services/lib/firebase'
+import { db, auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/services/lib/firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { collection, doc, setDoc } from 'firebase/firestore'
-import { Role, User, ServiceProvider, Customer } from '../../services/types/user'
+import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
+import { Role, ServiceProvider, Customer } from '~/services/types/user'
+import {
+    SERVICE_PROVIDER_FIRESTORE_PATH,
+    CUSTOMER_FIRESTORE_PATH,
+    ADMIN_FIRESTORE_PATH,
+} from '~/services/lib/constants'
 
-// import { collection } from "firebase/firestore";
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/firestore';
-type AuthActions = { type: 'SIGN_IN'; payload: { user: FirebaseUser } } | { type: 'SIGN_OUT' }
+type AuthActions = { type: 'SIGN_IN'; payload: { user: FirebaseUser; userType: Role } } | { type: 'SIGN_OUT' }
 
 type AuthState =
     | {
           state: 'SIGNED_IN'
           currentUser: FirebaseUser
+          userType: Role
       }
     | {
           state: 'SIGNED_OUT'
@@ -23,12 +26,37 @@ type AuthState =
           state: 'UNKNOWN'
       }
 
+export const CheckUidExistsInDoc = async (uid: string, docPath: Role): Promise<boolean> => {
+    try {
+        const serviceCollection = collection(db, docPath)
+        const q = query(serviceCollection, where('uid', '==', uid))
+        const snapshot = await getDocs(q)
+        return !snapshot.empty
+    } catch (error) {
+        console.error(error)
+    }
+    return false
+}
+
+export const GetUserType = async (uid: string): Promise<Role> => {
+    if (await CheckUidExistsInDoc(uid, SERVICE_PROVIDER_FIRESTORE_PATH)) {
+        return 'serviceProvider'
+    } else if (await CheckUidExistsInDoc(uid, CUSTOMER_FIRESTORE_PATH)) {
+        return 'customer'
+    } else if (await CheckUidExistsInDoc(uid, ADMIN_FIRESTORE_PATH)) {
+        return 'admin'
+    } else {
+        return 'anonymous'
+    }
+}
+
 const AuthReducer = (state: AuthState, action: AuthActions): AuthState => {
     switch (action.type) {
         case 'SIGN_IN':
             return {
                 state: 'SIGNED_IN',
                 currentUser: action.payload.user,
+                userType: action.payload.userType,
             }
         case 'SIGN_OUT':
             return {
@@ -53,9 +81,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(AuthReducer, { state: 'UNKNOWN' })
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                dispatch({ type: 'SIGN_IN', payload: { user } })
+                const userType = await GetUserType(user.uid)
+                dispatch({ type: 'SIGN_IN', payload: { user, userType } })
             } else {
                 dispatch({ type: 'SIGN_OUT' })
             }
@@ -82,12 +111,11 @@ const useSignIn = () => {
     const { dispatch } = useContext(AuthContext)
     return {
         signIn: async (email: string, password: string) => {
-            // const { user } = await auth.signInWithEmailAndPassword(email, password);
             const { user } = await signInWithEmailAndPassword(auth, email, password)
-
+            const userType = await GetUserType(user.uid)
             if (user) {
                 console.log('sign in')
-                dispatch({ type: 'SIGN_IN', payload: { user } })
+                dispatch({ type: 'SIGN_IN', payload: { user, userType } })
             }
         },
     }
@@ -102,7 +130,8 @@ const useGoogleSignIn = () => {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
                 if (user) {
-                    dispatch({ type: 'SIGN_IN', payload: { user } })
+                    const userType = await GetUserType(user.uid)
+                    dispatch({ type: 'SIGN_IN', payload: { user, userType } })
                 }
             } catch (error) {
                 console.error('signInWithGoogle error:', error)

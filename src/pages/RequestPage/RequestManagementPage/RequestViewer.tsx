@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthState } from '~/utils/hooks/UserContext'
-import { useRequestCreator } from '../../../utils/hooks/UseRequestService'
+import { useRequestCreator } from '~/utils/hooks/UseRequestService'
 import { IRequest, ServiceStatus } from '~/services/types/request'
 import InputTextField from '~/components/InputText/InputTextField'
 import dayjs from 'dayjs'

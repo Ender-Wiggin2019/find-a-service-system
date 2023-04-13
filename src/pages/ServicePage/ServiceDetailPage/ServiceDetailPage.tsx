@@ -6,7 +6,7 @@ import { db } from '~/services/lib/firebase'
 import { SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
 // import {ServiceProvider} from "~/components/types/user";
 import { Service } from '~/services/types/service'
-import CommentCreator from '../../../components/Creator/CommentCreator'
+import CommentCreator from '~/components/Creator/CommentCreator'
 import CommentsList from './Comments/CommentsListPage'
 import RequestCreator from '~/components/Creator/RequestCreator'
 import Page from '~/components/Page/Page'

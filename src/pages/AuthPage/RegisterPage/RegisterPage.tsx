@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PasswordChecklist from 'react-password-checklist'
-import { useRegister, useGoogleSignIn } from '../../../utils/hooks/UserContext'
-import InputTextField from '../../../components/InputText/InputTextField'
-import { Role } from '../../../services/types/user'
+import { useRegister, useGoogleSignIn } from '~/utils/hooks/UserContext'
+import InputTextField from '~/components/InputText/InputTextField'
+import { Role } from '~/services/types/user'
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState('')

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
 import { SERVICE_PROVIDER_FIRESTORE_PATH } from '~/services/lib/constants'
-import { ServiceProvider } from '../../../services/types/user'
-import ProviderCard from '../../../components/Card/ProviderCard'
+import { ServiceProvider } from '~/services/types/user'
+import ProviderCard from '~/components/Card/ProviderCard'
 
 const VerifyPage: React.FC = () => {
     const [providers, setProviders] = useState<ServiceProvider[]>([])
