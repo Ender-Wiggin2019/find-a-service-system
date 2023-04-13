@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import CurrencyInput from 'react-currency-input-field'
 
 import { useAuthState, useRegister } from '~/utils/hooks/UserContext'
-import InputTextField from '../../../components/InputText/InputTextField'
+import InputTextField from '~/components/InputText/InputTextField'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
 import { db, storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'

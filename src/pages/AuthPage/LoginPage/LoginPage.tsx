@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import InputTextField from '../../../components/InputText/InputTextField'
-import { useSignIn, useGoogleSignIn } from '../../../utils/hooks/UserContext'
+import InputTextField from '~/components/InputText/InputTextField'
+import { useSignIn, useGoogleSignIn, useAuthState } from '~/utils/hooks/UserContext'
 import { useNavigate } from 'react-router-dom'
 const Login: React.FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState('') // TODO: implement remember me
+    const { state } = useAuthState()
 
     const { signIn } = useSignIn()
     const { signInWithGoogle } = useGoogleSignIn()
@@ -15,7 +16,15 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         await signIn(email, password)
-        navigate('/service-creator') // TODO: test only
+        if (state.state === 'SIGNED_IN') {
+            if (state.userType === 'customer') {
+                navigate('/customer-creator')
+            } else if (state.userType === 'serviceProvider') {
+                navigate('/provider-home')
+            } else if (state.userType === 'admin') {
+                navigate('/admin')
+            }
+        }
     }
 
     return (
