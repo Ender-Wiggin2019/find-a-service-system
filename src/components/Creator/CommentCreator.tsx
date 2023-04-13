@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthState } from '../../utils/hooks/UserContext'
-import { useCommentCreator } from '../../utils/hooks/UseCommentCreator'
+import { useAuthState } from '~/utils/hooks/UserContext'
+import { useCommentCreator } from '~/utils/hooks/UseCommentCreator'
 import StarRatings from 'react-star-ratings'
 import { IService } from '~/services/types/service'
 

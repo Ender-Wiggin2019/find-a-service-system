@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore'
-import RequestManagementCard from '../../../components/Card/RequestManagementCard'
+import RequestManagementCard from '~/components/Card/RequestManagementCard'
 import { Service, Comment } from '~/services/types/service'
 import { ServiceProvider } from '~/services/types/user'
 import { db } from '~/services/lib/firebase'

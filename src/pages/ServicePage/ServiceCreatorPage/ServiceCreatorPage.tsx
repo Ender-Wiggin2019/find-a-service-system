@@ -4,7 +4,7 @@ import CurrencyInput from 'react-currency-input-field'
 
 import { useAuthState } from '~/utils/hooks/UserContext'
 import ImageUploader from '~/utils/ImageUploader'
-import InputTextField from '../../../components/InputText/InputTextField'
+import InputTextField from '~/components/InputText/InputTextField'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
 import { storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'

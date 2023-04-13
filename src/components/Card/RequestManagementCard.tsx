@@ -1,7 +1,7 @@
 import React from 'react'
 import { IService } from '~/services/types/service'
 import { IRequest, ServiceStatus } from '~/services/types/request'
-import RequestViewer from '../../pages/RequestPage/RequestManagementPage/RequestViewer'
+import RequestViewer from '~/pages/RequestPage/RequestManagementPage/RequestViewer'
 import { useRequestCreator } from '~/utils/hooks/UseRequestService'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
