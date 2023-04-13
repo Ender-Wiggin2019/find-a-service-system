@@ -1,11 +1,41 @@
+import React from 'react'
+import { Role } from '../types/user'
+
 export const SERVICE_PROVIDER_IMAGE_PATH = 'service_provider_images/'
 
 // Note: each time add a new collection, define a new constant here
-export const SERVICE_PROVIDER_FIRESTORE_PATH = 'serviceProvider'
-export const CUSTOMER_FIRESTORE_PATH = 'customer'
-export const SERVICE_FIRESTORE_PATH = 'service'
-export const COMMENT_FIRESTORE_PATH = 'comment'
-export const REQUEST_FIRESTORE_PATH = 'request'
-export const ADMIN_FIRESTORE_PATH = 'admin'
+export enum FirebasePath {
+    SERVICE_PROVIDER = 'serviceProvider',
+    CUSTOMER = 'customer',
+    SERVICE = 'service',
+    COMMENT = 'comment',
+    REQUEST = 'request',
+    ADMIN = 'admin',
+}
+
+export type URLPath =
+    | '/'
+    | '/login'
+    | '/register'
+    | '/service-creator'
+    | '/customer-home'
+    | '/services'
+    | '/service/:serviceId'
+    | '/setting'
+    | '/admin'
+    | '/requestHistory'
+    | '/request-list'
+    | '/provider-home'
+    | '*'
+
+export const AuthMap = new Map<Role, URLPath[]>([
+    ['customer', ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory']],
+    [
+        'serviceProvider',
+        ['*', '/', '/service-creator', '/service/:serviceId', '/provider-home', '/services', '/request-list'],
+    ],
+    ['anonymous', ['*', '/', '/login', '/register', '/services']],
+    ['admin', ['*', '/', '/admin']],
+])
 
 // FIXME: when deploy, change all path to plural, e.g. serviceProviders

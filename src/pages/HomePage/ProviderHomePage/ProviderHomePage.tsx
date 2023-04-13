@@ -9,7 +9,7 @@ import { db, storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { useServiceCreator } from '~/utils/hooks/UseServiceCreator'
 
-import { SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 import ProviderServiceCard from '~/components/Card/ProviderServiceCard'
 import { IService, ServiceCreator } from '~/services/types/service'
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
@@ -31,7 +31,7 @@ const ProviderHomePage: React.FC = () => {
             console.log(state.state)
             if (state.state === 'SIGNED_IN') {
                 console.log(state.currentUser.uid)
-                const serviceCollection = collection(db, SERVICE_FIRESTORE_PATH)
+                const serviceCollection = collection(db, FirebasePath.SERVICE)
                 const q = query(serviceCollection, where('uid', '==', state.currentUser.uid))
                 const serviceSnapshot = await getDocs(q)
                 const servicesData: IService[] = []

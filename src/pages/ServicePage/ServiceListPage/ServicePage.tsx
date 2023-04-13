@@ -5,7 +5,7 @@ import ServiceCard from '~/components/Card/CustomerServiceCard'
 import { Service, IService } from '~/services/types/service'
 import { ServiceProvider } from '~/services/types/user'
 import { db } from '~/services/lib/firebase'
-import { SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 import Page from '~/components/Page/Page'
 const ServicePage: React.FC = () => {
     const [services, setServices] = useState<IService[]>([])
@@ -14,7 +14,7 @@ const ServicePage: React.FC = () => {
 
     useEffect(() => {
         const fetchServices = async () => {
-            const serviceCollection = collection(db, SERVICE_FIRESTORE_PATH)
+            const serviceCollection = collection(db, FirebasePath.SERVICE)
             const serviceSnapshot = await getDocs(serviceCollection)
             const servicesData: IService[] = []
 

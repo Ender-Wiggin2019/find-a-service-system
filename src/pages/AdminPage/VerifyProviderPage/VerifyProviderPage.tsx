@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
-import { SERVICE_PROVIDER_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 import { ServiceProvider } from '~/services/types/user'
 import ProviderCard from '~/components/Card/ProviderCard'
 
@@ -11,7 +11,7 @@ const VerifyPage: React.FC = () => {
     // read data from firebase to `providers`
     useEffect(() => {
         const fetchServices = async () => {
-            const serviceCollection = collection(db, SERVICE_PROVIDER_FIRESTORE_PATH)
+            const serviceCollection = collection(db, FirebasePath.SERVICE_PROVIDER)
             const serviceSnapshot = await getDocs(serviceCollection)
             const providersData: ServiceProvider[] = []
 

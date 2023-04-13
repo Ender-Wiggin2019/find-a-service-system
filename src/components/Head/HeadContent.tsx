@@ -19,6 +19,7 @@ const RoleContentMap = new Map<Role, HeadProps[]>([
         [
             { title: 'Home', url: '/provider-home' },
             { title: 'Services', url: '/services' },
+            { title: 'Create', url: '/service-creator' },
         ],
     ],
     [

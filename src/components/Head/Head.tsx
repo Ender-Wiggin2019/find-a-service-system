@@ -1,16 +1,18 @@
 import { useAuthState, useSignOut } from '~/utils/hooks/UserContext'
-import { Block } from './HeadBlock'
 import { HeadContent } from './HeadContent'
+import { useNavigate } from 'react-router-dom'
 
 const SERVICE_NAME = import.meta.env.VITE_SERVICE_NAME
 const PROJECT_LINK = import.meta.env.VITE_PROJECT_LINK
 
-export const Head = () => {
+export const Head: React.FC = () => {
     const { state } = useAuthState()
     const { signOut } = useSignOut()
+    const navigate = useNavigate()
 
     const handleSignOut = () => {
         signOut()
+        navigate('/services')
     }
 
     return (
@@ -110,8 +112,7 @@ export const Head = () => {
                     id='navbar-sticky'
                 >
                     <ul className='flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-background'>
-                        {state.state === 'SIGNED_IN' && <HeadContent role={state.userType} />}
-                        {state.state === 'SIGNED_OUT' && <HeadContent role='anonymous' />}
+                        <HeadContent role={state.userType} />
                     </ul>
                 </div>
             </div>

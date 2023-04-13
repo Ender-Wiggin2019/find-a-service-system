@@ -5,7 +5,7 @@ import RequestServiceCard from '~/components/Card/RequestServiceCard'
 import { Service, IService, Comment } from '~/services/types/service'
 import { ServiceProvider } from '~/services/types/user'
 import { db } from '~/services/lib/firebase'
-import { COMMENT_FIRESTORE_PATH, REQUEST_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 import { IRequest, RequestCreator } from '~/services/types/request'
 import { useAuthState, useSignOut } from '~/utils/hooks/UserContext'
 
@@ -20,7 +20,7 @@ const RequestHistoryPage: React.FC = () => {
             console.log(state.state)
             if (state.state === 'SIGNED_IN') {
                 console.log(state.currentUser.uid)
-                const requestCollection = collection(db, REQUEST_FIRESTORE_PATH)
+                const requestCollection = collection(db, FirebasePath.REQUEST)
                 const q = query(requestCollection, where('uid', '==', state.currentUser.uid))
                 const requestSnapshot = await getDocs(q)
                 const requestData: IRequest[] = []
@@ -29,7 +29,7 @@ const RequestHistoryPage: React.FC = () => {
                     requestSnapshot.docs.map(async (singleDoc) => {
                         const data = singleDoc.data()
 
-                        const serviceDoc = await getDoc(doc(db, SERVICE_FIRESTORE_PATH, data.sid))
+                        const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, data.sid))
                         const serviceData = serviceDoc.data()
                         console.log(serviceData)
 

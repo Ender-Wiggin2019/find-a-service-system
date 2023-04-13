@@ -10,8 +10,6 @@ export const App = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <HelmetProvider>
                 <AuthProvider>
-                    {/*<Head title="Your App Title" />*/}
-                    <Head />
                     <main>
                         <Router />
                     </main>

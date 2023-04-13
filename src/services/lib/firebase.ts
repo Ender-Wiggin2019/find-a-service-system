@@ -11,13 +11,7 @@ import { connectStorageEmulator, getStorage } from 'firebase/storage'
 import { Role, ServiceProvider, Customer } from '~/services/types/user'
 import { ServiceCreator, Comment } from '~/services/types/service'
 import { RequestCreator } from '~/services/types/request'
-import {
-    SERVICE_PROVIDER_FIRESTORE_PATH,
-    CUSTOMER_FIRESTORE_PATH,
-    SERVICE_FIRESTORE_PATH,
-    COMMENT_FIRESTORE_PATH,
-    REQUEST_FIRESTORE_PATH,
-} from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -50,7 +44,7 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 // };
 const createCollectionFactory = <T = DocumentData>(collectionPath: string) => {
     return (serviceId: string): CollectionReference<T> => {
-        const fullPath = `${collectionPath}/${serviceId}/${COMMENT_FIRESTORE_PATH}`
+        const fullPath = `${collectionPath}/${serviceId}/${FirebasePath.COMMENT}`
         // return collection(db, fullPath) as CollectionReference<T>;
         return collection(db, fullPath) as CollectionReference<T>
     }
@@ -59,11 +53,11 @@ const createCollectionFactory = <T = DocumentData>(collectionPath: string) => {
 export { auth, db, storage }
 
 export const roleCol = createCollection<Role>('roles')
-export const customerCol = createCollection<Customer>(CUSTOMER_FIRESTORE_PATH)
-export const serviceProviderCol = createCollection<ServiceProvider>(SERVICE_PROVIDER_FIRESTORE_PATH)
-export const serviceCreatorCol = createCollection<ServiceCreator>(SERVICE_FIRESTORE_PATH)
-export const commentColFactory = createCollectionFactory<Comment>(SERVICE_FIRESTORE_PATH)
-export const requestCreatorCol = createCollection<RequestCreator>(REQUEST_FIRESTORE_PATH)
+export const customerCol = createCollection<Customer>(FirebasePath.CUSTOMER)
+export const serviceProviderCol = createCollection<ServiceProvider>(FirebasePath.SERVICE_PROVIDER)
+export const serviceCreatorCol = createCollection<ServiceCreator>(FirebasePath.SERVICE)
+export const commentColFactory = createCollectionFactory<Comment>(FirebasePath.COMMENT)
+export const requestCreatorCol = createCollection<RequestCreator>(FirebasePath.REQUEST)
 
 // TODO(Ender): the following code is from original template, need to be refactored
 
