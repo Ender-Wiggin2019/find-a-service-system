@@ -5,11 +5,7 @@ import { db, auth, useAuth, serviceProviderCol, Providers, customerCol } from '~
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
 import { Role, ServiceProvider, Customer } from '~/services/types/user'
-import {
-    SERVICE_PROVIDER_FIRESTORE_PATH,
-    CUSTOMER_FIRESTORE_PATH,
-    ADMIN_FIRESTORE_PATH,
-} from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 
 type AuthActions = { type: 'SIGN_IN'; payload: { user: FirebaseUser; userType: Role } } | { type: 'SIGN_OUT' }
 
@@ -21,9 +17,11 @@ type AuthState =
       }
     | {
           state: 'SIGNED_OUT'
+          userType: Role
       }
     | {
           state: 'UNKNOWN'
+          userType: Role
       }
 
 export const CheckUidExistsInDoc = async (uid: string, docPath: Role): Promise<boolean> => {
@@ -39,11 +37,11 @@ export const CheckUidExistsInDoc = async (uid: string, docPath: Role): Promise<b
 }
 
 export const GetUserType = async (uid: string): Promise<Role> => {
-    if (await CheckUidExistsInDoc(uid, SERVICE_PROVIDER_FIRESTORE_PATH)) {
+    if (await CheckUidExistsInDoc(uid, FirebasePath.SERVICE_PROVIDER)) {
         return 'serviceProvider'
-    } else if (await CheckUidExistsInDoc(uid, CUSTOMER_FIRESTORE_PATH)) {
+    } else if (await CheckUidExistsInDoc(uid, FirebasePath.CUSTOMER)) {
         return 'customer'
-    } else if (await CheckUidExistsInDoc(uid, ADMIN_FIRESTORE_PATH)) {
+    } else if (await CheckUidExistsInDoc(uid, FirebasePath.ADMIN)) {
         return 'admin'
     } else {
         return 'anonymous'
@@ -61,6 +59,7 @@ const AuthReducer = (state: AuthState, action: AuthActions): AuthState => {
         case 'SIGN_OUT':
             return {
                 state: 'SIGNED_OUT',
+                userType: 'anonymous',
             }
         default:
             return state
@@ -73,12 +72,12 @@ type AuthContextProps = {
 }
 
 export const AuthContext = createContext<AuthContextProps>({
-    state: { state: 'UNKNOWN' },
+    state: { state: 'UNKNOWN', userType: 'anonymous' },
     dispatch: (val) => {},
 })
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [state, dispatch] = useReducer(AuthReducer, { state: 'UNKNOWN' })
+    const [state, dispatch] = useReducer(AuthReducer, { state: 'UNKNOWN', userType: 'anonymous' })
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {

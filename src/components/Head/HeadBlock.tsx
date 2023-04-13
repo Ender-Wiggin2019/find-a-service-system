@@ -1,8 +1,9 @@
 import React from 'react'
+import { URLPath } from '~/services/lib/constants'
 
 export type HeadProps = {
     title: string
-    url: string
+    url: URLPath
 }
 
 export const Block: React.FC<HeadProps> = ({ title, url }) => {

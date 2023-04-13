@@ -5,7 +5,7 @@ import RequestManagementCard from '~/components/Card/RequestManagementCard'
 import { Service, Comment } from '~/services/types/service'
 import { ServiceProvider } from '~/services/types/user'
 import { db } from '~/services/lib/firebase'
-import { COMMENT_FIRESTORE_PATH, REQUEST_FIRESTORE_PATH, SERVICE_FIRESTORE_PATH } from '~/services/lib/constants'
+import { FirebasePath } from '~/services/lib/constants'
 import { IRequest, RequestCreator, ServiceStatus } from '~/services/types/request'
 import { useAuthState, useSignOut } from '~/utils/hooks/UserContext'
 import Tabs from '@mui/material/Tabs'
@@ -82,7 +82,7 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
     useEffect(() => {
         const fetchRequests = async () => {
             if (state.state === 'SIGNED_IN') {
-                const requestCollection = collection(db, REQUEST_FIRESTORE_PATH)
+                const requestCollection = collection(db, FirebasePath.REQUEST)
                 const q = query(requestCollection, where('sid', '==', serviceId))
                 const requestSnapshot = await getDocs(q)
 
@@ -98,7 +98,7 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
                     requestSnapshot.docs.map(async (singleDoc) => {
                         const data = singleDoc.data()
 
-                        const serviceDoc = await getDoc(doc(db, SERVICE_FIRESTORE_PATH, data.sid))
+                        const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, data.sid))
                         const serviceData = serviceDoc.data()
 
                         if (serviceData) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputTextField from '~/components/InputText/InputTextField'
 import { useSignIn, useGoogleSignIn, useAuthState } from '~/utils/hooks/UserContext'
 import { useNavigate } from 'react-router-dom'
@@ -16,16 +16,20 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         await signIn(email, password)
+    }
+
+    useEffect(() => {
         if (state.state === 'SIGNED_IN') {
+            console.log('navigate')
             if (state.userType === 'customer') {
-                navigate('/customer-creator')
+                navigate('/customer-home')
             } else if (state.userType === 'serviceProvider') {
                 navigate('/provider-home')
             } else if (state.userType === 'admin') {
                 navigate('/admin')
             }
         }
-    }
+    })
 
     return (
         <section className='h-screen'>
