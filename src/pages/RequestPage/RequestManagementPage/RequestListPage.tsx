@@ -11,9 +11,9 @@ import { useAuthState, useSignOut } from '~/utils/hooks/UserContext'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/material';
-import { BoxProps } from '@mui/material';
-import { useTheme } from '@mui/material';
+import { Box } from '@mui/material'
+import { BoxProps } from '@mui/material'
+import { useTheme } from '@mui/material'
 import dayjs from 'dayjs'
 
 interface TabPanelProps {

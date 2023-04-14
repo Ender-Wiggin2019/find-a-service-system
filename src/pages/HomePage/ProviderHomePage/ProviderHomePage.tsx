@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import CurrencyInput from 'react-currency-input-field'
 
 import { useAuthState, useRegister } from '~/utils/hooks/UserContext'
 import InputTextField from '~/components/InputText/InputTextField'

@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CurrencyInput from 'react-currency-input-field'
 
 import { useAuthState } from '~/utils/hooks/UserContext'
 import ImageUploader from '~/utils/ImageUploader'
 import InputTextField from '~/components/InputText/InputTextField'
+import InputCurrencyField from '~/components/InputText/InputCurrencyField'
+import InputGeoField from '~/components/InputText/InputGeoField'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
 import { storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
@@ -90,30 +91,24 @@ const ServiceCreatorPage: React.FC = () => {
                                 onChange={(value) => setName(value)}
                             />
                             <ImageUploader onImageSelected={handleImageSelected} />
-                            <div className='relative mb-6' data-te-input-wrapper-init>
-                                <label
-                                    htmlFor='text'
-                                    className='block mb-2 text-sm font-medium text-head dark:text-white'
-                                >
-                                    Your service price
-                                </label>
-                                <CurrencyInput
-                                    id='currency-input'
-                                    name='currency-input'
-                                    placeholder='Please enter a number'
-                                    prefix='£'
-                                    suffix=' per hour'
-                                    // defaultValue={1000}
-                                    decimalsLimit={2}
-                                    className='bg-gray-50 border border-gray-300 text-head sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-subhead dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                                    onValueChange={(value) => (value ? setPrice(value) : '')}
-                                />
-                            </div>
-                            <InputTextField
-                                label='Your covered areas'
+                            <InputCurrencyField
+                                label='Your service price'
                                 type='text'
-                                placeholder='todo'
-                                onChange={(value) => setArea(value)}
+                                onChange={(value) => setPrice(value)}
+                            />
+                            {/*<InputTextField*/}
+                            {/*    label='Your covered areas'*/}
+                            {/*    type='text'*/}
+                            {/*    placeholder='todo'*/}
+                            {/*    onChange={(value) => setArea(value)}*/}
+                            {/*/>*/}
+                            <InputGeoField
+                                label='Your covered areas'
+                                onChange={(selectedOptions) => {
+                                    const firstOption = selectedOptions[0]?.value || ''; // TODO: should be an array
+                                    console.log(firstOption);
+                                    setArea(firstOption);
+                                }}
                             />
 
                             <InputTextField
