@@ -105,9 +105,9 @@ const ServiceCreatorPage: React.FC = () => {
                             <InputGeoField
                                 label='Your covered areas'
                                 onChange={(selectedOptions) => {
-                                    const firstOption = selectedOptions[0]?.value || ''; // TODO: should be an array
-                                    console.log(firstOption);
-                                    setArea(firstOption);
+                                    const firstOption = selectedOptions[0]?.value || '' // TODO: should be an array
+                                    console.log(firstOption)
+                                    setArea(firstOption)
                                 }}
                             />
 

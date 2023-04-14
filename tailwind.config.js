@@ -5,7 +5,11 @@ module.exports = {
         safeList: [],
         content: ['./index.html', './src/**/*.tsx', './src/**/*.ts'],
     },
-    content: ['./node_modules/flowbite/**/*.js', 'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}', "./node_modules/react-tailwindcss-select/dist/index.esm.js"],
+    content: [
+        './node_modules/flowbite/**/*.js',
+        'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+        './node_modules/react-tailwindcss-select/dist/index.esm.js',
+    ],
     theme: {
         minWidth: {
             40: '10rem',
