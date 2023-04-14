@@ -22,20 +22,24 @@ export type URLPath =
     | '/services'
     | '/service/:serviceId'
     | '/setting'
-    | '/admin'
+    | '/admin-verify'
+    | '/admin-remove'
     | '/requestHistory'
     | '/request-list'
     | '/provider-home'
     | '*'
 
 export const AuthMap = new Map<Role, URLPath[]>([
-    ['customer', ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory']],
+    [
+        'customer',
+        ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory', '/login'],
+    ],
     [
         'serviceProvider',
-        ['*', '/', '/service-creator', '/service/:serviceId', '/provider-home', '/services', '/request-list'],
+        ['*', '/', '/service-creator', '/service/:serviceId', '/provider-home', '/services', '/request-list', '/login'],
     ],
-    ['anonymous', ['*', '/', '/login', '/register', '/services']],
-    ['admin', ['*', '/', '/admin']],
+    ['anonymous', ['*', '/', '/login', '/register', '/services', '/login', '/service/:serviceId']],
+    ['admin', ['*', '/', '/admin-verify', '/admin-remove', '/login', '/services', '/service/:serviceId']],
 ])
 
 // FIXME: when deploy, change all path to plural, e.g. serviceProviders

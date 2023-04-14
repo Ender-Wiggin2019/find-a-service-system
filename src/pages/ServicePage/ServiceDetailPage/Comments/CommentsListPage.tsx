@@ -33,12 +33,14 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
                     // console.log(serviceProviderData);
 
                     commentsData.push({
+                        id: singleDoc.id,
                         uid: data.uid,
                         name: data.name,
                         time: time,
                         // title: string;
                         comment: data.comment,
                         rating: data.rating,
+                        sid: serviceId,
                     })
                 }),
             )
@@ -53,12 +55,14 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
         <div className='w-full grid grid-cols-1 gap-2'>
             {comments.map((comment, index) => (
                 <CommentCard
+                    id={comment.id}
                     key={index}
                     uid={comment.uid}
                     name={comment.name}
                     time={comment.time}
                     comment={comment.comment}
                     rating={comment.rating}
+                    sid={comment.sid}
                 />
                 // <CommentCard  key={index}/>
                 // <CommentCard key={index+'1'} name="Annie" time="6 minutes ago" rating="2" comment="very good"/>

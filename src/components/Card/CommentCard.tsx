@@ -9,18 +9,26 @@ import StarRatings from 'react-star-ratings'
 // import {ServiceProvider} from "~/components/types/user";
 import { formatTime } from '~/utils/FormatTime'
 import { Service, Comment } from '~/services/types/service'
+import { useAuthState } from '~/utils/hooks/UserContext'
+import { FaTimes } from 'react-icons/fa'
+import { commentColFactory, db } from '~/services/lib/firebase'
+import { doc, deleteDoc } from 'firebase/firestore'
+import { FirebasePath } from '~/services/lib/constants'
+import { useNavigate } from 'react-router-dom'
 
 /* Ender: Note that this should be a single component, which should in a father component such as CommentList */
 
 type CommentCardProps = {
+    id: string
     uid: string
     name: string
     time: Date
     comment: string
     rating: number
+    sid: string
 }
 
-const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rating }: Comment) => {
+const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment, rating, sid }: Comment) => {
     // const { serviceId } = useParams<{ serviceId: string }>();
     // const [service, setService] = useState<Service | null>(null);
     //
@@ -44,8 +52,31 @@ const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rat
     //     return <div>Loading...</div>;
     // }
 
+    const { state } = useAuthState()
+    const navigate = useNavigate()
+
+    const [showDeleteButton, setShowDeleteButton] = useState(false)
+    const handleMouseEnter = () => {
+        if (state.userType === 'admin') {
+            setShowDeleteButton(true)
+        }
+    }
+
+    const handleMouseLeave = () => {
+        setShowDeleteButton(false)
+    }
+
+    const onDelete = async () => {
+        await deleteDoc(doc(db, FirebasePath.SERVICE, sid, FirebasePath.COMMENT, id))
+        navigate(0)
+    }
+
     return (
-        <div className='bg-white max-w-xl rounded-2xl px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500'>
+        <div
+            className='relative bg-white max-w-xl rounded-2xl px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500'
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             {/*<div className="w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-white">LOGO</div>*/}
             <div className='mt-4 flex items-center space-x-4 py-2'>
                 <div className=''>
@@ -82,6 +113,14 @@ const CommentCard: React.FC<CommentCardProps> = ({ uid, name, time, comment, rat
                 {/*    <div className="p-6 bg-yellow-400 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer">+</div>*/}
                 {/*</div>*/}
             </div>
+
+            {showDeleteButton && (
+                <div className='absolute top-0 right-0'>
+                    <button className='p-1 rounded-md bg-red-500 text-white hover:bg-red-600' onClick={onDelete}>
+                        <FaTimes />
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
