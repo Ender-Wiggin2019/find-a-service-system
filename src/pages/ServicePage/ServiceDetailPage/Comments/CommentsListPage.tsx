@@ -1,8 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 // import { Link } from "react-router-dom";
-import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, deleteDoc } from 'firebase/firestore'
 import CommentCard from '~/components/Card/CommentCard'
-import { Service, Comment } from '~/services/types/service'
+import { Service, Comment, IComment } from '~/services/types/service'
 // import { ServiceProvider } from '~/components/types/user';
 import { db } from '~/services/lib/firebase'
 import { FirebasePath } from '~/services/lib/constants'
@@ -12,7 +12,7 @@ type ServiceCardProps = {
 }
 
 const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
-    const [comments, setComments] = useState<Array<Comment>>([])
+    const [comments, setComments] = useState<Array<IComment>>([])
 
     // console.log(comments);
 
@@ -20,7 +20,7 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
         const fetchComments = async () => {
             const serviceCollection = collection(db, FirebasePath.SERVICE, serviceId, FirebasePath.COMMENT)
             const commentSnapshot = await getDocs(serviceCollection)
-            const commentsData: Comment[] = []
+            const commentsData: IComment[] = []
 
             await Promise.all(
                 commentSnapshot.docs.map(async (singleDoc) => {
@@ -34,13 +34,15 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
 
                     commentsData.push({
                         id: singleDoc.id,
-                        uid: data.uid,
-                        name: data.name,
-                        time: time,
-                        // title: string;
-                        comment: data.comment,
-                        rating: data.rating,
-                        sid: serviceId,
+                        comment: {
+                            uid: data.uid,
+                            name: data.name,
+                            time: time,
+                            // title: string;
+                            comment: data.comment,
+                            rating: data.rating,
+                        },
+                        serviceId: serviceId,
                     })
                 }),
             )
@@ -51,21 +53,34 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
         fetchComments()
     }, [])
 
+    const onDelete = async (index: number) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this comment?')
+        if (confirmDelete && comments[index]?.id) {
+            try {
+                const id = comments[index].id
+                await deleteDoc(doc(db, FirebasePath.SERVICE, serviceId, FirebasePath.COMMENT, id))
+                const newComments = comments.filter((_, cur) => cur !== index)
+                setComments(newComments)
+                console.log(comments)
+            } catch (error) {
+                console.error('Delete Comment Error: ', error)
+            }
+        }
+    }
+
     return (
         <div className='w-full grid grid-cols-1 gap-2'>
             {comments.map((comment, index) => (
                 <CommentCard
                     id={comment.id}
                     key={index}
-                    uid={comment.uid}
-                    name={comment.name}
-                    time={comment.time}
-                    comment={comment.comment}
-                    rating={comment.rating}
-                    sid={comment.sid}
+                    uid={comment.comment.uid}
+                    name={comment.comment.name}
+                    time={comment.comment.time}
+                    comment={comment.comment.comment}
+                    rating={comment.comment.rating}
+                    onDelete={() => onDelete(index)}
                 />
-                // <CommentCard  key={index}/>
-                // <CommentCard key={index+'1'} name="Annie" time="6 minutes ago" rating="2" comment="very good"/>
             ))}
         </div>
     )

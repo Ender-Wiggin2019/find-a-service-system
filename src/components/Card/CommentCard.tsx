@@ -25,10 +25,10 @@ type CommentCardProps = {
     time: Date
     comment: string
     rating: number
-    sid: string
+    onDelete: () => void
 }
 
-const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment, rating, sid }: Comment) => {
+const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment, rating, onDelete }) => {
     // const { serviceId } = useParams<{ serviceId: string }>();
     // const [service, setService] = useState<Service | null>(null);
     //
@@ -53,7 +53,6 @@ const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment,
     // }
 
     const { state } = useAuthState()
-    const navigate = useNavigate()
 
     const [showDeleteButton, setShowDeleteButton] = useState(false)
     const handleMouseEnter = () => {
@@ -64,11 +63,6 @@ const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment,
 
     const handleMouseLeave = () => {
         setShowDeleteButton(false)
-    }
-
-    const onDelete = async () => {
-        await deleteDoc(doc(db, FirebasePath.SERVICE, sid, FirebasePath.COMMENT, id))
-        navigate(0)
     }
 
     return (
