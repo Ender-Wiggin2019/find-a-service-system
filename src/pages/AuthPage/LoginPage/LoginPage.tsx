@@ -26,7 +26,7 @@ const Login: React.FC = () => {
             } else if (state.userType === 'serviceProvider') {
                 navigate('/provider-home')
             } else if (state.userType === 'admin') {
-                navigate('/admin')
+                navigate('/admin-verify')
             }
         }
     })

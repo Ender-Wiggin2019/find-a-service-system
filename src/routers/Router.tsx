@@ -2,6 +2,7 @@ import { Dialog } from '@headlessui/react'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom'
 import { Head } from '~/components/Head'
+import { URLPath } from '~/services/lib/constants'
 import { AuthMap } from '~/services/lib/constants'
 import { useAuthState } from '~/utils/hooks/UserContext'
 
@@ -92,11 +93,7 @@ const InnerRouter = () => {
             element: <UserSettingPage />,
         },
         {
-            path: '/comment', //  debug only
-            element: <CommentCard uid='111' name='Annie' time={new Date()} rating={2} comment='very good' />,
-        },
-        {
-            path: '/admin',
+            path: '/admin-verify',
             element: <AdminPage />,
         },
         {
@@ -123,7 +120,7 @@ const InnerRouter = () => {
             element: <Layout />,
             children: pages.map((page) => ({
                 path: page.path,
-                element: <>{AuthMap.get(state.userType) && page.element}</>,
+                element: <>{AuthMap.get(state.userType)?.includes(page.path as URLPath) && page.element}</>,
             })),
         },
     ]

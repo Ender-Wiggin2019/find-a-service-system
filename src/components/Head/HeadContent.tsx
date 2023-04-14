@@ -25,7 +25,8 @@ const RoleContentMap = new Map<Role, HeadProps[]>([
     [
         'admin',
         [
-            { title: 'Home', url: '/admin' },
+            { title: 'Verify', url: '/admin-verify' },
+            { title: 'Remove', url: '/admin-remove' },
             { title: 'Services', url: '/services' },
         ],
     ],
@@ -42,7 +43,7 @@ export const HeadContent: React.FC<ContentProps> = ({ role }) => {
     const list = RoleContentMap.get(role)
     return (
         <>
-            {!list ||
+            {list &&
                 list.map((headParams, index) => <Block key={index} title={headParams.title} url={headParams.url} />)}
         </>
     )

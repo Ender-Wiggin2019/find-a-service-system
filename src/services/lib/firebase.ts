@@ -56,7 +56,7 @@ export const roleCol = createCollection<Role>('roles')
 export const customerCol = createCollection<Customer>(FirebasePath.CUSTOMER)
 export const serviceProviderCol = createCollection<ServiceProvider>(FirebasePath.SERVICE_PROVIDER)
 export const serviceCreatorCol = createCollection<ServiceCreator>(FirebasePath.SERVICE)
-export const commentColFactory = createCollectionFactory<Comment>(FirebasePath.COMMENT)
+export const commentColFactory = createCollectionFactory<Comment>(FirebasePath.SERVICE)
 export const requestCreatorCol = createCollection<RequestCreator>(FirebasePath.REQUEST)
 
 // TODO(Ender): the following code is from original template, need to be refactored
