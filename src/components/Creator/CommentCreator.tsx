@@ -24,14 +24,12 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
             const name = state.currentUser.displayName ? state.currentUser.displayName : 'Anonymous'
             // FIXME: update interface
             const success = await commentCreator(serviceId as string, {
-                id: '', // FIXME
                 uid: state.currentUser.uid,
                 name: name,
                 time: new Date(),
                 // title: string,
                 comment: comment,
                 rating: rating,
-                sid: serviceId,
             })
             console.log('success', success)
             if (success) {
