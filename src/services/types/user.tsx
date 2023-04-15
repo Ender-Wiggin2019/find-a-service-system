@@ -1,5 +1,12 @@
 export type Role = 'admin' | 'serviceProvider' | 'customer' | 'anonymous'
 
+export enum ServiceProviderStatus {
+    ACCEPTED = 'accepted',
+    REJECTED = 'rejected',
+    NEED_TO_VERIFY = 'need to verify',
+    REMOVED = 'removed',
+}
+
 export class User {
     constructor(public uid: string, public displayName: string, public email: string, public role: Role) {}
 }
@@ -11,7 +18,8 @@ export class ServiceProvider extends User {
         email: string,
         public address: string | undefined,
         public description: string | undefined,
-        public isVerified: boolean,
+        public status: ServiceProviderStatus,
+        public rejectReason: string | undefined,
     ) {
         super(uid, displayName, email, 'serviceProvider')
     }
