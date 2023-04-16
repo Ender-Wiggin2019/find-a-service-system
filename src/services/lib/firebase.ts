@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { getAuth, Auth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
+import { getAuth, connectAuthEmulator, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
 import {
     connectFirestoreEmulator,
     getFirestore,

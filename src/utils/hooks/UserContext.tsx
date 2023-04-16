@@ -4,7 +4,7 @@ import { User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfil
 import { db, auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/services/lib/firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
-import { Role, ServiceProvider, Customer } from '~/services/types/user'
+import { Role, ServiceProvider, Customer, ServiceProviderStatus } from '~/services/types/user'
 import { FirebasePath } from '~/services/lib/constants'
 
 type AuthActions =
@@ -193,7 +193,17 @@ const useRegister = () => {
                     await setDoc(
                         doc(serviceProviderCol, user.uid),
                         JSON.parse(
-                            JSON.stringify(new ServiceProvider(user.uid, name, email, address, description, false)),
+                            JSON.stringify(
+                                new ServiceProvider(
+                                    user.uid,
+                                    name,
+                                    email,
+                                    address,
+                                    description,
+                                    ServiceProviderStatus.NEED_TO_VERIFY,
+                                    undefined,
+                                ),
+                            ),
                         ),
                     )
                     return true

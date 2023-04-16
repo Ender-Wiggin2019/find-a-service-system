@@ -50,7 +50,8 @@ const ProviderHomePage: React.FC = () => {
                                 serviceProviderData.email,
                                 serviceProviderData.address,
                                 serviceProviderData.description,
-                                serviceProviderData.isVerified || false,
+                                serviceProviderData.status,
+                                serviceProviderData.rejectReason,
                             )
 
                             servicesData.push({
