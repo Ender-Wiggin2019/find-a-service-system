@@ -11,6 +11,7 @@ export class ServiceCreator {
         public time: string,
         public description: string,
         public isVerified: boolean = false,
+        public category: string,
     ) {}
 }
 
@@ -25,9 +26,10 @@ export class Service extends ServiceCreator {
         public time: string,
         public description: string,
         public isVerified: boolean = false,
+        public category: string,
         public comments?: Array<Comment>,
     ) {
-        super(uid, name, image, price, coverArea, time, description, isVerified)
+        super(uid, name, image, price, coverArea, time, description, isVerified, category)
     }
 }
 
@@ -50,4 +52,20 @@ export interface IComment {
     id: string
     serviceId: string
     comment: Comment
+}
+
+// cleaning, babysitting, pest control, plumbing,
+// electrical repairs, beauty
+export enum ServiceCategory {
+    CLEANING = 'cleaning',
+    BABY_SITTING = 'baby sitting',
+    PEST_CONTROL = 'pest control',
+    PLUMBING = 'plumbing',
+    ELECTRICAL_REPAIRS = 'electrical repairs',
+    BEAUTY = 'beauty',
+}
+
+export enum ServiceAvailableTime {
+    WORKING_DAYS = 'working days',
+    ANY_TIME = '24/7',
 }

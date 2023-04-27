@@ -47,6 +47,7 @@ const ServicePage: React.FC = () => {
                                 data.time,
                                 data.description,
                                 data.isVerified,
+                                data.category,
                             ),
                             id: singleDoc.id,
                             serviceProvider: serviceProvider,

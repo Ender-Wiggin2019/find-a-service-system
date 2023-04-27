@@ -6,6 +6,8 @@ import ImageUploader from '~/utils/ImageUploader'
 import InputTextField from '~/components/InputText/InputTextField'
 import InputCurrencyField from '~/components/InputText/InputCurrencyField'
 import InputGeoField from '~/components/InputText/InputGeoField'
+import InputEnumField from '~/components/InputText/InputEnumField'
+import { ServiceCategory, ServiceAvailableTime } from '~/services/types/service'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
 import { storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
@@ -17,6 +19,7 @@ const ServiceCreatorPage: React.FC = () => {
     const { state } = useAuthState()
 
     const [name, setName] = useState('')
+    const [category, setCategory] = useState('')
     const [area, setArea] = useState('')
     const [price, setPrice] = useState('')
     const [time, setTime] = useState('')
@@ -52,13 +55,14 @@ const ServiceCreatorPage: React.FC = () => {
                 .then(() => {
                     // write back to firestore
                     if (imageUrl === undefined) return
-                    serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description)
+                    serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description, category)
                     console.log('success')
+                    navigate('/provider-home')
                     // TODO: if failed, delete image
                 })
                 .then(() => {
                     // TODO: should execute something and jump to another page
-                    // navigate("/");
+                    // navigate("/provider-home");
                 })
         }
     }
@@ -90,6 +94,17 @@ const ServiceCreatorPage: React.FC = () => {
                                 placeholder='Service Name'
                                 onChange={(value) => setName(value)}
                             />
+                            <InputEnumField
+                                label='Your service category'
+                                onChange={(selectedOption) => {
+                                    const firstOption = selectedOption?.value || '' // TODO: should be an array
+                                    setCategory(firstOption)
+                                }}
+                                enumType={Object.entries(ServiceCategory).reduce((obj, [key, value]) => {
+                                    obj[value] = value
+                                    return obj
+                                }, {} as Record<string, string>)}
+                            />
                             <ImageUploader onImageSelected={handleImageSelected} />
                             <InputCurrencyField
                                 label='Your service price'
@@ -111,11 +126,16 @@ const ServiceCreatorPage: React.FC = () => {
                                 }}
                             />
 
-                            <InputTextField
-                                label='Your time'
-                                type='text'
-                                placeholder='todo'
-                                onChange={(value) => setTime(value)}
+                            <InputEnumField
+                                label='Your available time'
+                                onChange={(selectedOption) => {
+                                    const firstOption = selectedOption?.value || '' // TODO: should be an array
+                                    setTime(firstOption)
+                                }}
+                                enumType={Object.entries(ServiceAvailableTime).reduce((obj, [key, value]) => {
+                                    obj[value] = value // TODO: what about key?
+                                    return obj
+                                }, {} as Record<string, string>)}
                             />
 
                             <div className='mb-4'>

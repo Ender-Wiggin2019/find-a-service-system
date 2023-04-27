@@ -19,7 +19,7 @@ export class ServiceProvider extends User {
         public address: string | undefined,
         public description: string | undefined,
         public status: ServiceProviderStatus,
-        public rejectReason: string | undefined,
+        public rejectReason?: string | undefined,
     ) {
         super(uid, displayName, email, 'serviceProvider')
     }

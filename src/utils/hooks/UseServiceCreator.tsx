@@ -14,12 +14,15 @@ export const useServiceCreator = () => {
             coverArea: string,
             time: string,
             description: string, // TODO: need a link to provider
+            category: string,
         ): Promise<boolean> => {
             try {
                 await setDoc(
                     doc(serviceCreatorCol), // will create a new document with a random ID
                     JSON.parse(
-                        JSON.stringify(new ServiceCreator(uid, name, image, price, coverArea, time, description)),
+                        JSON.stringify(
+                            new ServiceCreator(uid, name, image, price, coverArea, time, description, false, category),
+                        ),
                     ),
                 )
                 return true

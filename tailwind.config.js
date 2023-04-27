@@ -43,6 +43,8 @@ module.exports = {
                 button: '#3da9fc',
                 secondary: '#90b4ce',
                 tertiary: '#ef4565',
+                pink: '#f8eaef',
+                deeppink: '#ad6072',
             },
         },
         fontFamily: {
