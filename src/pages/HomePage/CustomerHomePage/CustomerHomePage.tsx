@@ -20,6 +20,7 @@ const CustomerHomePage: React.FC = () => {
     const { state } = useAuthState()
 
     const [name, setName] = useState('')
+    const [category, setCategory] = useState('')
     const [area, setArea] = useState('')
     const [price, setPrice] = useState('')
     const [time, setTime] = useState('')
@@ -66,7 +67,7 @@ const CustomerHomePage: React.FC = () => {
                 .then(() => {
                     // write back to firestore
                     if (imageUrl === undefined) return
-                    serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description)
+                    serviceCreator(state.currentUser.uid, name, imageUrl, price, area, time, description, category)
                     // TODO: if failed, delete image
                 })
                 .then(() => {

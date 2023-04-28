@@ -111,6 +111,7 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
                                 serviceData.time,
                                 serviceData.description,
                                 serviceData.isVerified,
+                                serviceData.category,
                             )
 
                             if (data) {

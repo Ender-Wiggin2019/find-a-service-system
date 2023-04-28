@@ -11,7 +11,7 @@ export const Block: React.FC<HeadProps> = ({ title, url }) => {
         <li>
             <a
                 href={url}
-                className='block py-2 pl-3 pr-4 text-white bg-button rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white'
+                className='block py-2 pl-3 pr-4 text-head rounded bg-transparent md:p-0 dark:text-white'
                 aria-current='page'
             >
                 {title}

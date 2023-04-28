@@ -1,41 +1,48 @@
 import React from 'react'
-import Select, { MultiValue } from 'react-select'
-import { UkCities } from '~/data/uk-cities'
+import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 
 type OptionType = {
     value: string
     label: string
 }
 
-type InputGeoFieldProps = {
+type InputEnumFieldProps<T extends Record<string, string>> = {
     label: string
-    onChange: (selectedOptions: OptionType[]) => void
+    onChange: (selectedOption: OptionType | null) => void
+    enumType: Record<string, string>
     placeholder?: string
-    value?: OptionType[]
+    value?: OptionType
     className?: string
 }
 
-const options: OptionType[] = Object.entries(UkCities).map(([key, value]) => ({
-    value: key,
-    // label: `${key} (${value})`,
-    label: `${key}`,
-}))
+const InputEnumField = <T extends Record<string, string>>({
+    label,
+    onChange,
+    enumType,
+    placeholder,
+    value,
+    className,
+}: InputEnumFieldProps<T>) => {
+    const options: OptionType[] = Object.entries(enumType).map(([key, value]) => ({
+        value: key,
+        label: value,
+    }))
 
-const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, placeholder, className }) => {
-    const handleInputChange = (selectedOptions: MultiValue<OptionType> | null) => {
-        if (selectedOptions) {
-            onChange(selectedOptions as OptionType[])
+    const handleInputChange = (selectedOption: OptionType | null) => {
+        if (selectedOption) {
+            onChange(selectedOption)
         }
     }
 
     return (
         <div className={`relative mb-6 ${className}`}>
             <label className='block mb-2 text-sm font-medium text-head dark:text-white'>{label}</label>
-            <Select
+            <CreatableSelect
                 options={options}
-                placeholder={placeholder}
-                isMulti
                 onChange={handleInputChange}
+                placeholder={placeholder}
+                // value={value}
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
@@ -45,7 +52,6 @@ const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, placehol
                 }}
                 theme={(theme) => ({
                     ...theme,
-
                     borderRadius: 2,
                     colors: {
                         ...theme.colors,
@@ -56,13 +62,12 @@ const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, placehol
                     },
                 })}
                 classNames={{
-                    input: () => '[&_input:focus]:ring-0 px-2 py-2.5',
+                    input: () => '[&_input:focus]:ring-0 px-0 py-2.5',
                     control: (state) => (state.isFocused ? 'border-red-600' : 'border-grey-300'),
                 }}
-                // value={value}
             />
         </div>
     )
 }
 
-export default InputGeoField
+export default InputEnumField

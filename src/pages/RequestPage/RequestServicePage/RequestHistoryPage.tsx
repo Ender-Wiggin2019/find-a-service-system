@@ -43,6 +43,7 @@ const RequestHistoryPage: React.FC = () => {
                                 serviceData.time,
                                 serviceData.description,
                                 serviceData.isVerified,
+                                serviceData.category,
                             )
 
                             if (data) {

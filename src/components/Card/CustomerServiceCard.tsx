@@ -16,8 +16,20 @@ const CustomerServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                     className='w-full h-40 object-cover rounded-t'
                 />
             </figure>
-            <div className='card-body hover:bg-gray-100 hover:rounded-b-md cursor-pointer h-52'>
+            <div className='card-body hover:bg-gray-100 hover:rounded-b-md cursor-pointer h-60'>
                 <h1 className='card-title text-head'>{serviceInformation.name}</h1>
+                <div className='flex gap-4'>
+                    <div className='flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-subhead bg-background border border-subhead '>
+                        <div className='text-xs font-normal leading-none max-w-full flex-initial'>
+                            {serviceInformation.category}
+                        </div>
+                    </div>
+                    <div className='flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-deeppink bg-pink border border-deeppink '>
+                        <div className='text-xs font-normal leading-none max-w-full flex-initial'>
+                            {serviceInformation.time}
+                        </div>
+                    </div>
+                </div>
                 <p className='line-clamp-3 text-subhead'>{serviceInformation.description}</p>{' '}
                 {/* use line-clamp to limit the number of lines of text to 3 */}
                 <div className='card-actions justify-end'>
