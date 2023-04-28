@@ -25,11 +25,9 @@ const ServiceDetailPage = lazy(() => import('~/pages/ServicePage/ServiceDetailPa
 
 const UserSettingPage = lazy(() => import('~/pages/SettingPage/UserSettingPage'))
 
-const CommentCard = lazy(() => import('~/components/Card/CommentCard'))
-
 const RequestHistoryPage = lazy(() => import('~/pages/RequestPage/RequestServicePage/RequestHistoryPage'))
 
-const AdminPage = lazy(() => import('~/pages/AdminPage/VerifyProviderPage/VerifyProviderPage'))
+const AdminVerifyPage = lazy(() => import('~/pages/AdminPage/VerifyProviderPage/VerifyProviderPage'))
 
 const RequestListPage = lazy(() => import('~/pages/RequestPage/RequestManagementPage/RequestListPage'))
 
@@ -94,7 +92,11 @@ const InnerRouter = () => {
         },
         {
             path: '/admin-verify',
-            element: <AdminPage />,
+            element: <AdminVerifyPage />,
+        },
+        {
+            path: '/admin-remove',
+            element: <AdminVerifyPage />,
         },
         {
             path: '*',

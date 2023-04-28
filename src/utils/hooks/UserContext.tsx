@@ -1,16 +1,10 @@
 // UserContext.tsx
-import { createContext, ReactNode, useContext, useEffect, useReducer } from 'react'
-import {
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    updateProfile,
-    User as FirebaseUser,
-} from 'firebase/auth'
-import { auth, customerCol, db, Providers, serviceProviderCol, useAuth } from '~/services/lib/firebase'
-import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore'
-import { Customer, Role, ServiceProvider, ServiceProviderStatus } from '~/services/types/user'
+import { createContext, ReactNode, useContext, useReducer, useEffect } from 'react'
+import { User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile } from 'firebase/auth'
+import { db, auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/services/lib/firebase'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
+import { Role, ServiceProvider, Customer, ServiceProviderStatus } from '~/services/types/user'
 import { FirebasePath } from '~/services/lib/constants'
 
 type AuthActions =
@@ -207,6 +201,7 @@ const useRegister = () => {
                                     address,
                                     description,
                                     ServiceProviderStatus.NEED_TO_VERIFY,
+                                    undefined,
                                 ),
                             ),
                         ),

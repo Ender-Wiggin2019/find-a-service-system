@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
-import { collection, getDocs, updateDoc, doc, deleteField } from 'firebase/firestore'
+import { collection, getDocs, updateDoc, doc, deleteField, deleteDoc } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
 import { FirebasePath } from '~/services/lib/constants'
 import { ServiceProvider, ServiceProviderStatus } from '~/services/types/user'
 import VerifyProviderCard from '~/components/Card/VerifyProviderCard'
 import RejectReasonCreator from '~/components/Creator/RejectReasonCreator'
+// import * as admin from 'firebase-admin'
+// import * as serviceAccount from '~/../functions/admin-key.json'
+
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+//     databaseURL: 'https://comp6251-ebe2c-default-rtdb.europe-west1.firebasedatabase.app',
+// })
 
 const VerifyPage: React.FC = () => {
     const [nonVerifiedProviders, setNonVerifiedProviders] = useState<ServiceProvider[]>([])
@@ -50,30 +57,37 @@ const VerifyPage: React.FC = () => {
         )
         if (confirmAccept) {
             try {
-                let providers = nonVerifiedProviders
+                let provider = nonVerifiedProviders[index]
                 if (newStatus === 'need to verify' || newStatus === 'removed') {
-                    providers = rejectedProviders
+                    provider = rejectedProviders[index]
                 }
-                await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, providers[index].uid), {
+                await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid), {
                     status: newStatus,
                 })
                 if (newStatus === 'need to verify') {
                     const newNonVerifiedProviders = nonVerifiedProviders
-                    newNonVerifiedProviders.push(rejectedProviders[index])
+                    newNonVerifiedProviders.push(provider)
                     setNonVerifiedProviders(newNonVerifiedProviders)
                     const newRejectedProviders = rejectedProviders.filter((_, cur) => cur !== index)
                     setRejectedProviders(newRejectedProviders)
                 } else if (newStatus === 'rejected') {
                     const newRejectedProviders = rejectedProviders
-                    newRejectedProviders.push(nonVerifiedProviders[index])
+                    newRejectedProviders.push(provider)
                     setRejectedProviders(newRejectedProviders)
                     const newNonVerifiedProviders = nonVerifiedProviders.filter((_, cur) => cur !== index)
                     setNonVerifiedProviders(newNonVerifiedProviders)
                 } else if (newStatus === 'removed') {
+                    await deleteDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid))
+                    // admin
+                    //     .auth()
+                    //     .deleteUser(provider.uid)
+                    //     .then(() => {
+                    //         console.log('Sucessfully deleted user')
+                    //     })
                     const newRejectedProviders = rejectedProviders.filter((_, cur) => cur !== index)
                     setRejectedProviders(newRejectedProviders)
                 } else if (newStatus === 'accepted') {
-                    await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, providers[index].uid), {
+                    await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid), {
                         rejectReason: deleteField(),
                     })
                     const newNonVerifiedProviders = nonVerifiedProviders.filter((_, cur) => cur !== index)
