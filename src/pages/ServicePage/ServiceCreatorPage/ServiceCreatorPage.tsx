@@ -96,6 +96,7 @@ const ServiceCreatorPage: React.FC = () => {
                             />
                             <InputEnumField
                                 label='Your service category'
+                                placeholder='Select or type...'
                                 onChange={(selectedOption) => {
                                     const firstOption = selectedOption?.value || '' // TODO: should be an array
                                     setCategory(firstOption)
@@ -119,6 +120,7 @@ const ServiceCreatorPage: React.FC = () => {
                             {/*/>*/}
                             <InputGeoField
                                 label='Your covered areas'
+                                placeholder='Select covered areas...'
                                 onChange={(selectedOptions) => {
                                     const firstOption = selectedOptions[0]?.value || '' // TODO: should be an array
                                     console.log(firstOption)
@@ -128,6 +130,7 @@ const ServiceCreatorPage: React.FC = () => {
 
                             <InputEnumField
                                 label='Your available time'
+                                placeholder='Select or type...'
                                 onChange={(selectedOption) => {
                                     const firstOption = selectedOption?.value || '' // TODO: should be an array
                                     setTime(firstOption)
