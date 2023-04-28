@@ -30,7 +30,7 @@ const InputCurrencyField: React.FC<InputCurrencyFieldProps> = ({ label, type, on
                         id='price'
                         className={`border ${
                             isValid === false ? 'border-red-500' : 'border-subhead'
-                        } text-head sm:text-sm rounded-sm focus:ring-subhead focus:border-head block w-full p-2.5 py-3 pl-7 dark:bg-subhead disabled:text-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                        } text-head sm:text-sm rounded-sm focus:ring-subhead focus:border-head block w-full px-2.5 pl-7 dark:bg-subhead disabled:text-gray-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                         placeholder='0.00'
                         onChange={handleInputChange}
                         value={value || undefined} // set value

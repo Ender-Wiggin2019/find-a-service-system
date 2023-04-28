@@ -11,6 +11,7 @@ type InputEnumFieldProps<T extends Record<string, string>> = {
     label: string
     onChange: (selectedOption: OptionType | null) => void
     enumType: Record<string, string>
+    placeholder?: string
     value?: OptionType
     className?: string
 }
@@ -19,6 +20,7 @@ const InputEnumField = <T extends Record<string, string>>({
     label,
     onChange,
     enumType,
+    placeholder,
     value,
     className,
 }: InputEnumFieldProps<T>) => {
@@ -39,7 +41,7 @@ const InputEnumField = <T extends Record<string, string>>({
             <CreatableSelect
                 options={options}
                 onChange={handleInputChange}
-                placeholder='Select or create...'
+                placeholder={placeholder}
                 // value={value}
                 styles={{
                     control: (baseStyles, state) => ({
