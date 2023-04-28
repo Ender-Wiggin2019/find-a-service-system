@@ -10,6 +10,7 @@ type OptionType = {
 type InputGeoFieldProps = {
     label: string
     onChange: (selectedOptions: OptionType[]) => void
+    placeholder?: string
     value?: OptionType[]
     className?: string
 }
@@ -20,7 +21,7 @@ const options: OptionType[] = Object.entries(UkCities).map(([key, value]) => ({
     label: `${key}`,
 }))
 
-const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, className }) => {
+const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, placeholder, className }) => {
     const handleInputChange = (selectedOptions: MultiValue<OptionType> | null) => {
         if (selectedOptions) {
             onChange(selectedOptions as OptionType[])
@@ -32,6 +33,7 @@ const InputGeoField: React.FC<InputGeoFieldProps> = ({ label, onChange, classNam
             <label className='block mb-2 text-sm font-medium text-head dark:text-white'>{label}</label>
             <Select
                 options={options}
+                placeholder={placeholder}
                 isMulti
                 onChange={handleInputChange}
                 styles={{
