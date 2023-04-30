@@ -126,6 +126,7 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
                                         dayjs(data.requestedTime).toDate(),
                                         dayjs(data.timestamp).toDate(),
                                         data.status,
+                                        data.completeCheck? data.completeCheck : 0,
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,
@@ -144,6 +145,9 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
                                         tempRequestLists.needMoreInfo.push(requestData)
                                         break
                                     case ServiceStatus.COMPLETED:
+                                        tempRequestLists.completed.push(requestData)
+                                        break
+                                    case ServiceStatus.FINISHED_COMMENT: // this one is also completed
                                         tempRequestLists.completed.push(requestData)
                                         break
                                     default:

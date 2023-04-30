@@ -12,6 +12,7 @@ import { Role, ServiceProvider, Customer } from '~/services/types/user'
 import { ServiceCreator, Comment } from '~/services/types/service'
 import { RequestCreator } from '~/services/types/request'
 import { FirebasePath } from '~/services/lib/constants'
+import {Message} from "~/services/types/message";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -42,10 +43,16 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 //     const fullPath = collectionNames.join("/");
 //     return collection(db, fullPath) as CollectionReference<T>;
 // };
-const createCollectionFactory = <T = DocumentData>(collectionPath: string) => {
+const createCommentCollectionFactory = <T = DocumentData>(collectionPath: string) => {
     return (serviceId: string): CollectionReference<T> => {
         const fullPath = `${collectionPath}/${serviceId}/${FirebasePath.COMMENT}`
         // return collection(db, fullPath) as CollectionReference<T>;
+        return collection(db, fullPath) as CollectionReference<T>
+    }
+}
+const createNotificationCollectionFactory = <T = DocumentData>(collectionPath: string) => {
+    return (uid: string): CollectionReference<T> => {
+        const fullPath = `${collectionPath}/${uid}/${FirebasePath.NOTIFICATION}`
         return collection(db, fullPath) as CollectionReference<T>
     }
 }
@@ -56,8 +63,9 @@ export const roleCol = createCollection<Role>('roles')
 export const customerCol = createCollection<Customer>(FirebasePath.CUSTOMER)
 export const serviceProviderCol = createCollection<ServiceProvider>(FirebasePath.SERVICE_PROVIDER)
 export const serviceCreatorCol = createCollection<ServiceCreator>(FirebasePath.SERVICE)
-export const commentColFactory = createCollectionFactory<Comment>(FirebasePath.SERVICE)
+export const commentColFactory = createCommentCollectionFactory<Comment>(FirebasePath.SERVICE)
 export const requestCreatorCol = createCollection<RequestCreator>(FirebasePath.REQUEST)
+export const notificationColFactory = createNotificationCollectionFactory<Message>(FirebasePath.CUSTOMER)
 
 // TODO(Ender): the following code is from original template, need to be refactored
 

@@ -75,6 +75,12 @@ const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
                                     onClick={() => handleClick(ServiceStatus.DECLINED)}
                                 />
                             )}
+                            {requestInformation.status === ServiceStatus.ACCEPTED && (
+                                <StatusButton
+                                    status={ServiceStatus.COMPLETED}
+                                    onClick={() => handleClick(ServiceStatus.COMPLETED)}
+                                />
+                            )}
                             <RequestViewer Irequest={request} />
                         </div>
                     </div>

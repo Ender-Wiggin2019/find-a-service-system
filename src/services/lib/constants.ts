@@ -11,6 +11,7 @@ export enum FirebasePath {
     COMMENT = 'comment',
     REQUEST = 'request',
     ADMIN = 'admin',
+    NOTIFICATION = 'notification',
 }
 
 export type URLPath =

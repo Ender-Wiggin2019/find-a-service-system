@@ -62,7 +62,7 @@ export const Head: React.FC = () => {
                                     className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-3'
                                 >
                                     <li>
-                                        <a>Information</a>
+                                        <a href='/notification'>Notification</a>
                                     </li>
                                     <li>
                                         <a href='/setting'>Setting</a>

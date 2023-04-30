@@ -5,6 +5,7 @@ export enum ServiceStatus {
     DECLINED = 'declined',
     NEED_MORE_INFO = 'need more info',
     COMPLETED = 'completed',
+    FINISHED_COMMENT = 'finished comment',
 }
 export class RequestCreator {
     constructor(
@@ -17,6 +18,7 @@ export class RequestCreator {
         public requestedTime: Date,
         public timestamp: Date,
         public status: ServiceStatus = ServiceStatus.REQUESTED,
+        public completeCheck?: number,
     ) {}
 }
 
