@@ -1,25 +1,40 @@
-import React from 'react'
-import { useAuthState, useSignOut } from '~/utils/hooks/UserContext'
-import { HeadContent } from './HeadContent'
-import logo from '~/assets/favicon.png'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { useAuthState, useSignOut } from '~/utils/hooks/UserContext';
+import { HeadContent } from './HeadContent';
+import logo from '~/assets/favicon.png';
+import { useNavigate } from 'react-router-dom';
+import { useUserNotifications } from '~/utils/hooks/UseUserNotifications'; // 导入 useUserNotifications
+import {MessageStatus} from "~/services/types/message";
 
-const SERVICE_NAME = import.meta.env.VITE_SERVICE_NAME
-const PROJECT_LINK = import.meta.env.VITE_PROJECT_LINK
+const SERVICE_NAME = import.meta.env.VITE_SERVICE_NAME;
+const PROJECT_LINK = import.meta.env.VITE_PROJECT_LINK;
 
 export const Head: React.FC = () => {
-    const { state } = useAuthState()
-    const { signOut } = useSignOut()
-    const navigate = useNavigate()
+    const { state } = useAuthState();
+    const { signOut } = useSignOut();
+    const navigate = useNavigate();
+
+    // 使用 useUserNotifications
+    let uid = '';
+    if (state.state === 'SIGNED_IN') {
+        uid = state.currentUser.uid;
+    }
+    const {loading, error, notifications} = useUserNotifications(uid, [MessageStatus.UNREAD]);
 
     const handleSignOut = () => {
-        signOut()
-        navigate('/services')
-    }
+        signOut();
+        navigate('/services');
+    };
 
     if (state.isLoading) {
-        return <div className='h-14 bg-background dark:bg-head fixed w-full z-20 top-0 left-0'></div>
+        return (
+            <div className='h-14 bg-background dark:bg-head fixed w-full z-20 top-0 left-0'></div>
+        );
     }
+
+    // 计算通知数量
+    const notificationCount = notifications.length;
+
 
     return (
         <nav className='bg-background px-2 sm:px-4 py-2.5 dark:bg-head fixed w-full z-20 top-0 left-0'>
@@ -56,13 +71,17 @@ export const Head: React.FC = () => {
                                             </span>
                                         </div>
                                     </div>
+                                    {notificationCount > 0 && (
+                                        <span
+                                            className="w-3 h-3 bg-tertiary absolute bottom-7 right-0 rounded-full"></span>
+                                        )}
                                 </label>
                                 <ul
                                     tabIndex={0}
                                     className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-3'
                                 >
                                     <li>
-                                        <a href='/notification'>Notification</a>
+                                        <a href='/notifications' className={notificationCount > 0 ? 'text-tertiary' : ''}>Notifications{notificationCount > 0 && ` (${notificationCount})`}</a>
                                     </li>
                                     <li>
                                         <a href='/setting'>Setting</a>
