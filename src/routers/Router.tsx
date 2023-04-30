@@ -35,6 +35,8 @@ const ProviderHomePage = lazy(() => import('~/pages/HomePage/ProviderHomePage/Pr
 
 const Page404Screen = lazy(() => import('~/pages/ErrorPage/404'))
 
+const NotificationPage = lazy(() => import('~/pages/NotificationPage/NotificationPage'))
+
 function Layout() {
     return (
         <div>
@@ -113,6 +115,10 @@ const InnerRouter = () => {
         {
             path: '/provider-home',
             element: <ProviderHomePage />,
+        },
+        {
+            path: '/notifications',
+            element: <NotificationPage />,
         },
     ]
 

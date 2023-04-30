@@ -1,6 +1,7 @@
-import { requestCreatorCol, useAuth } from '~/services/lib/firebase'
-import { doc, setDoc, updateDoc } from 'firebase/firestore'
+import {notificationColFactory, requestCreatorCol, useAuth} from '~/services/lib/firebase'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { RequestCreator, ServiceStatus } from '~/services/types/request'
+import {createWaitingForCommentMessage} from "~/services/types/message";
 
 export const useRequestCreator = () => {
     // const auth = useAuth();
@@ -32,6 +33,7 @@ export const useRequestCreator = () => {
                                 requestedTime,
                                 timestamp,
                                 status,
+                                0, // initial state is 0
                             ),
                         ),
                     ),
@@ -45,12 +47,48 @@ export const useRequestCreator = () => {
 
         updateRequest: async (requestId: string, updates: Partial<RequestCreator>): Promise<boolean> => {
             try {
-                await updateDoc(doc(requestCreatorCol, requestId), updates)
-                return true
+                const requestDocRef = doc(requestCreatorCol, requestId);
+
+                const requestDocSnap = await getDoc(requestDocRef);
+                const requestData = requestDocSnap.data();
+
+                if (requestData && !('completeCheck' in requestData)) {
+                    await updateDoc(requestDocRef, { completeCheck: 0 } as Partial<RequestCreator>);
+                }
+
+                // if the request should be completed
+                if (updates.status === ServiceStatus.COMPLETED) {
+                    const completeCheck = requestData && requestData.completeCheck ? requestData.completeCheck + 1 : 1;
+                    if (completeCheck >= 1) {
+                        await updateDoc(requestDocRef, updates);
+                        if (requestData && requestData.uid && requestData.sid) {
+                            await setDoc(
+                                doc(notificationColFactory(requestData.uid)), // will create a new document with a random ID
+                                createWaitingForCommentMessage(requestData),
+                            )
+                        }
+                    }
+                    await updateDoc(requestDocRef, {
+                        completeCheck: completeCheck,
+                    } as Partial<RequestCreator>);
+                } else {
+                    // else just update
+                    await updateDoc(requestDocRef, updates);
+                }
+
+                // no matter what, update the time
+                // FIXME: data type is not correct
+                // await updateDoc(requestDocRef, {
+                //     // timestamp: new Date().toISOString(),
+                //
+                // } as Partial<RequestCreator>);
+
+                return true;
             } catch (error) {
-                console.error('Update failed:', error)
-                return false
+                console.error('Update failed:', error);
+                return false;
             }
         },
+
     }
 }

@@ -58,6 +58,7 @@ const RequestHistoryPage: React.FC = () => {
                                         data.requestedTime,
                                         data.timestamp,
                                         data.status,
+                                        data.completeCheck? data.completeCheck : 0,
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,

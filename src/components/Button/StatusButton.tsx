@@ -30,6 +30,12 @@ const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick }) => {
                 Decline
             </Button>
         )
+    } else if (statusText === ServiceStatus.COMPLETED.toLowerCase()) {
+        return (
+            <Button variant='contained' color='success' endIcon={<CheckIcon />} onClick={onClick}>
+                Complete
+            </Button>
+        )
     }
 
     return null

@@ -3,7 +3,7 @@ import { Role } from '../types/user'
 
 export const SERVICE_PROVIDER_IMAGE_PATH = 'service_provider_images/'
 
-// Note: each time add a new collection, define a new constant here
+// !Note: each time add a new collection, define a new constant here
 export enum FirebasePath {
     SERVICE_PROVIDER = 'serviceProvider',
     CUSTOMER = 'customer',
@@ -11,6 +11,7 @@ export enum FirebasePath {
     COMMENT = 'comment',
     REQUEST = 'request',
     ADMIN = 'admin',
+    NOTIFICATION = 'notification',
 }
 
 export type URLPath =
@@ -27,12 +28,13 @@ export type URLPath =
     | '/requestHistory'
     | '/request-list'
     | '/provider-home'
+    | '/notifications'
     | '*'
 
 export const AuthMap = new Map<Role, URLPath[]>([
     [
         'customer',
-        ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory', '/login'],
+        ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory', '/login', '/notifications'],
     ],
     [
         'serviceProvider',
