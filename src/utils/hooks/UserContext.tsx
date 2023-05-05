@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
 import { Role, ServiceProvider, Customer, ServiceProviderStatus } from '~/services/types/user'
 import { FirebasePath } from '~/services/lib/constants'
+import { FirebaseError } from '@firebase/util'
 
 type AuthActions =
     | { type: 'SIGN_IN'; payload: { user: FirebaseUser; userType: Role } }
@@ -231,8 +232,8 @@ const useRegister = () => {
                     return false
                 }
             } catch (error) {
-                if (error.code === 'auth/email-already-in-use') {
-                    alert('Email already in use')
+                if (error instanceof FirebaseError) {
+                    if (error.code === 'auth/email-already-in-use') alert('Email already in use')
                 }
                 console.error('Registration failed:', error)
                 return false

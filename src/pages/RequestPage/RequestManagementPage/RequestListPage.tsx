@@ -126,7 +126,7 @@ const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
                                         dayjs(data.requestedTime).toDate(),
                                         dayjs(data.timestamp).toDate(),
                                         data.status,
-                                        data.completeCheck? data.completeCheck : 0,
+                                        data.completeCheck ? data.completeCheck : 0,
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,

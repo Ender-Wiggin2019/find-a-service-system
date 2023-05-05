@@ -12,7 +12,7 @@ import { Role, ServiceProvider, Customer } from '~/services/types/user'
 import { ServiceCreator, Comment } from '~/services/types/service'
 import { RequestCreator } from '~/services/types/request'
 import { FirebasePath } from '~/services/lib/constants'
-import {Message} from "~/services/types/message";
+import { Message } from '~/services/types/message'
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_APIKEY,

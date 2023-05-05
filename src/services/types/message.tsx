@@ -1,4 +1,4 @@
-import {RequestCreator} from "~/services/types/request";
+import { RequestCreator } from '~/services/types/request'
 
 export enum MessageStatus {
     UNREAD = 'unread',
@@ -7,10 +7,10 @@ export enum MessageStatus {
 }
 
 export interface Message {
-    body: string,
-    time: Date,
-    status: MessageStatus,
-    link?: string,
+    body: string
+    time: Date
+    status: MessageStatus
+    link?: string
 }
 
 export interface IMessage {
@@ -24,7 +24,7 @@ export function createWaitingForCommentMessage(request: RequestCreator): Message
         body: body,
         time: new Date(),
         status: MessageStatus.UNREAD,
-        link: '/customer-home'
+        link: '/customer-home',
     }
 }
 
@@ -34,7 +34,6 @@ export function createNewServiceMessage(serviceId: string, serviceName: string):
         body: body,
         time: new Date(),
         status: MessageStatus.UNREAD,
-        link: `/service/${serviceId}`
+        link: `/service/${serviceId}`,
     }
 }
-

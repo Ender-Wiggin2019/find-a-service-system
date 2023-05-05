@@ -34,7 +34,17 @@ export type URLPath =
 export const AuthMap = new Map<Role, URLPath[]>([
     [
         'customer',
-        ['*', '/', '/customer-home', '/services', '/service/:serviceId', '/setting', '/requestHistory', '/login', '/notifications'],
+        [
+            '*',
+            '/',
+            '/customer-home',
+            '/services',
+            '/service/:serviceId',
+            '/setting',
+            '/requestHistory',
+            '/login',
+            '/notifications',
+        ],
     ],
     [
         'serviceProvider',
