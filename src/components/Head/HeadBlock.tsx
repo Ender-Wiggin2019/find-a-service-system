@@ -8,10 +8,10 @@ export type HeadProps = {
 
 export const Block: React.FC<HeadProps> = ({ title, url }) => {
     return (
-        <li>
+        <li className='p-2 rounded-lg hover:bg-white hover:shadow-lg'>
             <a
                 href={url}
-                className='block py-2 pl-3 pr-4 text-head rounded bg-transparent md:p-0 dark:text-white'
+                className='block text-head text-base rounded bg-transparent md:p-0 dark:text-white'
                 aria-current='page'
             >
                 {title}

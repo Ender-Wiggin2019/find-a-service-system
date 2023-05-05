@@ -100,7 +100,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userType = await GetUserType(user.uid)
-                dispatch({ type: 'SIGN_IN', payload: { user, userType } })
+                if (userType !== 'anonymous') {
+                    dispatch({ type: 'SIGN_IN', payload: { user, userType } })
+                } else {
+                    dispatch({ type: 'SIGN_OUT' })
+                }
             } else {
                 dispatch({ type: 'SIGN_OUT' })
             }
@@ -129,9 +133,13 @@ const useSignIn = () => {
         signIn: async (email: string, password: string) => {
             const { user } = await signInWithEmailAndPassword(auth, email, password)
             const userType = await GetUserType(user.uid)
-            if (user) {
+            if (user && userType !== 'anonymous') {
                 console.log('sign in')
                 dispatch({ type: 'SIGN_IN', payload: { user, userType } })
+            } else if (!user) {
+                alert('User not found, please register first')
+            } else if (userType === 'anonymous') {
+                alert('User has been removed, please register again')
             }
         },
     }
@@ -145,9 +153,13 @@ const useGoogleSignIn = () => {
             try {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
-                if (user) {
-                    const userType = await GetUserType(user.uid)
+                const userType = await GetUserType(user.uid)
+                if (user && userType !== 'anonymous') {
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
+                } else if (!user) {
+                    alert('User not found, please register first')
+                } else if (userType === 'anonymous') {
+                    alert('User has been removed, please register using again')
                 }
             } catch (error) {
                 console.error('signInWithGoogle error:', error)
@@ -180,6 +192,7 @@ const useRegister = () => {
             description?: string,
         ): Promise<boolean> => {
             try {
+                // find user by email in auth
                 const { user } = await createUserWithEmailAndPassword(auth, email, password)
 
                 await updateProfile(user, {
@@ -218,6 +231,9 @@ const useRegister = () => {
                     return false
                 }
             } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    alert('Email already in use')
+                }
                 console.error('Registration failed:', error)
                 return false
             }

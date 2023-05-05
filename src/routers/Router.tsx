@@ -29,6 +29,8 @@ const RequestHistoryPage = lazy(() => import('~/pages/RequestPage/RequestService
 
 const AdminVerifyPage = lazy(() => import('~/pages/AdminPage/VerifyProviderPage/VerifyProviderPage'))
 
+const AdminRemovePage = lazy(() => import('~/pages/AdminPage/RemoveProviderPage/RemoveProviderPage'))
+
 const RequestListPage = lazy(() => import('~/pages/RequestPage/RequestManagementPage/RequestListPage'))
 
 const ProviderHomePage = lazy(() => import('~/pages/HomePage/ProviderHomePage/ProviderHomePage'))
@@ -98,7 +100,7 @@ const InnerRouter = () => {
         },
         {
             path: '/admin-remove',
-            element: <AdminVerifyPage />,
+            element: <AdminRemovePage />,
         },
         {
             path: '*',

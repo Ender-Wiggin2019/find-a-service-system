@@ -20,7 +20,6 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (state.state === 'SIGNED_IN') {
-            console.log('navigate')
             if (state.userType === 'customer') {
                 navigate('/customer-home')
             } else if (state.userType === 'serviceProvider') {

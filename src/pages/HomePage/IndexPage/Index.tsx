@@ -1,8 +1,6 @@
 import { Dialog } from '@headlessui/react'
 import { useRef, useState } from 'react'
 import { useAuthState } from '~/utils/hooks/UserContext'
-import { SignInButton } from '~/components/Button/SignInButton'
-import { SignOutButton } from '~/components/Button/SignOutButton'
 import { Head } from '~/components/Head/Head'
 
 function Index() {
