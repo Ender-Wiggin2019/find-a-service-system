@@ -148,6 +148,7 @@ const ServicePage: React.FC = () => {
                     </div>
                 </div>
                 <button
+                    title='Reset Filters'
                     className='bg-tertiary text-card rounded flex items-center h-9 mt-2  px-2.5'
                     onClick={handleResetFilters}
                 >

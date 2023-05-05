@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 // import { Link } from "react-router-dom";
-import { getFirestore, collection, getDocs, doc, getDoc, query, where, deleteDoc } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, query, where, deleteDoc, updateDoc } from 'firebase/firestore'
 import CommentCard from '~/components/Card/CommentCard'
 import { Service, Comment, IComment } from '~/services/types/service'
 // import { ServiceProvider } from '~/components/types/user';
@@ -58,6 +58,22 @@ const CommentsList: React.FC<ServiceCardProps> = ({ serviceId }) => {
         if (confirmDelete && comments[index]?.id) {
             try {
                 const id = comments[index].id
+                const curRating = comments[index].comment.rating
+                const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, serviceId))
+                if (serviceDoc.exists()) {
+                    const providerDoc = await getDoc(doc(db, FirebasePath.SERVICE_PROVIDER, serviceDoc.data().uid))
+                    if (providerDoc.exists()) {
+                        await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, serviceDoc.data().uid), {
+                            commentCount:
+                                providerDoc.data().commentCount - 1 <= 0 ? 0 : providerDoc.data().commentCount - 1,
+                            rating:
+                                providerDoc.data().commentCount - 1 <= 0
+                                    ? 0
+                                    : (providerDoc.data().rating * providerDoc.data().commentCount - curRating) /
+                                      (providerDoc.data().commentCount - 1),
+                        })
+                    }
+                }
                 await deleteDoc(doc(db, FirebasePath.SERVICE, serviceId, FirebasePath.COMMENT, id))
                 const newComments = comments.filter((_, cur) => cur !== index)
                 setComments(newComments)

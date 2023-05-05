@@ -20,6 +20,8 @@ export class ServiceProvider extends User {
         public description: string | undefined,
         public status: ServiceProviderStatus,
         public rejectReason?: string | undefined,
+        public rating = 0,
+        public commentCount = 0,
     ) {
         super(uid, displayName, email, 'serviceProvider')
     }

@@ -5,18 +5,12 @@ import { FirebasePath } from '~/services/lib/constants'
 import { ServiceProvider, ServiceProviderStatus } from '~/services/types/user'
 import VerifyProviderCard from '~/components/Card/VerifyProviderCard'
 import RejectReasonCreator from '~/components/Creator/RejectReasonCreator'
-// import * as admin from 'firebase-admin'
-// import * as serviceAccount from '~/../functions/admin-key.json'
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-//     databaseURL: 'https://comp6251-ebe2c-default-rtdb.europe-west1.firebasedatabase.app',
-// })
 
 const VerifyPage: React.FC = () => {
     const [nonVerifiedProviders, setNonVerifiedProviders] = useState<ServiceProvider[]>([])
     const [rejectedProviders, setRejectedProviders] = useState<ServiceProvider[]>([])
     const [selectedUser, setSelectedUser] = useState<ServiceProvider>()
+    const [isChanged, setIsChanged] = useState<boolean>(false)
 
     // read data from firebase to `providers`
     useEffect(() => {
@@ -41,7 +35,6 @@ const VerifyPage: React.FC = () => {
                     )
                 }),
             )
-
             setNonVerifiedProviders(
                 providersData.filter((provider) => provider.status === ServiceProviderStatus.NEED_TO_VERIFY),
             )
@@ -49,49 +42,26 @@ const VerifyPage: React.FC = () => {
         }
 
         fetchServices()
-    }, [])
+    }, [isChanged])
 
-    const onChangeStatus = async (index: number, newStatus: ServiceProviderStatus) => {
+    const onChangeStatus = async (uid: string, newStatus: ServiceProviderStatus) => {
         const confirmAccept = window.confirm(
             `Are you sure you want to change the service provider status to ${newStatus}?`,
         )
         if (confirmAccept) {
             try {
-                let provider = nonVerifiedProviders[index]
-                if (newStatus === 'need to verify' || newStatus === 'removed') {
-                    provider = rejectedProviders[index]
-                }
-                await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid), {
+                await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, uid), {
                     status: newStatus,
                 })
-                if (newStatus === 'need to verify') {
-                    const newNonVerifiedProviders = nonVerifiedProviders
-                    newNonVerifiedProviders.push(provider)
-                    setNonVerifiedProviders(newNonVerifiedProviders)
-                    const newRejectedProviders = rejectedProviders.filter((_, cur) => cur !== index)
-                    setRejectedProviders(newRejectedProviders)
-                } else if (newStatus === 'rejected') {
-                    const newRejectedProviders = rejectedProviders
-                    newRejectedProviders.push(provider)
-                    setRejectedProviders(newRejectedProviders)
-                    const newNonVerifiedProviders = nonVerifiedProviders.filter((_, cur) => cur !== index)
-                    setNonVerifiedProviders(newNonVerifiedProviders)
-                } else if (newStatus === 'removed') {
-                    await deleteDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid))
-                    // admin
-                    //     .auth()
-                    //     .deleteUser(provider.uid)
-                    //     .then(() => {
-                    //         console.log('Sucessfully deleted user')
-                    //     })
-                    const newRejectedProviders = rejectedProviders.filter((_, cur) => cur !== index)
-                    setRejectedProviders(newRejectedProviders)
+                setIsChanged(!isChanged)
+                if (newStatus === 'removed') {
+                    await deleteDoc(doc(db, FirebasePath.SERVICE_PROVIDER, uid))
                 } else if (newStatus === 'accepted') {
-                    await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, provider.uid), {
+                    await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, uid), {
                         rejectReason: deleteField(),
+                        rating: 0,
+                        commentCount: 0,
                     })
-                    const newNonVerifiedProviders = nonVerifiedProviders.filter((_, cur) => cur !== index)
-                    setNonVerifiedProviders(newNonVerifiedProviders)
                 }
             } catch (error) {
                 console.error('Accept Service Provider Error: ', error)
@@ -104,13 +74,13 @@ const VerifyPage: React.FC = () => {
     }
 
     return (
-        <div className='flex py-6 flex-wrap md:flex-no-wrap'>
+        <div className='flex py-6 flex-wrap md:flex-no-wrap justify-between'>
             <div className='w-full md:w-1/2 mx-auto py-4 px-4'>
-                <div className='w-full items-center justify-between'>
-                    <h2 className='text-2xl font-medium text-head'>Need to Verify</h2>
-                    <div className='text-gray-500 text-sm'>
-                        <span className='font-medium'>{nonVerifiedProviders.length}</span> items
-                    </div>
+                <div className='flex w-full items-center justify-between'>
+                    <h2 className='text-xl font-medium text-head'>Need to Verify</h2>
+                    <span className='ml-auto text-gray-500 text-sm'>
+                        <span className='font-medium'>{nonVerifiedProviders.length}</span> item(s)
+                    </span>
                 </div>
                 {nonVerifiedProviders.map((provider, index) => (
                     <VerifyProviderCard
@@ -118,7 +88,7 @@ const VerifyPage: React.FC = () => {
                         provider={provider}
                         blueButton={{
                             name: 'Accept',
-                            handleClick: () => onChangeStatus(index, ServiceProviderStatus.ACCEPTED),
+                            handleClick: () => onChangeStatus(provider.uid, ServiceProviderStatus.ACCEPTED),
                         }}
                         redButton={{
                             name: 'Reject',
@@ -128,11 +98,11 @@ const VerifyPage: React.FC = () => {
                 ))}
             </div>
             <div className='w-full md:w-1/2 py-4 px-4'>
-                <div className='w-full items-center justify-between'>
-                    <h2 className='text-2xl font-medium text-head'>Rejected</h2>
-                    <div className='text-gray-500 text-sm'>
-                        <span className='font-medium'>{rejectedProviders.length}</span> items
-                    </div>
+                <div className='flex w-full items-center justify-between'>
+                    <h2 className='text-xl font-medium text-head'>Rejected</h2>
+                    <span className='ml-auto text-gray-500 text-sm'>
+                        <span className='font-medium'>{rejectedProviders.length}</span> item(s)
+                    </span>
                 </div>
                 {rejectedProviders.map((provider, index) => (
                     <VerifyProviderCard
@@ -140,11 +110,11 @@ const VerifyPage: React.FC = () => {
                         provider={provider}
                         blueButton={{
                             name: 'Recover',
-                            handleClick: () => onChangeStatus(index, ServiceProviderStatus.NEED_TO_VERIFY),
+                            handleClick: () => onChangeStatus(provider.uid, ServiceProviderStatus.NEED_TO_VERIFY),
                         }}
                         redButton={{
                             name: 'Remove',
-                            handleClick: () => onChangeStatus(index, ServiceProviderStatus.REMOVED),
+                            handleClick: () => onChangeStatus(provider.uid, ServiceProviderStatus.REMOVED),
                         }}
                     />
                 ))}

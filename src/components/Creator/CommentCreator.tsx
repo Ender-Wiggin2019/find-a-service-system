@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthState } from '~/utils/hooks/UserContext'
 import { useCommentCreator } from '~/utils/hooks/UseCommentCreator'
 import StarRatings from 'react-star-ratings'
-import { IService } from '~/services/types/service'
 
 type CommentCreatorProps = {
     serviceId: string
@@ -31,6 +30,7 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId }) => {
                 comment: comment,
                 rating: rating,
             })
+
             console.log('success', success)
             if (success) {
                 navigate(0)

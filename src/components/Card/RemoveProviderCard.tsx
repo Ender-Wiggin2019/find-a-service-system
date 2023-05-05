@@ -1,18 +1,12 @@
 import React, { useState } from 'react'
 import { ServiceProvider } from '~/services/types/user'
 
-type ButtonProps = {
-    name: string
-    handleClick: () => void
-}
-
 type ProviderItemProps = {
     provider: ServiceProvider
-    blueButton: ButtonProps
-    redButton: ButtonProps
+    onRemove: () => void
 }
 
-const VerifyProviderCard: React.FC<ProviderItemProps> = ({ provider, blueButton, redButton }) => {
+const VerifyProviderCard: React.FC<ProviderItemProps> = ({ provider, onRemove }) => {
     const [isHover, setIsHover] = useState(false)
 
     const handleMouseEnter = () => {
@@ -33,6 +27,13 @@ const VerifyProviderCard: React.FC<ProviderItemProps> = ({ provider, blueButton,
                 <div>
                     <div className='flex items-center space-x-4 py-4'>
                         <div className='text-sm font-semibold'>
+                            <span className='bg-blue-800 text-white text-xl p-1 rounded-lg mr-2'>
+                                {provider.rating.toFixed(1)}
+                            </span>
+                            <span className='text-xl'>|</span>
+                            <span className='bg-green-800 text-white text-xl p-1 rounded-lg ml-2 mr-2'>
+                                {provider.commentCount}
+                            </span>
                             {provider.displayName} • <span className='font-normal'> {provider.email}</span>
                         </div>
                     </div>
@@ -41,19 +42,11 @@ const VerifyProviderCard: React.FC<ProviderItemProps> = ({ provider, blueButton,
                 <div className='ml-auto flex-shrink-0'>
                     <div className='flex flex-col items-end'>
                         <button
-                            className='inline-block w-20 h-8 mb-2 font-bold text-white bg-button rounded hover:bg-blue-500 focus:outline-none focus:shadow-outline-green'
-                            onClick={blueButton.handleClick}
+                            className='inline-block w-20 h-8 mb-2 font-bold text-white bg-error rounded hover:bg-red-600 focus:outline-none focus:shadow-outline-green'
+                            onClick={onRemove}
                         >
-                            {blueButton.name}
+                            Remove
                         </button>
-                        <label
-                            className='flex text-center flex-col justify-center bg-error w-20 h-8 font-bold text-white rounded hover:bg-red-500 focus:outline-none focus:shadow-outline-red'
-                            onClick={redButton.handleClick}
-                            htmlFor='my-modal-6'
-                            color='error'
-                        >
-                            {redButton.name}
-                        </label>
                     </div>
                 </div>
             </div>
