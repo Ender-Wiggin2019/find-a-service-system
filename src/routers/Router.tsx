@@ -39,6 +39,8 @@ const Page404Screen = lazy(() => import('~/pages/ErrorPage/404'))
 
 const NotificationPage = lazy(() => import('~/pages/NotificationPage/NotificationPage'))
 
+const WaitForVerifyPage = lazy(() => import('~/pages/HomePage/WaitForVerifyPage/WaitForVerifyPage'))
+
 function Layout() {
     return (
         <div>
@@ -121,6 +123,10 @@ const InnerRouter = () => {
         {
             path: '/notifications',
             element: <NotificationPage />,
+        },
+        {
+            path: '/wait-for-verify',
+            element: <WaitForVerifyPage />,
         },
     ]
 
