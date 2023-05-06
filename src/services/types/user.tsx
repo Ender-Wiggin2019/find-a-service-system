@@ -1,4 +1,4 @@
-export type Role = 'admin' | 'serviceProvider' | 'customer' | 'anonymous'
+export type Role = 'admin' | 'serviceProvider' | 'customer' | 'anonymous' | 'nonVerifiedProvider'
 
 export enum ServiceProviderStatus {
     ACCEPTED = 'accepted',

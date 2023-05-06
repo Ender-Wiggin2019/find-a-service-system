@@ -1,10 +1,7 @@
 import React from 'react'
 import { Role } from '~/services/types/user'
 import { Block, HeadProps } from './HeadBlock'
-
-type ContentProps = {
-    role: Role
-}
+import { useAuthState } from '~/utils/hooks/UserContext'
 
 const RoleContentMap = new Map<Role, HeadProps[]>([
     [
@@ -37,10 +34,18 @@ const RoleContentMap = new Map<Role, HeadProps[]>([
             { title: 'Services', url: '/services' },
         ],
     ],
+    [
+        'nonVerifiedProvider',
+        [
+            { title: 'Home', url: '/wait-for-verify' },
+            { title: 'Services', url: '/services' },
+        ],
+    ],
 ])
 
-export const HeadContent: React.FC<ContentProps> = ({ role }) => {
-    const list = RoleContentMap.get(role)
+export const HeadContent: React.FC = () => {
+    const { state } = useAuthState()
+    const list = RoleContentMap.get(state.userType)
     return (
         <>
             {list &&
