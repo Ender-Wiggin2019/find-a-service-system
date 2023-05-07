@@ -26,6 +26,8 @@ const Login: React.FC = () => {
                 navigate('/provider-home')
             } else if (state.userType === 'admin') {
                 navigate('/admin-verify')
+            } else if (state.userType === 'nonVerifiedProvider') {
+                navigate('/wait-for-verify')
             }
         }
     })

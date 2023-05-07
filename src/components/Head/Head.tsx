@@ -134,7 +134,7 @@ export const Head: React.FC = () => {
                     id='navbar-sticky'
                 >
                     <ul className='flex flex-col p-4 mt-4 border rounded-lg bg-background md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-background'>
-                        <HeadContent role={state.userType} />
+                        <HeadContent />
                     </ul>
                 </div>
             </div>

@@ -29,6 +29,7 @@ export type URLPath =
     | '/request-list'
     | '/provider-home'
     | '/notifications'
+    | '/wait-for-verify'
     | '*'
 
 export const AuthMap = new Map<Role, URLPath[]>([
@@ -51,6 +52,10 @@ export const AuthMap = new Map<Role, URLPath[]>([
         ['*', '/', '/service-creator', '/service/:serviceId', '/provider-home', '/services', '/request-list', '/login'],
     ],
     ['anonymous', ['*', '/', '/login', '/register', '/services', '/login', '/service/:serviceId']],
+    [
+        'nonVerifiedProvider',
+        ['*', '/', '/login', '/register', '/services', '/login', '/service/:serviceId', '/wait-for-verify'],
+    ],
     ['admin', ['*', '/', '/admin-verify', '/admin-remove', '/login', '/services', '/service/:serviceId']],
 ])
 

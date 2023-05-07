@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useReducer, useEffect } from 'rea
 import { User as FirebaseUser, signInWithPopup, onAuthStateChanged, updateProfile } from 'firebase/auth'
 import { db, auth, useAuth, serviceProviderCol, Providers, customerCol } from '~/services/lib/firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { collection, doc, getDocs, setDoc, where, query } from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc, where, query, getDoc } from 'firebase/firestore'
 import { Role, ServiceProvider, Customer, ServiceProviderStatus } from '~/services/types/user'
 import { FirebasePath } from '~/services/lib/constants'
 import { FirebaseError } from '@firebase/util'
@@ -31,7 +31,7 @@ type AuthState =
           isLoading: boolean
       }
 
-export const CheckUidExistsInDoc = async (uid: string, docPath: Role): Promise<boolean> => {
+export const CheckUidExistsInDoc = async (uid: string, docPath: FirebasePath): Promise<boolean> => {
     try {
         const serviceCollection = collection(db, docPath)
         const q = query(serviceCollection, where('uid', '==', uid))
@@ -45,7 +45,13 @@ export const CheckUidExistsInDoc = async (uid: string, docPath: Role): Promise<b
 
 export const GetUserType = async (uid: string): Promise<Role> => {
     if (await CheckUidExistsInDoc(uid, FirebasePath.SERVICE_PROVIDER)) {
-        return 'serviceProvider'
+        if (
+            await getDoc(doc(db, FirebasePath.SERVICE_PROVIDER, uid)).then((doc) => doc.data()?.status !== 'accepted')
+        ) {
+            return 'nonVerifiedProvider'
+        } else {
+            return 'serviceProvider'
+        }
     } else if (await CheckUidExistsInDoc(uid, FirebasePath.CUSTOMER)) {
         return 'customer'
     } else if (await CheckUidExistsInDoc(uid, FirebasePath.ADMIN)) {
