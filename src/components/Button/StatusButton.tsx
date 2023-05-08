@@ -43,8 +43,8 @@ const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick, role='serv
         )
     } else if (statusText === ServiceStatus.COMPLETED.toLowerCase()) {
         return (
-            <Button variant='contained' color='success' endIcon={role === 'serviceProvider' ? <CheckIcon /> : <CreateIcon />} onClick={onClick}>
-                {role === 'serviceProvider' ? 'Complete' : 'Write Comment'}
+            <Button variant='contained' color='success' endIcon={role === 'serviceProvider' ? <CheckIcon /> : <CheckIcon />} onClick={onClick}>
+                {role === 'serviceProvider' ? 'Complete' : 'Complete'}
             </Button>
         )
     }
