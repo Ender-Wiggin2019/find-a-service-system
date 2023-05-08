@@ -1,17 +1,18 @@
 import React from 'react'
 import { IService } from '~/services/types/service'
 import { IRequest, ServiceStatus } from '~/services/types/request'
-import RequestViewer from '~/pages/RequestPage/RequestManagementPage/RequestViewer'
+import RequestViewer from '~/pages/RequestPage/RequestCustomerPage/RequestViewer'
 import { useRequestCreator } from '~/utils/hooks/UseRequestService'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import StatusButton from '../Button/StatusButton'
+import CommentCreator from "~/components/Creator/CommentCreator";
 
 type RequestCardProps = {
     request: IRequest
 }
 
-const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
+const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
     const { updateRequest } = useRequestCreator()
     const navigate = useNavigate()
 
@@ -37,7 +38,7 @@ const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
                 <div className='flex w-full justify-between'>
                     <div className='flex flex-col mr-4'>
                         <p className='font-bold text-head'>Order ID</p>
-                        <p className='text-subhead'>{request.id}</p>
+                        <a href = {'/service/'+request.request.sid} className='text-subhead'>{request.id}</a>
                     </div>
                     <div className='flex flex-col mr-4'>
                         <p className='font-bold text-head'>Order Time</p>
@@ -56,34 +57,48 @@ const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
                     {/*<p>DESCRIPTION: {requestInformation.requestDescription}</p>*/}
                     <div className='card-actions justify-end'>
                         <div className='flex justify-center items-baseline my-2 gap-4'>
-                            {(requestInformation.status === ServiceStatus.REQUESTED ||
-                                requestInformation.status === ServiceStatus.NEED_MORE_INFO) && (
+                            {(requestInformation.status === ServiceStatus.REQUESTED) && (
                                 <StatusButton
-                                    status={ServiceStatus.ACCEPTED}
-                                    role = 'serviceProvider'
-                                    onClick={() => handleClick(ServiceStatus.ACCEPTED)}
+                                    status={ServiceStatus.REQUESTED}
+                                    role = 'customer'
+                                    onClick={() => handleClick(ServiceStatus.REQUESTED)}
                                 />
                             )}
-                            {requestInformation.status === ServiceStatus.REQUESTED && (
-                                <StatusButton
-                                    status={ServiceStatus.NEED_MORE_INFO}
-                                    role = 'serviceProvider'
-                                    onClick={() => handleClick(ServiceStatus.NEED_MORE_INFO)}
-                                />
-                            )}
-                            {requestInformation.status === ServiceStatus.REQUESTED && (
+                            {(requestInformation.status === ServiceStatus.REQUESTED) && (
                                 <StatusButton
                                     status={ServiceStatus.DECLINED}
-                                    role = 'serviceProvider'
+                                    role = 'customer'
+                                    onClick={() => handleClick(ServiceStatus.DECLINED)}
+                                />
+                            )}
+                            {/*{requestInformation.status === ServiceStatus.NEED_MORE_INFO && (*/}
+                            {/*    <StatusButton*/}
+                            {/*        status={ServiceStatus.NEED_MORE_INFO}*/}
+                            {/*        role = 'customer'*/}
+                            {/*        onClick={() => handleClick(ServiceStatus.NEED_MORE_INFO)}*/}
+                            {/*    />*/}
+                            {/*)}*/}
+                            {requestInformation.status === ServiceStatus.NEED_MORE_INFO && (
+                                <StatusButton
+                                    status={ServiceStatus.DECLINED}
+                                    role = 'customer'
                                     onClick={() => handleClick(ServiceStatus.DECLINED)}
                                 />
                             )}
                             {requestInformation.status === ServiceStatus.ACCEPTED && (
                                 <StatusButton
                                     status={ServiceStatus.COMPLETED}
-                                    role = 'serviceProvider'
+                                    role = 'customer'
                                     onClick={() => handleClick(ServiceStatus.COMPLETED)}
                                 />
+                            )}
+                            {requestInformation.status === ServiceStatus.COMPLETED && (
+                                // <StatusButton
+                                //     status={ServiceStatus.COMPLETED}
+                                //     role = 'customer'
+                                //     onClick={() => handleClick(ServiceStatus.COMPLETED)}
+                                // />
+                                <CommentCreator serviceId={requestInformation.sid} requestId={request.id} />
                             )}
                             <RequestViewer Irequest={request} />
                         </div>
@@ -94,4 +109,4 @@ const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
     )
 }
 
-export default RequestManagementCard
+export default CustomerRequestCard

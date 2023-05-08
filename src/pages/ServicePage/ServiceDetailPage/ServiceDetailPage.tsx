@@ -81,7 +81,7 @@ const ServiceDetail: React.FC = () => {
                 <>
                     <div className='container grid grid-col-1 items-center px-5 py-2 mx-auto my-5 md:flex-row lg:px-28 shadow-xl bg-base-100'>
                         <div>
-                            <CommentCreator serviceId={serviceId} />
+                            Comment
                         </div>
                         <div className='w-full'>
                             <CommentsList serviceId={serviceId} />

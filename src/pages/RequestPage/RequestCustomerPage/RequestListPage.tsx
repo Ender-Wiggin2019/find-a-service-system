@@ -1,8 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { getFirestore, collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore'
-import CustomerRequestCard from '~/components/Card/CustomerRequestCard'
-import { Service, IService, Comment } from '~/services/types/service'
+import RequestManagementCard from '~/components/Card/RequestManagementCard'
+import { Service, Comment } from '~/services/types/service'
 import { ServiceProvider } from '~/services/types/user'
 import { db } from '~/services/lib/firebase'
 import { FirebasePath } from '~/services/lib/constants'
@@ -12,6 +12,9 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/material'
+import { BoxProps } from '@mui/material'
+import { useTheme } from '@mui/material'
+import dayjs from 'dayjs'
 
 interface TabPanelProps {
     children?: React.ReactNode
@@ -62,10 +65,8 @@ interface IRequestLists {
     completed: Array<IRequest>
 }
 
-const RequestHistoryPage: React.FC = () => {
-
+const RequestList: React.FC<RequestListProps> = ({ serviceId }) => {
     const { state } = useAuthState()
-    const [requests, setRequests] = useState<IRequest[]>([])
     const [value, setValue] = React.useState(0)
     const [requestLists, setRequestLists] = useState<IRequestLists>({
         requested: [],
@@ -74,10 +75,13 @@ const RequestHistoryPage: React.FC = () => {
         declined: [],
         completed: [],
     })
+
     useEffect(() => {
         const fetchRequests = async () => {
-            console.log(state.state)
             if (state.state === 'SIGNED_IN') {
+                const requestCollection = collection(db, FirebasePath.REQUEST)
+                const q = query(requestCollection, where('sid', '==', serviceId))
+                const requestSnapshot = await getDocs(q)
 
                 const tempRequestLists: IRequestLists = {
                     requested: [],
@@ -87,18 +91,12 @@ const RequestHistoryPage: React.FC = () => {
                     completed: [],
                 }
 
-                const requestCollection = collection(db, FirebasePath.REQUEST)
-                const q = query(requestCollection, where('uid', '==', state.currentUser.uid))
-                const requestSnapshot = await getDocs(q)
-                // const requestData: IRequest[] = []
-
                 await Promise.all(
                     requestSnapshot.docs.map(async (singleDoc) => {
                         const data = singleDoc.data()
 
                         const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, data.sid))
                         const serviceData = serviceDoc.data()
-                        console.log(serviceData)
 
                         if (serviceData) {
                             const serviceDetail = new Service(
@@ -114,7 +112,7 @@ const RequestHistoryPage: React.FC = () => {
                             )
 
                             if (data) {
-                                const requestData = ({
+                                const requestData = {
                                     request: new RequestCreator(
                                         data.sid,
                                         data.uid,
@@ -122,18 +120,17 @@ const RequestHistoryPage: React.FC = () => {
                                         data.requiredHours,
                                         data.address,
                                         data.requestDescription,
-                                        data.requestedTime,
-                                        data.timestamp,
+                                        dayjs(data.requestedTime).toDate(),
+                                        dayjs(data.timestamp).toDate(),
                                         data.status,
                                         data.completeCheck ? data.completeCheck : 0,
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,
-                                })
-
+                                }
                                 switch (data.status) {
                                     case ServiceStatus.REQUESTED:
-                                        tempRequestLists.requested.push(requestData)
+                                        tempRequestLists.requested.push(requestData as IRequest)
                                         break
                                     case ServiceStatus.ACCEPTED:
                                         tempRequestLists.accepted.push(requestData)
@@ -157,8 +154,6 @@ const RequestHistoryPage: React.FC = () => {
                         }
                     }),
                 )
-
-                // setRequests(requestData)
                 setRequestLists(tempRequestLists)
             }
         }
@@ -184,12 +179,12 @@ const RequestHistoryPage: React.FC = () => {
                         aria-controls='simple-tabpanel-1'
                     />
                     <Tab
-                        label={`Need More Info (${requestLists.needMoreInfo.length})`}
+                        label={`Waiting (${requestLists.needMoreInfo.length})`}
                         id='simple-tab-2'
                         aria-controls='simple-tabpanel-2'
                     />
                     <Tab
-                        label={`Withdraw (${requestLists.declined.length})`}
+                        label={`Declined (${requestLists.declined.length})`}
                         id='simple-tab-3'
                         aria-controls='simple-tabpanel-3'
                     />
@@ -201,13 +196,15 @@ const RequestHistoryPage: React.FC = () => {
                 </Tabs>
             </Box>
             {Object.keys(requestLists).map((status, index) => {
+                console.log('1', status, requestLists[status as keyof IRequestLists].length)
                 return (
                     <TabPanel value={value} index={index} key={status}>
                         <div className='service-cards grid grid-cols-1 gap-2'>
                             {requestLists[status as keyof IRequestLists].map((request, index) => {
+                                console.log('2', status, index, request.request.status)
                                 return (
                                     // <Link key={index} to={`/service/${request.id}`}>
-                                    <CustomerRequestCard key={index} request={request} />
+                                    <RequestManagementCard key={index} request={request} />
                                     // </Link>
                                 )
                             })}
@@ -216,17 +213,7 @@ const RequestHistoryPage: React.FC = () => {
                 )
             })}
         </Box>
-        // <div>
-        //     <h2 className='text-2xl font-bold mb-4'>Service Request History</h2>
-        //     <div className='service-cards grid grid-cols-1 gap-2'>
-        //         {requests.map((request, index) => (
-        //             <Link key={index} to={`/service/${request.id}`}>
-        //                 <RequestServiceCard request={request} />
-        //             </Link>
-        //         ))}
-        //     </div>
-        // </div>
     )
 }
 
-export default RequestHistoryPage
+export default RequestList
