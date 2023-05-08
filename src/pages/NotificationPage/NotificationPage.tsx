@@ -71,7 +71,7 @@ const NotificationPage: React.FC = () => {
                                                 handleNavigate(notification.message.link || '/customer-home')
                                             }
                                         >
-                                            Open {notification.message.link}
+                                            Open
                                         </Button>
                                     )}
                                 </div>

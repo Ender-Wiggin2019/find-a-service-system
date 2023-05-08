@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAuthState} from '~/utils/hooks/UserContext'
-import {useRequestCreator} from '~/utils/hooks/UseRequestService'
-import {IRequest, ServiceStatus} from '~/services/types/request'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuthState } from '~/utils/hooks/UserContext'
+import { useRequestCreator } from '~/utils/hooks/UseRequestService'
+import { IRequest, ServiceStatus } from '~/services/types/request'
 import InputTextField from '~/components/InputText/InputTextField'
 import dayjs from 'dayjs'
-import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 
 type RequestCreatorProps = {
     // sid: string, // user.uid
@@ -33,22 +33,23 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
     const canEdit = state.state === 'SIGNED_IN' && state.currentUser.uid === request.uid && Irequest.request.status === ServiceStatus.NEED_MORE_INFO// user only
 
     const navigate = useNavigate()
-    const { requestCreator } = useRequestCreator()
+    const { updateRequest } = useRequestCreator()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         if (canEdit && time !== null) {
-            const success = await requestCreator(
-                request.sid,
-                request.uid,
-                serviceCategory,
-                requireHours,
-                address,
-                requestDesc,
-                time, // TODO: Need to store correct time in the services
-                new Date(),
-                ServiceStatus.REQUESTED,
+            const success = await updateRequest(
+                Irequest.id,
+            {
+                requestCategory: serviceCategory,
+                requiredHours: requireHours,
+                address: address,
+                requestDescription: requestDesc,
+                requestedTime: time,
+                // timestamp: new Date(), // FIXME: 时间格式有问题
+                status: ServiceStatus.REQUESTED,
+            }
             )
             console.log('success', success)
             if (success) {
@@ -65,7 +66,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                 htmlFor='my-modal-7'
                 className='flex items-center px-6 py-2 mt-auto cursor-pointer font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-md  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
-                View Details
+                { (request.status === ServiceStatus.NEED_MORE_INFO) ? 'Add More Details' : 'View Details'}
             </label>
 
             {/* Put this part before </body> tag */}
