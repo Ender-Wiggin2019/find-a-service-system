@@ -101,6 +101,12 @@ export const Head: React.FC = () => {
                                 className='inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-subhead dark:focus:ring-gray-600'
                                 aria-controls='mobile-menu-2'
                                 aria-expanded='false'
+                                onClick={() => {
+                                    const menu = document.getElementById('mobile-menu-2')
+                                    if (menu) {
+                                        menu.classList.toggle('hidden')
+                                    }
+                                }}
                             >
                                 <span className='sr-only'>Open main menu</span>
                                 <svg
@@ -134,6 +140,11 @@ export const Head: React.FC = () => {
                     id='navbar-sticky'
                 >
                     <ul className='flex flex-col p-4 mt-4 border rounded-lg bg-background md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-background'>
+                        <HeadContent />
+                    </ul>
+                </div>
+                <div className='lg:hidden md:hidden w-full md:flex md:w-auto md:order-1' id='mobile-menu-2'>
+                    <ul className='flex flex-col p-4 mt-4 border rounded-lg bg-background md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-white'>
                         <HeadContent />
                     </ul>
                 </div>
