@@ -62,6 +62,10 @@ const VerifyPage: React.FC = () => {
                         rating: 0,
                         commentCount: 0,
                     })
+                } else if (newStatus === 'need to verify') {
+                    await updateDoc(doc(db, FirebasePath.SERVICE_PROVIDER, uid), {
+                        rejectReason: deleteField(),
+                    })
                 }
             } catch (error) {
                 console.error('Accept Service Provider Error: ', error)
