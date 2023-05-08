@@ -37,7 +37,7 @@ const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
             <div className='grid grid-cols-1 divide-y'>
                 <div className='flex w-full justify-between'>
                     <div className='flex flex-col mr-4'>
-                        <p className='font-bold text-head'>Order ID</p>
+                        <p className='font-bold text-head'>Request ID</p>
                         <a href = {'/service/'+request.request.sid} className='text-subhead'>{request.id}</a>
                     </div>
                     <div className='flex flex-col mr-4'>
@@ -45,8 +45,8 @@ const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
                         <p className='text-subhead'>{dayjs(requestInformation.timestamp).format('LLL')}</p>
                     </div>
                     <div className='flex flex-col mr-4'>
-                        <p className='font-bold text-head'>Service Category</p>
-                        <p className='text-subhead'>{requestInformation.requestCategory}</p>
+                        <p className='font-bold text-head'>Service Name</p>
+                        <p className='text-subhead'>{serviceInformation.name}</p>
                     </div>
                 </div>
                 <div className='mt-2'>
