@@ -143,10 +143,8 @@ const useSignIn = () => {
             if (user && userType !== 'anonymous') {
                 console.log('sign in')
                 dispatch({ type: 'SIGN_IN', payload: { user, userType } })
-            } else if (!user) {
-                alert('User not found, please register first')
             } else if (userType === 'anonymous') {
-                alert('User has been removed, please register again')
+                throw new Error('User has been removed')
             }
         },
     }
@@ -163,10 +161,6 @@ const useGoogleSignIn = () => {
                 const userType = await GetUserType(user.uid)
                 if (user && userType !== 'anonymous') {
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
-                } else if (!user) {
-                    alert('User not found, please register first')
-                } else if (userType === 'anonymous') {
-                    alert('User has been removed, please register using again')
                 }
             } catch (error) {
                 console.error('signInWithGoogle error:', error)

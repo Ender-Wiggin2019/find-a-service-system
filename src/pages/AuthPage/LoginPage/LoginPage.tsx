@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import InputTextField from '~/components/InputText/InputTextField'
 import { useSignIn, useGoogleSignIn, useAuthState } from '~/utils/hooks/UserContext'
 import { useNavigate } from 'react-router-dom'
+import { FirebaseError } from 'firebase/app'
 const Login: React.FC = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState('') // TODO: implement remember me
     const { state } = useAuthState()
+    const [error, setError] = useState('')
 
     const { signIn } = useSignIn()
     const { signInWithGoogle } = useGoogleSignIn()
@@ -15,7 +17,21 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        await signIn(email, password)
+        try {
+            await signIn(email, password)
+        } catch (e) {
+            if (e instanceof Error) {
+                if (e.message === 'User has been removed') {
+                    setError('User has been removed')
+                } else if (e instanceof FirebaseError) {
+                    if (e.code === 'auth/user-not-found') {
+                        setError('User not found')
+                    } else if (e.code === 'auth/wrong-password') {
+                        setError('Wrong password')
+                    }
+                }
+            }
+        }
     }
 
     useEffect(() => {
@@ -57,7 +73,14 @@ const Login: React.FC = () => {
                                 placeholder='Password'
                                 onChange={(value) => setPassword(value)}
                             />
-
+                            {error && (
+                                <div
+                                    className='bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mb-3'
+                                    role='alert'
+                                >
+                                    <span className='block sm:inline'>{error}</span>
+                                </div>
+                            )}
                             <div className='flex items-center justify-between'>
                                 <div className='flex items-start'>
                                     <div className='flex items-center h-5'>
