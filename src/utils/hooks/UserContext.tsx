@@ -140,8 +140,8 @@ const useSignIn = () => {
         signIn: async (email: string, password: string) => {
             const { user } = await signInWithEmailAndPassword(auth, email, password)
             const userType = await GetUserType(user.uid)
+            console.log('user:', user)
             if (user && userType !== 'anonymous') {
-                console.log('sign in')
                 dispatch({ type: 'SIGN_IN', payload: { user, userType } })
             } else if (!user) {
                 alert('User not found, please register first')
@@ -160,7 +160,9 @@ const useGoogleSignIn = () => {
             try {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
-                const userType = await GetUserType(user.uid)
+                // const userType = await GetUserType(user.uid)
+                const userType = 'customer'
+
                 if (user && userType !== 'anonymous') {
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
                 } else if (!user) {

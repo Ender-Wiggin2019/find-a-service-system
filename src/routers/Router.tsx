@@ -19,6 +19,8 @@ const Register = lazy(() => import('~/pages/AuthPage/RegisterPage/RegisterPage')
 
 const ServiceCreatorPage = lazy(() => import('~/pages/ServicePage/ServiceCreatorPage/ServiceCreatorPage'))
 
+const ServiceUpdaterPage = lazy(() => import('~/pages/ServicePage/ServiceUpdaterPage/ServiceUpdaterPage'))
+
 const ServicePage = lazy(() => import('~/pages/ServicePage/ServiceListPage/ServicePage'))
 
 const ServiceDetailPage = lazy(() => import('~/pages/ServicePage/ServiceDetailPage/ServiceDetailPage'))
@@ -127,6 +129,10 @@ const InnerRouter = () => {
         {
             path: '/wait-for-verify',
             element: <WaitForVerifyPage />,
+        },
+        {
+            path: '/service-editor/:serviceId',
+            element: <ServiceUpdaterPage />,
         },
     ]
 

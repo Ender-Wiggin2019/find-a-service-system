@@ -4,6 +4,8 @@ import RequestList from '~/pages/RequestPage/RequestManagementPage/RequestListPa
 import { Button } from '@mui/material'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
 
 type ServiceCardProps = {
     service: IService
@@ -12,6 +14,7 @@ type ServiceCardProps = {
 const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     const serviceInformation = service.service
     const [showRequestList, setShowRequestList] = useState(false)
+    const navigate = useNavigate();
 
     const handleViewRequestsClick = () => {
         setShowRequestList(!showRequestList)
@@ -38,6 +41,14 @@ const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                             {/*    <span className='mr-2 text-5xl font-extrabold'>{'£' + serviceInformation.price}</span>*/}
                             {/*    <span className='text-gray-500 dark:text-gray-400'>/hour</span>*/}
                             {/*</div>*/}
+                            <Button
+                                variant='contained'
+                                className='bg-button'
+                                endIcon={<EditIcon />}
+                                onClick={() => navigate(`/service-editor/${service.id}`)}
+                            >
+                                Edit
+                            </Button>
                             <Button
                                 variant='contained'
                                 className='bg-button'

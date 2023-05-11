@@ -37,3 +37,13 @@ export function createNewServiceMessage(serviceId: string, serviceName: string):
         link: `/service/${serviceId}`,
     }
 }
+
+export function updateServiceMessage(serviceId: string, serviceName: string): Message {
+    const body = `The service ${serviceName} is now updated. Find new changes!`
+    return {
+        body: body,
+        time: new Date(),
+        status: MessageStatus.UNREAD,
+        link: `/service/${serviceId}`,
+    }
+}
