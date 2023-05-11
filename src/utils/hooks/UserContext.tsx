@@ -140,13 +140,11 @@ const useSignIn = () => {
         signIn: async (email: string, password: string) => {
             const { user } = await signInWithEmailAndPassword(auth, email, password)
             const userType = await GetUserType(user.uid)
-            console.log('user:', user)
             if (user && userType !== 'anonymous') {
+                console.log('sign in')
                 dispatch({ type: 'SIGN_IN', payload: { user, userType } })
-            } else if (!user) {
-                alert('User not found, please register first')
             } else if (userType === 'anonymous') {
-                alert('User has been removed, please register again')
+                throw new Error('User has been removed')
             }
         },
     }
@@ -160,17 +158,10 @@ const useGoogleSignIn = () => {
             try {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
-                // const userType = await GetUserType(user.uid)
-                const userType = 'customer'
-
-                if (user) {
+                const userType = await GetUserType(user.uid)
+                if (user && userType !== 'anonymous') {
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
-                } else if (!user) {
-                    alert('User not found, please register first')
                 }
-                // else if (userType === 'anonymous') {
-                //     alert('User has been removed, please register using again')
-                // }
             } catch (error) {
                 console.error('signInWithGoogle error:', error)
             }
