@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAuthState} from '~/utils/hooks/UserContext'
-import {useRequestCreator} from '~/utils/hooks/UseRequestService'
-import {IRequest, ServiceStatus} from '~/services/types/request'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuthState } from '~/utils/hooks/UserContext'
+import { useRequestCreator } from '~/utils/hooks/UseRequestService'
+import { IRequest, ServiceStatus } from '~/services/types/request'
 import InputTextField from '~/components/InputText/InputTextField'
 import dayjs from 'dayjs'
-import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 
 type RequestCreatorProps = {
     // sid: string, // user.uid
@@ -30,7 +30,10 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
     const [address, setAddress] = React.useState<string>(request.address)
     const [requireHours, setRequireHours] = React.useState<number>(request.requiredHours || 0)
 
-    const canEdit = state.state === 'SIGNED_IN' && state.currentUser.uid === request.uid && Irequest.request.status === ServiceStatus.NEED_MORE_INFO// user only
+    const canEdit =
+        state.state === 'SIGNED_IN' &&
+        state.currentUser.uid === request.uid &&
+        Irequest.request.status === ServiceStatus.NEED_MORE_INFO // user only
 
     const navigate = useNavigate()
     const { requestCreator } = useRequestCreator()

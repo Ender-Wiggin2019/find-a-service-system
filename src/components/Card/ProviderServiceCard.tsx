@@ -4,8 +4,8 @@ import RequestList from '~/pages/RequestPage/RequestManagementPage/RequestListPa
 import { Button } from '@mui/material'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit'
+import { useNavigate } from 'react-router-dom'
 
 type ServiceCardProps = {
     service: IService
@@ -14,7 +14,7 @@ type ServiceCardProps = {
 const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     const serviceInformation = service.service
     const [showRequestList, setShowRequestList] = useState(false)
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const handleViewRequestsClick = () => {
         setShowRequestList(!showRequestList)

@@ -34,12 +34,12 @@ export const useServiceCreator = () => {
 
         updateServiceCreator: async (docId: string, serviceCreator: ServiceCreator): Promise<boolean> => {
             try {
-                const serviceCreatorDoc = doc(serviceCreatorCol, docId);
-                await updateDoc(serviceCreatorDoc, JSON.parse(JSON.stringify(serviceCreator)));
-                return true;
+                const serviceCreatorDoc = doc(serviceCreatorCol, docId)
+                await updateDoc(serviceCreatorDoc, JSON.parse(JSON.stringify(serviceCreator)))
+                return true
             } catch (error) {
-                console.error('Update failed:', error);
-                return false;
+                console.error('Update failed:', error)
+                return false
             }
         },
     }

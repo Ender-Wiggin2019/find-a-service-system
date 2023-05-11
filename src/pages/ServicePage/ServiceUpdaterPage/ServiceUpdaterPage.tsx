@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAuthState } from '~/utils/hooks/UserContext'
 import { useServiceNotifications } from '~/utils/hooks/UseServiceNotifications'
@@ -8,15 +8,15 @@ import InputTextField from '~/components/InputText/InputTextField'
 import InputCurrencyField from '~/components/InputText/InputCurrencyField'
 import InputGeoField from '~/components/InputText/InputGeoField'
 import InputEnumField from '~/components/InputText/InputEnumField'
-import {ServiceCategory, ServiceAvailableTime, Service, IService} from '~/services/types/service'
+import { ServiceCategory, ServiceAvailableTime, Service, IService } from '~/services/types/service'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
-import {db, storage} from '~/services/lib/firebase'
+import { db, storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { useServiceCreator } from '~/utils/hooks/UseServiceCreator'
 
-import {FirebasePath, SERVICE_PROVIDER_IMAGE_PATH} from '~/services/lib/constants'
-import {addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where} from "firebase/firestore";
-import {createNewServiceMessage, updateServiceMessage} from "~/services/types/message";
+import { FirebasePath, SERVICE_PROVIDER_IMAGE_PATH } from '~/services/lib/constants'
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { createNewServiceMessage, updateServiceMessage } from '~/services/types/message'
 
 const ServiceUpdaterPage: React.FC = () => {
     const { state } = useAuthState()
@@ -29,7 +29,7 @@ const ServiceUpdaterPage: React.FC = () => {
 
     const [imageUpload, setImageUpload] = useState<File>() // TODO: for now only assume one service has only one image
     const [imageUrl, setImageUrl] = useState<string>()
-    const [service, setService] = useState<Service | null>(null);
+    const [service, setService] = useState<Service | null>(null)
     const { serviceId } = useParams<{ serviceId: string }>()
     const navigate = useNavigate()
 
@@ -51,7 +51,7 @@ const ServiceUpdaterPage: React.FC = () => {
         }
 
         fetchService()
-    }, [serviceId]);
+    }, [serviceId])
 
     const handleImageSelected = useCallback((file: File) => {
         console.log('Image selected:', file)
@@ -59,7 +59,7 @@ const ServiceUpdaterPage: React.FC = () => {
     }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (state.state === 'SIGNED_IN' && service != null) {
             // ... rest of your code here ...
@@ -75,37 +75,37 @@ const ServiceUpdaterPage: React.FC = () => {
                 description,
                 service.isVerified,
                 category,
-                service.comments
-        );
+                service.comments,
+            )
             try {
-                const serviceDocRef = doc(db, FirebasePath.SERVICE, serviceId || '');
-                await updateDoc(serviceDocRef, JSON.parse(JSON.stringify(updatedService)));
-                console.log('Service updated successfully');
+                const serviceDocRef = doc(db, FirebasePath.SERVICE, serviceId || '')
+                await updateDoc(serviceDocRef, JSON.parse(JSON.stringify(updatedService)))
+                console.log('Service updated successfully')
 
-                const requestsCollection = collection(db, `request`);
-                const q = query(requestsCollection, where('sid', '==', serviceId));
-                const requestSnapshot = await getDocs(q);
+                const requestsCollection = collection(db, `request`)
+                const q = query(requestsCollection, where('sid', '==', serviceId))
+                const requestSnapshot = await getDocs(q)
 
                 // Get unique uids
-                const uidSet = new Set<string>();
+                const uidSet = new Set<string>()
                 requestSnapshot.forEach((doc) => {
-                    uidSet.add(doc.data().uid);
-                });
+                    uidSet.add(doc.data().uid)
+                })
 
-                const uniqueUids = Array.from(uidSet);
-                console.log(uniqueUids);
+                const uniqueUids = Array.from(uidSet)
+                console.log(uniqueUids)
                 // Create new service message
-                const newMessage = updateServiceMessage(serviceId || '', updatedService.name);
+                const newMessage = updateServiceMessage(serviceId || '', updatedService.name)
 
                 // Add new message to each user's notifications collection
                 for (const uid of uniqueUids) {
-                    const userNotificationsCollection = collection(db, `customer/${uid}/notification`);
-                    await addDoc(userNotificationsCollection, newMessage);
+                    const userNotificationsCollection = collection(db, `customer/${uid}/notification`)
+                    await addDoc(userNotificationsCollection, newMessage)
                 }
 
                 navigate(`/service/${serviceId}`)
             } catch (error) {
-                console.error('Failed to update service:', error);
+                console.error('Failed to update service:', error)
             }
         }
     }

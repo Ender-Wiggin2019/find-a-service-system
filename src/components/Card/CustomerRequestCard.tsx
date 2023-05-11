@@ -6,7 +6,7 @@ import { useRequestCreator } from '~/utils/hooks/UseRequestService'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import StatusButton from '../Button/StatusButton'
-import CommentCreator from "~/components/Creator/CommentCreator";
+import CommentCreator from '~/components/Creator/CommentCreator'
 
 type RequestCardProps = {
     request: IRequest
@@ -38,7 +38,9 @@ const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
                 <div className='flex w-full justify-between'>
                     <div className='flex flex-col mr-4'>
                         <p className='font-bold text-head'>Request ID</p>
-                        <a href = {'/service/'+request.request.sid} className='text-subhead'>{request.id}</a>
+                        <a href={'/service/' + request.request.sid} className='text-subhead'>
+                            {request.id}
+                        </a>
                     </div>
                     <div className='flex flex-col mr-4'>
                         <p className='font-bold text-head'>Order Time</p>
@@ -57,17 +59,17 @@ const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
                     {/*<p>DESCRIPTION: {requestInformation.requestDescription}</p>*/}
                     <div className='card-actions justify-end'>
                         <div className='flex justify-center items-baseline my-2 gap-4'>
-                            {(requestInformation.status === ServiceStatus.REQUESTED) && (
+                            {requestInformation.status === ServiceStatus.REQUESTED && (
                                 <StatusButton
                                     status={ServiceStatus.REQUESTED}
-                                    role = 'customer'
+                                    role='customer'
                                     onClick={() => handleClick(ServiceStatus.REQUESTED)}
                                 />
                             )}
-                            {(requestInformation.status === ServiceStatus.REQUESTED) && (
+                            {requestInformation.status === ServiceStatus.REQUESTED && (
                                 <StatusButton
                                     status={ServiceStatus.DECLINED}
-                                    role = 'customer'
+                                    role='customer'
                                     onClick={() => handleClick(ServiceStatus.DECLINED)}
                                 />
                             )}
@@ -81,14 +83,14 @@ const CustomerRequestCard: React.FC<RequestCardProps> = ({ request }) => {
                             {requestInformation.status === ServiceStatus.NEED_MORE_INFO && (
                                 <StatusButton
                                     status={ServiceStatus.DECLINED}
-                                    role = 'customer'
+                                    role='customer'
                                     onClick={() => handleClick(ServiceStatus.DECLINED)}
                                 />
                             )}
                             {requestInformation.status === ServiceStatus.ACCEPTED && (
                                 <StatusButton
                                     status={ServiceStatus.COMPLETED}
-                                    role = 'customer'
+                                    role='customer'
                                     onClick={() => handleClick(ServiceStatus.COMPLETED)}
                                 />
                             )}

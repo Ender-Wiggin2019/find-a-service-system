@@ -7,16 +7,16 @@ import InputTextField from '~/components/InputText/InputTextField'
 import InputCurrencyField from '~/components/InputText/InputCurrencyField'
 import InputGeoField from '~/components/InputText/InputGeoField'
 import InputEnumField from '~/components/InputText/InputEnumField'
-import {ServiceCategory, ServiceAvailableTime, IService, Service} from '~/services/types/service'
+import { ServiceCategory, ServiceAvailableTime, IService, Service } from '~/services/types/service'
 import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
-import {db, storage} from '~/services/lib/firebase'
+import { db, storage } from '~/services/lib/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { useServiceCreator } from '~/utils/hooks/UseServiceCreator'
 
-import {FirebasePath, SERVICE_PROVIDER_IMAGE_PATH} from '~/services/lib/constants'
-import {addDoc, collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
-import {ServiceProvider} from "~/services/types/user";
-import {createNewServiceMessage} from "~/services/types/message";
+import { FirebasePath, SERVICE_PROVIDER_IMAGE_PATH } from '~/services/lib/constants'
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { ServiceProvider } from '~/services/types/user'
+import { createNewServiceMessage } from '~/services/types/message'
 
 const ServiceCreatorPage: React.FC = () => {
     const { state } = useAuthState()
@@ -49,7 +49,7 @@ const ServiceCreatorPage: React.FC = () => {
             const imageRef = ref(storage, `${SERVICE_PROVIDER_IMAGE_PATH + imageUpload.name + uuidv4()}`)
             uploadBytes(imageRef, imageUpload)
                 .then((snapshot) => {
-                    return getDownloadURL(snapshot.ref);
+                    return getDownloadURL(snapshot.ref)
                 })
                 .then((url) => {
                     setImageUrl(url)
@@ -65,47 +65,46 @@ const ServiceCreatorPage: React.FC = () => {
                     const q = query(serviceCollection, where('uid', '==', state.currentUser.uid))
                     const serviceSnapshot = await getDocs(q)
                     const servicesData: IService[] = []
-                    const uidSet = new Set<string>();
+                    const uidSet = new Set<string>()
 
-                    let newServiceId = '';
-                    await Promise.all(serviceSnapshot.docs.map(async (singleDoc) => {
-                        const data = singleDoc.data()
-                        if (data.name === name) newServiceId =  singleDoc.id
-                        const requestsCollection = collection(db, `request`);
-                        const q = query(requestsCollection, where('sid', '==', singleDoc.id));
-                        const requestSnapshot = await getDocs(q);
+                    let newServiceId = ''
+                    await Promise.all(
+                        serviceSnapshot.docs.map(async (singleDoc) => {
+                            const data = singleDoc.data()
+                            if (data.name === name) newServiceId = singleDoc.id
+                            const requestsCollection = collection(db, `request`)
+                            const q = query(requestsCollection, where('sid', '==', singleDoc.id))
+                            const requestSnapshot = await getDocs(q)
 
-                        // Get unique uids
-                        requestSnapshot.forEach((doc) => {
-                            uidSet.add(doc.data().uid);
-                        });
+                            // Get unique uids
+                            requestSnapshot.forEach((doc) => {
+                                uidSet.add(doc.data().uid)
+                            })
+                        }),
+                    )
 
-                    }));
-
-                    const uniqueUids = Array.from(uidSet);
-                    console.log(uniqueUids);
+                    const uniqueUids = Array.from(uidSet)
+                    console.log(uniqueUids)
 
                     if (uniqueUids) {
-
-                        const newMessage = createNewServiceMessage(newServiceId, name);
+                        const newMessage = createNewServiceMessage(newServiceId, name)
 
                         // Add new message to each user's notifications collection
                         const promises = uniqueUids.map((uid) => {
-                            const userNotificationsCollection = collection(db, `customer/${uid}/notification`);
-                            return addDoc(userNotificationsCollection, newMessage);
-                        });
+                            const userNotificationsCollection = collection(db, `customer/${uid}/notification`)
+                            return addDoc(userNotificationsCollection, newMessage)
+                        })
 
-                        await Promise.all(promises);
+                        await Promise.all(promises)
                     }
 
                     navigate('/provider-home')
                     // TODO: if failed, delete image
                 })
                 .catch((error) => {
-                    console.error('Failed to update service:', error);
+                    console.error('Failed to update service:', error)
                 })
         }
-
     }
 
     return (

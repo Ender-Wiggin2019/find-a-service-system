@@ -4,17 +4,17 @@ import { Role } from '~/services/types/user'
 import { Button } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 import InfoIcon from '@mui/icons-material/Info'
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import CreateIcon from '@mui/icons-material/Create';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
+import CreateIcon from '@mui/icons-material/Create'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 type StatusButtonProps = {
-    status: ServiceStatus,
-    role: Role,
-    onClick: () => void,
+    status: ServiceStatus
+    role: Role
+    onClick: () => void
 }
 
-const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick, role='serviceProvider' }) => {
+const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick, role = 'serviceProvider' }) => {
     const statusText = status.toLowerCase()
 
     if (statusText === ServiceStatus.REQUESTED.toLowerCase()) {
@@ -43,7 +43,12 @@ const StatusButton: React.FC<StatusButtonProps> = ({ status, onClick, role='serv
         )
     } else if (statusText === ServiceStatus.COMPLETED.toLowerCase()) {
         return (
-            <Button variant='contained' color='success' endIcon={role === 'serviceProvider' ? <CheckIcon /> : <CheckIcon />} onClick={onClick}>
+            <Button
+                variant='contained'
+                color='success'
+                endIcon={role === 'serviceProvider' ? <CheckIcon /> : <CheckIcon />}
+                onClick={onClick}
+            >
                 {role === 'serviceProvider' ? 'Complete' : 'Complete'}
             </Button>
         )

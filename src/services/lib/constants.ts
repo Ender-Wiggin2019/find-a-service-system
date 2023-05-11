@@ -50,7 +50,17 @@ export const AuthMap = new Map<Role, URLPath[]>([
     ],
     [
         'serviceProvider',
-        ['*', '/', '/service-creator', '/service/:serviceId', '/service-editor/:serviceId', '/provider-home', '/services', '/request-list', '/login'],
+        [
+            '*',
+            '/',
+            '/service-creator',
+            '/service/:serviceId',
+            '/service-editor/:serviceId',
+            '/provider-home',
+            '/services',
+            '/request-list',
+            '/login',
+        ],
     ],
     ['anonymous', ['*', '/', '/login', '/register', '/services', '/login', '/service/:serviceId']],
     [

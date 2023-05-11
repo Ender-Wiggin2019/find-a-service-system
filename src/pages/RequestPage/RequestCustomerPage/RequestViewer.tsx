@@ -30,7 +30,10 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
     const [address, setAddress] = React.useState<string>(request.address)
     const [requireHours, setRequireHours] = React.useState<number>(request.requiredHours || 0)
 
-    const canEdit = state.state === 'SIGNED_IN' && state.currentUser.uid === request.uid && Irequest.request.status === ServiceStatus.NEED_MORE_INFO// user only
+    const canEdit =
+        state.state === 'SIGNED_IN' &&
+        state.currentUser.uid === request.uid &&
+        Irequest.request.status === ServiceStatus.NEED_MORE_INFO // user only
 
     const navigate = useNavigate()
     const { updateRequest } = useRequestCreator()
@@ -39,9 +42,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
         e.preventDefault()
 
         if (canEdit && time !== null) {
-            const success = await updateRequest(
-                Irequest.id,
-            {
+            const success = await updateRequest(Irequest.id, {
                 requestCategory: serviceCategory,
                 requiredHours: requireHours,
                 address: address,
@@ -49,8 +50,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                 requestedTime: time,
                 // timestamp: new Date(), // FIXME: 时间格式有问题
                 status: ServiceStatus.REQUESTED,
-            }
-            )
+            })
             console.log('success', success)
             if (success) {
                 navigate(0)
@@ -66,7 +66,7 @@ const RequestViewer: React.FC<RequestCreatorProps> = ({ Irequest }) => {
                 htmlFor='my-modal-7'
                 className='flex items-center px-6 py-2 mt-auto cursor-pointer font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-md  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
-                { (request.status === ServiceStatus.NEED_MORE_INFO) ? 'Add More Details' : 'View Details'}
+                {request.status === ServiceStatus.NEED_MORE_INFO ? 'Add More Details' : 'View Details'}
             </label>
 
             {/* Put this part before </body> tag */}

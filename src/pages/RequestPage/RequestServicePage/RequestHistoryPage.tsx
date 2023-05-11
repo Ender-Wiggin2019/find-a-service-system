@@ -63,7 +63,6 @@ interface IRequestLists {
 }
 
 const RequestHistoryPage: React.FC = () => {
-
     const { state } = useAuthState()
     const [requests, setRequests] = useState<IRequest[]>([])
     const [value, setValue] = React.useState(0)
@@ -78,7 +77,6 @@ const RequestHistoryPage: React.FC = () => {
         const fetchRequests = async () => {
             console.log(state.state)
             if (state.state === 'SIGNED_IN') {
-
                 const tempRequestLists: IRequestLists = {
                     requested: [],
                     accepted: [],
@@ -114,7 +112,7 @@ const RequestHistoryPage: React.FC = () => {
                             )
 
                             if (data) {
-                                const requestData = ({
+                                const requestData = {
                                     request: new RequestCreator(
                                         data.sid,
                                         data.uid,
@@ -129,7 +127,7 @@ const RequestHistoryPage: React.FC = () => {
                                     ),
                                     id: singleDoc.id,
                                     service: serviceDetail,
-                                })
+                                }
 
                                 switch (data.status) {
                                     case ServiceStatus.REQUESTED:

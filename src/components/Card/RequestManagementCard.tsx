@@ -60,28 +60,28 @@ const RequestManagementCard: React.FC<RequestCardProps> = ({ request }) => {
                                 requestInformation.status === ServiceStatus.NEED_MORE_INFO) && (
                                 <StatusButton
                                     status={ServiceStatus.ACCEPTED}
-                                    role = 'serviceProvider'
+                                    role='serviceProvider'
                                     onClick={() => handleClick(ServiceStatus.ACCEPTED)}
                                 />
                             )}
                             {requestInformation.status === ServiceStatus.REQUESTED && (
                                 <StatusButton
                                     status={ServiceStatus.NEED_MORE_INFO}
-                                    role = 'serviceProvider'
+                                    role='serviceProvider'
                                     onClick={() => handleClick(ServiceStatus.NEED_MORE_INFO)}
                                 />
                             )}
                             {requestInformation.status === ServiceStatus.REQUESTED && (
                                 <StatusButton
                                     status={ServiceStatus.DECLINED}
-                                    role = 'serviceProvider'
+                                    role='serviceProvider'
                                     onClick={() => handleClick(ServiceStatus.DECLINED)}
                                 />
                             )}
                             {requestInformation.status === ServiceStatus.ACCEPTED && (
                                 <StatusButton
                                     status={ServiceStatus.COMPLETED}
-                                    role = 'serviceProvider'
+                                    role='serviceProvider'
                                     onClick={() => handleClick(ServiceStatus.COMPLETED)}
                                 />
                             )}

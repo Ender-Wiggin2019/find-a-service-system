@@ -1,17 +1,17 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAuthState} from '~/utils/hooks/UserContext'
-import {useCommentCreator} from '~/utils/hooks/UseCommentCreator'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuthState } from '~/utils/hooks/UserContext'
+import { useCommentCreator } from '~/utils/hooks/UseCommentCreator'
 import StarRatings from 'react-star-ratings'
-import {useRequestCreator} from "~/utils/hooks/UseRequestService";
-import {ServiceStatus} from "~/services/types/request";
+import { useRequestCreator } from '~/utils/hooks/UseRequestService'
+import { ServiceStatus } from '~/services/types/request'
 
 type CommentCreatorProps = {
-    serviceId: string,
-    requestId: string,
+    serviceId: string
+    requestId: string
 }
 
-const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId, requestId}) => {
+const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId, requestId }) => {
     const { state } = useAuthState()
     const [rating, setRating] = useState<number>(0)
     const [comment, setComment] = useState<string>('')
@@ -49,10 +49,10 @@ const CommentCreator: React.FC<CommentCreatorProps> = ({ serviceId, requestId}) 
             {/* The button to open modal */}
             <label
                 htmlFor='my-modal-6'
-            //     className='p-6 bg-button rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer'
-            // >
-            //     +
-            // </label>
+                //     className='p-6 bg-button rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white mt-4 shadow-lg cursor-pointer'
+                // >
+                //     +
+                // </label>
                 className='flex items-center px-6 py-2 mt-auto cursor-pointer font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-md  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
                 Write Comment
