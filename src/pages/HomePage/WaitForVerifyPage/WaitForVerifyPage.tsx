@@ -59,7 +59,7 @@ const WaitForVerifyPage: React.FC = () => {
                             Register
                         </span>
                         <span className='text-base font-semibold inline-block py-1 px-2 uppercase text-blue-100 bg-blue-500 w-1/3 text-center hover:bg-blue-700'>
-                            Waiting for verify
+                            Verification Pending
                         </span>
                         <span className='text-base font-semibold inline-block py-1 px-2 uppercase text-blue-600 bg-blue-300 w-1/3 text-center'>
                             Success

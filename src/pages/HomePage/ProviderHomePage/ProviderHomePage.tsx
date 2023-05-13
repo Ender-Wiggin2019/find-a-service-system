@@ -80,6 +80,7 @@ const ProviderHomePage: React.FC = () => {
     }, [state])
 
     return (
+
         <Page>
             <h2 className='text-2xl font-bold mb-4'>Services</h2>
             <div className='service-cards grid grid-cols-1 gap-4'>

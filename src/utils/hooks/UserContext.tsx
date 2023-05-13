@@ -191,6 +191,8 @@ const useRegister = () => {
             role: Role,
             address?: string,
             description?: string,
+            lat?: number,
+            lng?: number,
         ): Promise<boolean> => {
             try {
                 // find user by email in auth
@@ -216,6 +218,8 @@ const useRegister = () => {
                                     description,
                                     ServiceProviderStatus.NEED_TO_VERIFY,
                                     undefined,
+                                    lat,
+                                    lng,
                                 ),
                             ),
                         ),
