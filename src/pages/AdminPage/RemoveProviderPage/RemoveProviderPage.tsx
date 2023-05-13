@@ -31,6 +31,8 @@ const RemovePage: React.FC = () => {
                             data.description,
                             data.status,
                             data.rejectReason,
+                            data.latitude,
+                            data.longitude,
                             data.rating,
                             data.commentCount,
                         ),
