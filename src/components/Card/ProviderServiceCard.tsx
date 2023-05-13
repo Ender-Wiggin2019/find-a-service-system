@@ -44,6 +44,7 @@ const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                             <Button
                                 variant='contained'
                                 className='bg-button'
+                                color='secondary'
                                 endIcon={<EditIcon />}
                                 onClick={() => navigate(`/service-editor/${service.id}`)}
                             >
@@ -52,6 +53,7 @@ const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                             <Button
                                 variant='contained'
                                 className='bg-button'
+                                color='info'
                                 endIcon={showRequestList ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                                 onClick={handleViewRequestsClick}
                             >
