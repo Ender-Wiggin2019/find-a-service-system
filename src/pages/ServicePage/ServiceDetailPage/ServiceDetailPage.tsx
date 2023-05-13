@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getDoc, doc, collection, getDocs } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
+import LocationPin from 'google-map-react'
+import { useMemo } from "react";
+import './Map/map.css'
 
 import { FirebasePath } from '~/services/lib/constants'
 // import {ServiceProvider} from "~/components/types/user";
 import { Service } from '~/services/types/service'
 import CommentCreator from '~/components/Creator/CommentCreator'
 import CommentsList from './Comments/CommentsListPage'
+import MapCard from './Map/MapCard'
 import RequestCreator from '~/components/Creator/RequestCreator'
 import Page from '~/components/Page/Page'
+
+
 
 const ServiceDetail: React.FC = () => {
     const { serviceId } = useParams<{ serviceId: string }>()
@@ -66,6 +72,16 @@ const ServiceDetail: React.FC = () => {
                                 <>
                                     <div>
                                         <RequestCreator serviceId={serviceId} />
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        <div><br></br></div>
+                        <div className='flex flex-row w-full gap-2 md:justify-start md:flex-row'>
+                            {serviceId && (
+                                <>
+                                    <div>
+                                        <MapCard serviceId={serviceId} />
                                     </div>
                                 </>
                             )}
