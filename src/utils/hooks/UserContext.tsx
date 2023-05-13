@@ -158,8 +158,8 @@ const useGoogleSignIn = () => {
             try {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
-                const email = user.email || "N/A";
-                const displayName = user.displayName || "N/A";
+                const email = user.email || 'N/A'
+                const displayName = user.displayName || 'N/A'
                 await setDoc(
                     doc(customerCol, user.uid),
                     JSON.parse(JSON.stringify(new Customer(user.uid, displayName, email))),
@@ -169,7 +169,7 @@ const useGoogleSignIn = () => {
                 console.log(user)
                 console.log(userType)
                 if (user && userType !== 'anonymous') {
-                    console.log("Here")
+                    console.log('Here')
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
                 }
             } catch (error) {

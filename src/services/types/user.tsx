@@ -25,7 +25,6 @@ export class ServiceProvider extends User {
         public longitude = 0,
         public rating = 0,
         public commentCount = 0,
-
     ) {
         super(uid, displayName, email, 'serviceProvider')
     }

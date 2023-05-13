@@ -59,6 +59,7 @@ export const AuthMap = new Map<Role, URLPath[]>([
             '/provider-home',
             '/services',
             '/request-list',
+            '/setting',
             '/login',
         ],
     ],

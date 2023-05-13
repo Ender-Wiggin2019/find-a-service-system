@@ -52,7 +52,7 @@ const RequestCreator: React.FC<RequestCreatorProps> = ({ serviceId }) => {
             {/* The button to open modal */}
             <label
                 htmlFor='my-modal-7'
-                className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
+                className='flex items-center justify-center px-6 py-3 w-48 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
                 Request
             </label>

@@ -67,18 +67,18 @@ const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment,
 
     return (
         <div
-            className='relative bg-white max-w-xl rounded-2xl px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500'
+            className='relative bg-base-100 max-w-xl rounded-md px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500'
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {/*<div className="w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-white">LOGO</div>*/}
             <div className='mt-4 flex items-center space-x-4 py-2'>
-                <div className=''>
-                    <img
-                        className='w-12 h-12 rounded-full'
-                        src='https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80'
-                        alt=''
-                    />
+                <div className='avatar placeholder'>
+                    <div className='bg-button text-neutral-content rounded-full w-10 h-10'>
+                                            <span className='text-3xl'>
+                                                {name.charAt(0)?.toUpperCase()}
+                                            </span>
+                    </div>
                 </div>
                 <div className='text-sm font-semibold'>
                     {name} • <span className='font-normal'> {formatTime(time)}</span>

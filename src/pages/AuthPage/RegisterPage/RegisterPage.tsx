@@ -4,17 +4,15 @@ import PasswordChecklist from 'react-password-checklist'
 import { useRegister, useGoogleSignIn } from '~/utils/hooks/UserContext'
 import InputTextField from '~/components/InputText/InputTextField'
 import { Role } from '~/services/types/user'
-import {Grid} from "@mui/material";
-import Geocode from "react-geocode";
+import { Grid } from '@mui/material'
+import Geocode from 'react-geocode'
 
-Geocode.setApiKey("AIzaSyDhczFRE73TpmtpletCMqSg-A8TZLq4npI");
-Geocode.setLanguage("en");
+Geocode.setApiKey('AIzaSyDhczFRE73TpmtpletCMqSg-A8TZLq4npI')
+Geocode.setLanguage('en')
 //Geocode.setRegion("es");
-Geocode.setLocationType("ROOFTOP");
+Geocode.setLocationType('ROOFTOP')
 // Enable or disable logs. Its optional.
-Geocode.enableDebug();
-
-
+Geocode.enableDebug()
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState('')
@@ -36,31 +34,31 @@ const Register: React.FC = () => {
 
     const geocodeAddress = async (address: string) => {
         try {
-            const response = await Geocode.fromAddress(address);
+            const response = await Geocode.fromAddress(address)
             // Handle the result here
-            console.log(response);
+            console.log(response)
             // Extract latitude and longitude from the result
-            const latlng = response.results[0].geometry.location;
-            console.log(response.results[0].geometry.location);
-            console.log('Latitude:', latlng.lat);
-            console.log('Longitude:', latlng.lng);
+            const latlng = response.results[0].geometry.location
+            console.log(response.results[0].geometry.location)
+            console.log('Latitude:', latlng.lat)
+            console.log('Longitude:', latlng.lng)
             // Return latitude and longitude as an object
-            return { latitude: latlng.lat, longitude: latlng.lng };
+            return { latitude: latlng.lat, longitude: latlng.lng }
         } catch (error) {
             // Handle any errors that occur during geocoding
-            console.error(error);
+            console.error(error)
             // Return undefined or an appropriate error value
-            return { latitude: 0, longitude: 0 };
+            return { latitude: 0, longitude: 0 }
         }
-    };
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         if (passwordValid) {
-            const address = address_part_1 + ", " + address_part_2 + ", " + address_part_3 + ", " + address_part_4;
+            const address = address_part_1 + ', ' + address_part_2 + ', ' + address_part_3 + ', ' + address_part_4
 
-            const latlng = { lat:0, lng:0 }
+            const latlng = { lat: 0, lng: 0 }
 
             /*
             Geocode.fromAddress(address).then(
@@ -81,22 +79,40 @@ const Register: React.FC = () => {
             }, 1000);
              */
 
-            await geocodeAddress("montefiore house, wessex lane, so182nu,southampton")
-                .then(({ latitude, longitude }) => {
-                    console.log('Latitude:', latitude);
-                    console.log('Longitude:', longitude);
-                    latlng.lat = latitude;
-                    latlng.lng = longitude;
-                });
+            await geocodeAddress('montefiore house, wessex lane, so182nu,southampton').then(
+                ({ latitude, longitude }) => {
+                    console.log('Latitude:', latitude)
+                    console.log('Longitude:', longitude)
+                    latlng.lat = latitude
+                    latlng.lng = longitude
+                },
+            )
 
-            console.log("***")
-            console.log(latlng.lat, latlng.lng);
-            console.log("***")
-            const success = await register(email, name, password, selectedRole, address, description, latlng.lat, latlng.lng)
+            console.log('***')
+            console.log(latlng.lat, latlng.lng)
+            console.log('***')
+            const success = await register(
+                email,
+                name,
+                password,
+                selectedRole,
+                address,
+                description,
+                latlng.lat,
+                latlng.lng,
+            )
             console.log('success', success)
             if (success) {
-                console.log('Registering user with email: ' + email + ' and password: ' + ' and latitude: '+ latlng.lat + ' and longitude: '+ latlng.lng)
-                alert("Sign-up successful, redirecting to login page.");
+                console.log(
+                    'Registering user with email: ' +
+                        email +
+                        ' and password: ' +
+                        ' and latitude: ' +
+                        latlng.lat +
+                        ' and longitude: ' +
+                        latlng.lng,
+                )
+                alert('Sign-up successful, redirecting to login page.')
                 navigate('/login')
             }
         }
@@ -184,40 +200,40 @@ const Register: React.FC = () => {
 
                             {selectedRole === 'serviceProvider' && (
                                 <>
-                                    <label className='block text-subhead text-sm font-bold mb-2'>
-                                        Your Address
-                                    </label>
+                                    <label className='block text-subhead text-sm font-bold mb-2'>Your Address</label>
                                     <Grid container spacing={1}>
                                         <Grid item xs={6}>
-                                    <InputTextField
-                                        label='House number or name'
-                                        type='text'
-                                        placeholder='House number or name'
-                                        onChange={(value) => setAddressPart1(value)}
-                                    />
+                                            <InputTextField
+                                                label='House number or name'
+                                                type='text'
+                                                placeholder='House number or name'
+                                                onChange={(value) => setAddressPart1(value)}
+                                            />
                                         </Grid>
                                         <Grid item xs={6}>
-                                    <InputTextField
-                                        label='Street'
-                                        type='text'
-                                        placeholder='street'
-                                        onChange={(value) => setAddressPart2(value)}
-                                    /></Grid>
-                                            <Grid item xs={6}>
-                                    <InputTextField
-                                        label='Post code'
-                                        type='text'
-                                        placeholder='Post code'
-                                        onChange={(value) => setAddressPart3(value)}
-                                    /></Grid>
-                                                <Grid item xs={6}>
-                                    <InputTextField
-                                        label='Town'
-                                        type='text'
-                                        placeholder='Town'
-                                        onChange={(value) => setAddressPart4(value)}
-                                    />
-                                                </Grid>
+                                            <InputTextField
+                                                label='Street'
+                                                type='text'
+                                                placeholder='street'
+                                                onChange={(value) => setAddressPart2(value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <InputTextField
+                                                label='Post code'
+                                                type='text'
+                                                placeholder='Post code'
+                                                onChange={(value) => setAddressPart3(value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <InputTextField
+                                                label='Town'
+                                                type='text'
+                                                placeholder='Town'
+                                                onChange={(value) => setAddressPart4(value)}
+                                            />
+                                        </Grid>
                                     </Grid>
                                     <label className='block text-subhead text-sm font-bold mb-2'>
                                         Your Description
