@@ -158,8 +158,18 @@ const useGoogleSignIn = () => {
             try {
                 const userCredential = await signInWithPopup(auth, Providers.google)
                 const { user } = userCredential
+                const email = user.email || "N/A";
+                const displayName = user.displayName || "N/A";
+                await setDoc(
+                    doc(customerCol, user.uid),
+                    JSON.parse(JSON.stringify(new Customer(user.uid, displayName, email))),
+                )
+
                 const userType = await GetUserType(user.uid)
+                console.log(user)
+                console.log(userType)
                 if (user && userType !== 'anonymous') {
+                    console.log("Here")
                     dispatch({ type: 'SIGN_IN', payload: { user, userType } })
                 }
             } catch (error) {
@@ -181,6 +191,68 @@ const useSignOut = () => {
 }
 
 const useRegister = () => {
+    const auth = useAuth()
+    // const firestore = useFirestore();
+    return {
+        register: async (
+            email: string,
+            name: string,
+            password: string,
+            role: Role,
+            address?: string,
+            description?: string,
+        ): Promise<boolean> => {
+            try {
+                // find user by email in auth
+                const { user } = await createUserWithEmailAndPassword(auth, email, password)
+
+                await updateProfile(user, {
+                    displayName: name,
+                })
+
+                console.log(role)
+                if (user && role === 'serviceProvider') {
+                    // case: service provider
+                    console.log('check')
+                    await setDoc(
+                        doc(serviceProviderCol, user.uid),
+                        JSON.parse(
+                            JSON.stringify(
+                                new ServiceProvider(
+                                    user.uid,
+                                    name,
+                                    email,
+                                    address,
+                                    description,
+                                    ServiceProviderStatus.NEED_TO_VERIFY,
+                                    undefined,
+                                ),
+                            ),
+                        ),
+                    )
+                    return true
+                } else if (user && role === 'customer') {
+                    // case: customer
+                    await setDoc(
+                        doc(customerCol, user.uid),
+                        JSON.parse(JSON.stringify(new Customer(user.uid, name, email))),
+                    )
+                    return true
+                } else {
+                    return false
+                }
+            } catch (error) {
+                if (error instanceof FirebaseError) {
+                    if (error.code === 'auth/email-already-in-use') alert('Email already in use')
+                }
+                console.error('Registration failed:', error)
+                return false
+            }
+        },
+    }
+}
+
+const useRegisterByGoogle = () => {
     const auth = useAuth()
     // const firestore = useFirestore();
     return {
