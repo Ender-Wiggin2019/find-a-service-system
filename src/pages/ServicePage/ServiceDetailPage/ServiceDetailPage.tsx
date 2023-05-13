@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getDoc, doc, collection, getDocs } from 'firebase/firestore'
 import { db } from '~/services/lib/firebase'
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import GoogleMapReact from 'google-map-react'
 import LocationPin from 'google-map-react'
 import { useMemo } from "react";
 import './Map/map.css'
@@ -17,33 +15,11 @@ import MapCard from './Map/MapCard'
 import RequestCreator from '~/components/Creator/RequestCreator'
 import Page from '~/components/Page/Page'
 
-const AnyReactComponent = ({ lat, lng, text }: { lat: number, lng: number, text: string }) => (
-    <div style={{
-        color: 'white',
-        background: 'red',
-        padding: '15px 10px',
-        display: 'inline-flex',
-        textAlign: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        transform: 'translate(-50%, -50%)'
-    }}>
-        {text}
-    </div>
-);
+
 
 const ServiceDetail: React.FC = () => {
     const { serviceId } = useParams<{ serviceId: string }>()
     const [service, setService] = useState<Service | null>(null)
-
-    const defaultProps = {
-        center: {
-            lat: 50.9377101,
-            lng: -1.3766856
-        },
-        zoom: 15
-    };
 
     useEffect(() => {
         const fetchService = async () => {
@@ -100,24 +76,19 @@ const ServiceDetail: React.FC = () => {
                                 </>
                             )}
                         </div>
+                        <div><br></br></div>
+                        <div className='flex flex-row w-full gap-2 md:justify-start md:flex-row'>
+                            {serviceId && (
+                                <>
+                                    <div>
+                                        <MapCard serviceId={serviceId} />
+                                    </div>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div style={{ height: '100vh', width: '100%' }}>
-                <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyDhczFRE73TpmtpletCMqSg-A8TZLq4npI" }}
-                    defaultCenter={defaultProps.center}
-                    defaultZoom={defaultProps.zoom}
-                >
-                    <AnyReactComponent
-                        lat={defaultProps.center.lat}
-                        lng={defaultProps.center.lng}
-                        text={service.name}
-                    />
-                </GoogleMapReact>
-            </div>
-
 
             {serviceId && (
                 <>
@@ -127,12 +98,6 @@ const ServiceDetail: React.FC = () => {
                             <CommentsList serviceId={serviceId} />
                         </div>
                     </div>
-                </>
-            )}
-
-            {serviceId && (
-                <>
-                    <MapCard serviceId={serviceId} />
                 </>
             )}
         </Page>

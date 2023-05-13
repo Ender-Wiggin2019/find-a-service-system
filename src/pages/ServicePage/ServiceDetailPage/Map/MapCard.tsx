@@ -16,17 +16,27 @@ const MapCard: React.FC<MapCardProps> = ({ serviceId }) => {
     const [provider_name, setName] = useState("")
     const [latitude, setLat] = useState(50.9377101)
     const [longitude, setLng] = useState(-1.3766856)
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleButtonClick = () => {
+        setModalVisible(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
 
 
     const defaultProps = {
         center: {
-            lat: 50.9377101,
-            lng: -1.3766856
+            lat: latitude,
+            lng: longitude
         },
-        zoom: 15
+        zoom: 13
     };
 
     const AnyReactComponent = ({ lat, lng, text }: { lat: number, lng: number, text: string }) => (
+
         <div style={{
             color: 'white',
             background: 'red',
@@ -46,25 +56,26 @@ const MapCard: React.FC<MapCardProps> = ({ serviceId }) => {
 
     useEffect(() => {
         const fetchMap = async () => {
-            const serviceCollection = collection(db, FirebasePath.SERVICE, serviceId, FirebasePath.COMMENT)
-            const commentSnapshot = await getDocs(serviceCollection)
             const commentsData = {name:"", lat:0, lng:0}
+            const serviceDoc = await getDoc(doc(db, FirebasePath.SERVICE, serviceId));
+            const serviceData = serviceDoc.data();
+            console.log(serviceData);
 
-            await Promise.all(
-                commentSnapshot.docs.map(async (singleDoc) => {
-                    const data = singleDoc.data()
-                     console.log(data);
-                     const serviceProviderDoc = await getDoc(doc(db, "serviceProvider", data.uid));
-                     const serviceProviderData = serviceProviderDoc.data();
-                     console.log(serviceProviderData);
-                     commentsData.name = data.name;
-                     if (serviceProviderData) {
-                        commentsData.lat = serviceProviderData.lat;
-                        commentsData.lng = serviceProviderData.lng;
-                     }
-                }),
-            )
+            if (serviceData)
+            {
+                const serviceProviderDoc = await getDoc(doc(db, "serviceProvider", serviceData.uid));
+                const serviceProviderData = serviceProviderDoc.data();
 
+                console.log(serviceProviderData);
+                if (serviceProviderData) {
+
+                    commentsData.name = serviceData.name;
+                    commentsData.lat = serviceProviderData.latitude;
+                    commentsData.lng = serviceProviderData.longitude;
+                    console.log(commentsData.name);
+                }
+
+            }
             setName(commentsData.name);
             setLat(commentsData.lat);
             setLng(commentsData.lng);
@@ -74,20 +85,38 @@ const MapCard: React.FC<MapCardProps> = ({ serviceId }) => {
     }, [])
 
     return (
-        <div style={{ height: '100vh', width: '100%' }}>
-            <GoogleMapReact
-                bootstrapURLKeys={{ key: "AIzaSyDhczFRE73TpmtpletCMqSg-A8TZLq4npI" }}
-                defaultCenter={defaultProps.center}
-                defaultZoom={defaultProps.zoom}
+        <div>
+            <label
+                htmlFor='my-modal-map'
+                className='flex items-center px-6 py-3 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-button rounded-lg  hover:bg-button focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2'
             >
-                <AnyReactComponent
-                    lat={latitude}
-                    lng={longitude}
-                    text={provider_name}
-                />
-            </GoogleMapReact>
+                See location
+            </label>
+
+            <input type='checkbox' id='my-modal-map' className='modal-toggle' />
+            <div className='modal modal-middle'>
+                <div className='modal-box'>
+                    <label htmlFor='my-modal-map' className='btn btn-sm btn-circle absolute right-2 top-2'>
+                        ✕
+                    </label>
+                    <div><br></br></div>
+                    <div style={{ height: '50vh', width: '100%' }}>
+                        <GoogleMapReact
+                            bootstrapURLKeys={{ key: "AIzaSyDhczFRE73TpmtpletCMqSg-A8TZLq4npI" }}
+                            defaultCenter={defaultProps.center}
+                            defaultZoom={defaultProps.zoom}
+                        >
+                            <AnyReactComponent
+                                lat={latitude}
+                                lng={longitude}
+                                text={provider_name}
+                            />
+                        </GoogleMapReact>
+                    </div>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default MapCard
