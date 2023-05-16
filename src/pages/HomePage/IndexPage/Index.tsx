@@ -30,7 +30,10 @@ function Index() {
                             </a>
                         </div>
                         <div className='hidden lg:mt-0 lg:col-span-5 lg:flex'>
-                            <img src='src/assets/landing.png' alt='mockup' />
+                            <img
+                                src='https://raw.githubusercontent.com/Ender-Wiggin2019/PicGo-Images/main/img/landing.png'
+                                alt='landing'
+                            />
                         </div>
                     </div>
                 </section>

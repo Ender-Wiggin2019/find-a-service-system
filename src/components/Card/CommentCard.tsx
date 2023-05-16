@@ -75,9 +75,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ id, uid, name, time, comment,
             <div className='mt-4 flex items-center space-x-4 py-2'>
                 <div className='avatar placeholder'>
                     <div className='bg-button text-neutral-content rounded-full w-10 h-10'>
-                                            <span className='text-3xl'>
-                                                {name.charAt(0)?.toUpperCase()}
-                                            </span>
+                        <span className='text-3xl'>{name.charAt(0)?.toUpperCase()}</span>
                     </div>
                 </div>
                 <div className='text-sm font-semibold'>

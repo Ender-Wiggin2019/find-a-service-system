@@ -103,8 +103,8 @@ const ServicePage: React.FC = () => {
     return (
         <Page>
             <h2 className='text-2xl font-bold mb-4'>Services</h2>
-            <div className='flex justify-between mb-4 gap-4'>
-                <div className='w-1/2 flex items-center'>
+            <div className='flex flex-col md:flex-row justify-between mb-4 gap-4'>
+                <div className='w-full md:basic-1/2 flex items-center'>
                     <SearchIcon className='mb-4' />
                     <div className='w-full'>
                         <InputTextField
@@ -116,44 +116,46 @@ const ServicePage: React.FC = () => {
                         />
                     </div>
                 </div>
-                <div className='w-1/4 flex items-center space-x-2'>
-                    <CategoryIcon className='mb-4' />
-                    <div className='w-full'>
-                        <InputEnumField
-                            label=''
-                            placeholder='Category'
-                            onChange={(selectedOption) => {
-                                const firstOption = selectedOption?.value || '' // TODO: should be an array
-                                setCategoryFilter(firstOption)
-                            }}
-                            enumType={Object.entries(ServiceCategory).reduce((obj, [key, value]) => {
-                                obj[value] = value
-                                return obj
-                            }, {} as Record<string, string>)}
-                        />
+                <div className='w-full md:basic-1/2 flex items-center'>
+                    <div className='w-1/2 md:basic-1/4 flex items-center space-x-2'>
+                        <CategoryIcon className='mb-4' />
+                        <div className='w-full'>
+                            <InputEnumField
+                                label=''
+                                placeholder='Category'
+                                onChange={(selectedOption) => {
+                                    const firstOption = selectedOption?.value || '' // TODO: should be an array
+                                    setCategoryFilter(firstOption)
+                                }}
+                                enumType={Object.entries(ServiceCategory).reduce((obj, [key, value]) => {
+                                    obj[value] = value
+                                    return obj
+                                }, {} as Record<string, string>)}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className='w-1/4 flex items-center space-x-2'>
-                    <FmdGoodIcon className='mb-4' />
-                    <div className='w-full'>
-                        <InputGeoField
-                            label=''
-                            placeholder='Cover Area'
-                            onChange={(selectedOptions) => {
-                                const firstOption = selectedOptions[0]?.value || '' // TODO: should be an array
-                                console.log(firstOption)
-                                setCoverAreaFilter(firstOption)
-                            }}
-                        />
+                    <div className='w-1/2 md:basic-1/4 flex items-center space-x-2'>
+                        <FmdGoodIcon className='mb-4' />
+                        <div className='w-full'>
+                            <InputGeoField
+                                label=''
+                                placeholder='Cover Area'
+                                onChange={(selectedOptions) => {
+                                    const firstOption = selectedOptions[0]?.value || '' // TODO: should be an array
+                                    console.log(firstOption)
+                                    setCoverAreaFilter(firstOption)
+                                }}
+                            />
+                        </div>
                     </div>
+                    <button
+                        title='Reset Filters'
+                        className='bg-tertiary text-card rounded flex items-center h-9 mb-4 ml-1 px-2.5'
+                        onClick={handleResetFilters}
+                    >
+                        <RestartAltIcon className='w-4 h-2' />
+                    </button>
                 </div>
-                <button
-                    title='Reset Filters'
-                    className='bg-tertiary text-card rounded flex items-center h-9 mt-2  px-2.5'
-                    onClick={handleResetFilters}
-                >
-                    <RestartAltIcon className='w-4 h-2' />
-                </button>
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 justify-items-stretch'>
