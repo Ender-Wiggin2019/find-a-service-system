@@ -1,4 +1,6 @@
-# COMP6251 Project
+# Find A Service
+
+A React project.
 
 -   Using the template from [vite-react-ts-tailwind-firebase-starter](https://github.com/TeXmeijin/vite-react-ts-tailwind-firebase-starter)
 -   [Linear](https://linear.app/find-a-service-project/project/find-a-service-project-0ed999db45f3/6251) for project management
